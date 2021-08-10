@@ -1,0 +1,30 @@
+{
+  "name": "interlinq-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "develop": "nodemon index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ernix/interlinQ.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ernix/interlinQ/issues"
+  },
+  "homepage": "https://github.com/ernix/interlinQ#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/ws": "^7.4.7",
+    "ws": "^8.0.0"
+  }
+}
