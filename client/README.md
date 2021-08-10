@@ -14,3 +14,11 @@ brew install xcodegen
 cd client
 xcodegen generate
 ```
+
+以下のログが出ると成功です。
+```
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/username/interlinQ/client/client.xcodeproj
+```
