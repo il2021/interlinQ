@@ -3,7 +3,7 @@
         <pre id='log'></pre>
         <script>
             const log = document.getElementById('log');
-            const wss = new WebSocket('ws://0.0.0.0:8080');
+            const wss = new WebSocket('ws://0.0.0.0:8081');
             wss.onopen = event => {
                 wss.send('Hello! on ' + (new Date()).toISOString());
             };
