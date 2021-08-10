@@ -10,10 +10,13 @@ tagger.parse('')
 re_quote = re.compile(r'[『』]', re.UNICODE)
 re_last_ruby = re.compile(r'\(([\p{Hira}\p{Katakana}ー・]+)\)$', re.UNICODE)
 re_ruby = re.compile(r'\([^\)]*\)', re.UNICODE)
-re_not_wanted = re.compile(r'[^0-9A-Z\p{Katakana}ー]', re.UNICODE)
+re_following_num = re.compile(r'^(-?[0-9.]+)(?!ブンノ)', re.UNICODE)
+re_unwanted = re.compile(r'[^0-9A-Z\p{Katakana}ー.]', re.UNICODE)
 
 question_dict = {
     '大相撲で、平幕の力士が横綱を倒したときの勝星を何というでしょう？': 'キンボシ',
+    '動物、スポーツ、映画、音楽、料理など、いろいろな「好き」を入口に514種の職業を紹介した、村上龍による仕事の百科全書といえば何でしょう？': '１３サイノハローワーク',
+    'スキューバダイビングをするために必要となる認定証のことを、アルファベット1文字で何カードというでしょう？': 'Ｃ',
 }
 
 answer_dict = {
@@ -73,8 +76,13 @@ def to_kana(question, answer):
 
     kana = ''.join(words)
     kana = kana.upper()
-    kana = jaconv.h2z(kana)
-    kana = re.sub(re_not_wanted, '', kana)
+
+    m = re_following_num.search(kana)
+    if m:
+        kana = m.group(1)
+
+    kana = re.sub(re_unwanted, '', kana)
+    kana = jaconv.h2z(kana, ascii=True, digit=True)
 
     if not kana:
         warn(question)
