@@ -2,6 +2,21 @@
 
 interlinQ のサーバー実装です。TypeScript を使用しています。
 
+## API
+
+### `/problems/random`
+
+問題をランダムで返します。`?n=3` などと問題数を指定できます (指定されていない場合、5問)。
+
+戻り値:
+```
+{
+    question: string;
+    answer: string;
+    answerInKana: string;
+}[];
+```
+
 ## 開発
 
 1. このディレクトリに移動
