@@ -15,12 +15,12 @@ server.get<{
     Querystring: {
         n?: number;
     };
-}>('/problems/random', async (request, reply) => {
+}>('/api/problems/random', async (request, reply) => {
     const n = request.query.n || 5;
     return sampleSize(problems, n);
 });
 
-server.get('/', { websocket: true }, (connection, req) => {
+server.get('/ws', { websocket: true }, (connection, req) => {
     connection.socket.send('Welcome!');
     connection.socket.on('message', message => {
         connection.socket.send(message);

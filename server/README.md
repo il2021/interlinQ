@@ -4,7 +4,7 @@ interlinQ のサーバー実装です。TypeScript を使用しています。
 
 ## API
 
-### `/problems/random`
+### `/api/problems/random`
 
 問題をランダムで返します。`?n=3` などと問題数を指定できます (指定されていない場合、5問)。
 
@@ -16,6 +16,10 @@ interlinQ のサーバー実装です。TypeScript を使用しています。
     answerInKana: string;
 }[];
 ```
+
+### `/ws`
+
+WebSocket 用 (開発中)
 
 ## 開発
 
