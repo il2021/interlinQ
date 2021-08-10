@@ -13,3 +13,5 @@ targets:
       - Sources/
       - .gitignore
       - README.md
+      - project.yml
+
