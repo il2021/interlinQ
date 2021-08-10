@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import fastifyWebSocket from 'fastify-websocket';
-import { sample } from 'lodash';
+import { sampleSize } from 'lodash';
 import fs from 'fs';
 
 const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map(line => {
@@ -11,8 +11,13 @@ const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map
 const server = fastify();
 server.register(fastifyWebSocket);
 
-server.get('/problems/random', async () => {
-    return sample(problems);
+server.get<{
+    Querystring: {
+        n?: number;
+    };
+}>('/problems/random', async (request, reply) => {
+    const n = request.query.n || 5;
+    return sampleSize(problems, n);
 });
 
 server.get('/', { websocket: true }, (connection, req) => {
