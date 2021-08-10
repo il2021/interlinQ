@@ -12,12 +12,14 @@
 		2F523F1E7F04E990C267D8FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5C1882863D650D3D18DDA6 /* ViewController.swift */; };
 		5415E8531290A6818B0988F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE64C5234FBB1A84DE287F24 /* SceneDelegate.swift */; };
 		97C459D62AEC784F9811A284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75D7FD29996885F4A28ACB1A /* Assets.xcassets */; };
+		BB3497CEDE2E7F8FBDA9AEF7 /* project.yml in Resources */ = {isa = PBXBuildFile; fileRef = 457FCA0F882AD7EB7938EF04 /* project.yml */; };
 		D0882114975ADC451A807CF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A186F9637DFB32852805B /* AppDelegate.swift */; };
 		E574D1BBA5A7E53FD819B426 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2990200C22BBE35E9716B638 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2965B6AAEC8B72A5AA362A72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		457FCA0F882AD7EB7938EF04 /* project.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = project.yml; sourceTree = "<group>"; };
 		75D7FD29996885F4A28ACB1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8173C5CD325C99327C79430F /* .gitignore */ = {isa = PBXFileReference; path = .gitignore; sourceTree = "<group>"; };
 		933C27CBD861086CECFA76EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -34,6 +36,7 @@
 			isa = PBXGroup;
 			children = (
 				8173C5CD325C99327C79430F /* .gitignore */,
+				457FCA0F882AD7EB7938EF04 /* project.yml */,
 				CB82FFD8CFA86023FDF72A4A /* README.md */,
 				739C76D43A92331916BE4CE7 /* Sources */,
 				AA99229A272F07DA07B0963B /* Products */,
@@ -117,6 +120,7 @@
 				E574D1BBA5A7E53FD819B426 /* LaunchScreen.storyboard in Resources */,
 				0D2B1E73D7A994F874FA3F9D /* Main.storyboard in Resources */,
 				04089A340EA68E17952842A0 /* README.md in Resources */,
+				BB3497CEDE2E7F8FBDA9AEF7 /* project.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
