@@ -8,7 +8,7 @@ from warnings import warn
 tagger = MeCab.Tagger("-Ochasen")
 tagger.parse('')
 re_quote = re.compile(r'[『』]', re.UNICODE)
-re_digraph = re.compile(r'【[^】]+】', re.UNICODE)
+re_digraph = re.compile(r'[【\[][^】\]]+[】\]]', re.UNICODE)
 re_last_ruby = re.compile(r'\(([\p{Hira}\p{Katakana}ー・]+)\)$', re.UNICODE)
 re_ruby = re.compile(r'\([^\)]*\)', re.UNICODE)
 re_following_num = re.compile(r'^(-?[0-9.]+)(?!ブンノ)', re.UNICODE)
@@ -18,6 +18,7 @@ question_dict = {
     '大相撲で、平幕の力士が横綱を倒したときの勝星を何というでしょう？': 'キンボシ',
     '動物、スポーツ、映画、音楽、料理など、いろいろな「好き」を入口に514種の職業を紹介した、村上龍による仕事の百科全書といえば何でしょう？': '１３サイノハローワーク',
     'スキューバダイビングをするために必要となる認定証のことを、アルファベット1文字で何カードというでしょう？': 'Ｃ',
+    '生後6か月頃から満1歳前後の乳児にみられる発熱を、とくに何というでしょう？': 'チエネツ',
 }
 
 answer_dict = {
@@ -42,6 +43,8 @@ answer_dict = {
     '浅井長政': 'アザイナガマサ',
     '阪東妻三郎': 'バンドウツマサブロウ',
     '山名持豊': 'ヤマナモチトヨ',
+    '景徳鎮': 'ケイトクチン',
+    '空腸': 'クウチョウ',
 }
 
 
