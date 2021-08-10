@@ -1,4 +1,5 @@
 import fastify from 'fastify';
+import fastifyWebSocket from 'fastify-websocket';
 import { sample } from 'lodash';
 import fs from 'fs';
 
@@ -8,22 +9,17 @@ const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map
 });
 
 const server = fastify();
+server.register(fastifyWebSocket);
 
 server.get('/problems/random', async () => {
     return sample(problems);
 });
 
-server.listen(8000);
-
-import WebSocket from 'ws';
-
-const wss = new WebSocket.Server({ host: '0.0.0.0', port: 8081 });
-
-wss.on('connection', ws => {
-    ws.send('Welcome!');
-    ws.on('message', payload => {
-        wss.clients.forEach(client => {
-            client.send(payload.toString());
-        });
+server.get('/', { websocket: true }, (connection, req) => {
+    connection.socket.send('Welcome!');
+    connection.socket.on('message', message => {
+        connection.socket.send(message);
     });
 });
+
+server.listen(8080);
