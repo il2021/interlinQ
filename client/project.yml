@@ -1,0 +1,17 @@
+name: client
+options:
+  bundleIdPrefix: com.interlinq
+  deploymentTarget:
+    iOS: 14.0
+  generateEmptyDirectories: true
+
+targets:
+  client:
+    platform: iOS
+    type: application
+    sources:
+      - Sources/
+      - .gitignore
+      - README.md
+      - project.yml
+
