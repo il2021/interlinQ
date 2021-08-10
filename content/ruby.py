@@ -12,7 +12,11 @@ re_last_ruby = re.compile(r'\(([\p{Hira}\p{Katakana}ー・]+)\)$', re.UNICODE)
 re_ruby = re.compile(r'\([^\)]*\)', re.UNICODE)
 re_not_wanted = re.compile(r'[^0-9A-Z\p{Katakana}ー]', re.UNICODE)
 
-extra_dict = {
+question_dict = {
+    '大相撲で、平幕の力士が横綱を倒したときの勝星を何というでしょう？': 'キンボシ',
+}
+
+answer_dict = {
     '白樺派': 'シラカバハ',
     '荀子': 'ジュンシ',
     '靱猿': 'ウツボザル',
@@ -29,6 +33,11 @@ extra_dict = {
     '鞐': 'コハゼ',
     '姚明': 'ヤオミン',
     '☆(星)': 'ホシ',
+    '満を持す': 'マンヲジス',
+    '和井内貞行': 'ワイナイサダユキ',
+    '浅井長政': 'アザイナガマサ',
+    '阪東妻三郎': 'バンドウツマサブロウ',
+    '山名持豊': 'ヤマナモチトヨ',
 }
 
 
@@ -43,11 +52,14 @@ def prep(txt):
     return re.sub(re_ruby, '', raw)
 
 
-def to_kana(txt):
-    prepared = prep(txt)
+def to_kana(question, answer):
+    if question in question_dict:
+        return question_dict[question]
 
-    if prepared in extra_dict:
-        return extra_dict[prepared]
+    prepared = prep(answer)
+
+    if prepared in answer_dict:
+        return answer_dict[prepared]
 
     node = tagger.parseToNode(prepared)
     words = []
@@ -59,14 +71,17 @@ def to_kana(txt):
             words.append(jaconv.hira2kata(node.surface))
         node = node.next
 
-    kana = re.sub(re_not_wanted, '', ''.join(words).upper())
+    kana = ''.join(words)
+    kana = kana.upper()
+    kana = jaconv.h2z(kana)
+    kana = re.sub(re_not_wanted, '', kana)
 
     if not kana:
-        warn(txt)
+        warn(question)
 
     return kana
 
 
 for line in fileinput.input():
     (question, answer) = line.strip().split("\t")
-    print("\t".join((question, answer, to_kana(answer))))
+    print("\t".join((question, answer, to_kana(question, answer))))
