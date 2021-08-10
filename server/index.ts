@@ -1,12 +1,30 @@
-import WebSocket from 'ws';
+import fastify from 'fastify';
+import fastifyWebSocket from 'fastify-websocket';
+import { sampleSize } from 'lodash';
+import fs from 'fs';
 
-const wss = new WebSocket.Server({ host: '0.0.0.0', port: 8080 });
+const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map(line => {
+    const [ question, answer, answerInKana ] = line.split('\t');
+    return { question, answer, answerInKana };
+});
 
-wss.on('connection', ws => {
-    ws.send('Welcome!');
-    ws.on('message', payload => {
-        wss.clients.forEach(client => {
-            client.send(payload.toString());
-        })
+const server = fastify();
+server.register(fastifyWebSocket);
+
+server.get<{
+    Querystring: {
+        n?: number;
+    };
+}>('/api/problems/random', async (request, reply) => {
+    const n = request.query.n || 5;
+    return sampleSize(problems, n);
+});
+
+server.get('/ws', { websocket: true }, (connection, req) => {
+    connection.socket.send('Welcome!');
+    connection.socket.on('message', message => {
+        connection.socket.send(message);
     });
 });
+
+server.listen(8080);
