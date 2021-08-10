@@ -8,6 +8,7 @@ from warnings import warn
 tagger = MeCab.Tagger("-Ochasen")
 tagger.parse('')
 re_quote = re.compile(r'[『』]', re.UNICODE)
+re_digraph = re.compile(r'【[^】]+】', re.UNICODE)
 re_last_ruby = re.compile(r'\(([\p{Hira}\p{Katakana}ー・]+)\)$', re.UNICODE)
 re_ruby = re.compile(r'\([^\)]*\)', re.UNICODE)
 re_following_num = re.compile(r'^(-?[0-9.]+)(?!ブンノ)', re.UNICODE)
@@ -46,6 +47,7 @@ answer_dict = {
 
 def prep(txt):
     raw = txt.split('※', 1)[0]
+    raw = re.sub(re_digraph, '', raw)
     raw = re.sub(re_quote, '', raw)
 
     m = re_last_ruby.search(raw)
