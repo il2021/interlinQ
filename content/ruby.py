@@ -60,6 +60,19 @@ def prep(txt):
     return re.sub(re_ruby, '', raw)
 
 
+def run_mecab(txt):
+    node = tagger.parseToNode(txt)
+    words = []
+    while node:
+        features = node.feature.split(',')
+        if features[-2] != '*':
+            words.append(features[-2])
+        else:
+            words.append(node.surface)
+        node = node.next
+    return ''.join(words)
+
+
 def to_kana(question, answer):
     if question in question_dict:
         return question_dict[question]
@@ -69,17 +82,8 @@ def to_kana(question, answer):
     if prepared in answer_dict:
         return answer_dict[prepared]
 
-    node = tagger.parseToNode(prepared)
-    words = []
-    while node:
-        features = node.feature.split(',')
-        if features[-2] != '*':
-            words.append(features[-2])
-        else:
-            words.append(jaconv.hira2kata(node.surface))
-        node = node.next
-
-    kana = ''.join(words)
+    kana = run_mecab(prepared)
+    kana = jaconv.hira2kata(kana)
     kana = kana.upper()
 
     m = re_following_num.search(kana)
