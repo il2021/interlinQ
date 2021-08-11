@@ -1,5 +1,5 @@
 import fastify from 'fastify';
-import fastifyWebSocket from 'fastify-websocket';
+import { Server } from 'socket.io';
 import { sampleSize } from 'lodash';
 import fs from 'fs';
 
@@ -8,10 +8,9 @@ const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map
     return { question, answer, answerInKana };
 });
 
-const server = fastify();
-server.register(fastifyWebSocket);
+const app = fastify();
 
-server.get<{
+app.get<{
     Querystring: {
         n?: number;
     };
@@ -20,11 +19,28 @@ server.get<{
     return sampleSize(problems, n);
 });
 
-server.get('/ws', { websocket: true }, (connection, req) => {
-    connection.socket.send('Welcome!');
-    connection.socket.on('message', message => {
-        connection.socket.send(message);
+const io = new Server(app.server, {
+    cors: {
+        origin: '*',
+    },
+});
+
+io.on('connection', socket => {
+    console.log('Connected');
+    socket.on('disconnect', () => {
+        console.log('Disconnected');
+    });
+    socket.on('from_client', obj => {
+        console.log('Received data from client: ', obj);
     });
 });
 
-server.listen(8080);
+const sendServerTime = () => {
+    const now = new Date();
+    io.emit('from_server', now.toLocaleString());
+    console.log(now.toLocaleString());
+    setTimeout(sendServerTime, 1000);
+};
+sendServerTime();
+
+app.listen(8080);
