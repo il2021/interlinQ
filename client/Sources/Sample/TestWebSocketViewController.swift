@@ -68,12 +68,17 @@ class APIClient {
         let request = AF.request("http://localhost:8080/api/problems/random")
         request.responseJSON { response in
             let decoder: JSONDecoder = JSONDecoder()
-            do {
-                self.questions = try decoder.decode([Question].self, from: response.data!)
-                print(self.questions)
-            } catch {
-                print("failed")
+            if let data = response.data {
+                do {
+                    self.questions = try decoder.decode([Question].self, from: data)
+                    print(self.questions)
+                } catch {
+                    print("failed")
+                }
+            } else {
+                print("データ未取得")
             }
+            
         }
         
         
