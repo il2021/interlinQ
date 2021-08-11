@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SocketIO
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
