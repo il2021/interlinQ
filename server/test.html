@@ -2,15 +2,22 @@
 <html lang='ja'>
     <body>
         <pre id='log'></pre>
+        <script src="http://localhost:8080/socket.io/socket.io.js"></script>
         <script>
-            const log = document.getElementById('log');
-            const wss = new WebSocket('ws://0.0.0.0:8080/ws');
-            wss.onopen = event => {
-                wss.send('Hello! on ' + (new Date()).toISOString());
+            const logElement = document.getElementById('log');
+            const log = text => {
+                logElement.innerHTML += text += '\n';
             };
-            wss.onmessage = event => {
-                log.innerHTML += event.data + '\n';
-            };
+            const socket = io.connect('http://localhost:8080');
+            socket.on('connect', () => {
+                log('Socket connected.');
+            });
+            socket.on('disconnect', () => {
+                log('Socket disconnected.');
+            });
+            socket.on('from_server', data => {
+                log(data);
+            });
         </script>
     </body>
 </html>
