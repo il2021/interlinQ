@@ -26,8 +26,7 @@ class ViewController: UIViewController {
         
         socket.on("from_server"){ data, ack in
             if let message = data as? [String] {
-                print(message)
-//                print(message[0])
+                print(message[0])
                 self.dataList.insert(message[0],at: 0)
                 
             }
@@ -36,7 +35,9 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tapButtonAction(_ sender: Any) {
-        socket.emit("from_client", "Button Pushed")
+        socket.emit("from_client", CustomData(name: "Erik", age: 24)) {
+            print("送信完了")
+        }
     }
     
     @IBAction func connectButtonAction(_ sender: Any) {
@@ -49,3 +50,12 @@ class ViewController: UIViewController {
     
 }
 
+
+struct CustomData : SocketData {
+    let name: String
+    let age: Int
+    
+    func socketRepresentation() -> SocketData {
+        return ["name": name, "age": age]
+    }
+}
