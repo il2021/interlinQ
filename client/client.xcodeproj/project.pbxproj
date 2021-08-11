@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03D5343826C37F66000C3F77 /* TestWebSocket.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03D5343726C37F66000C3F77 /* TestWebSocket.storyboard */; };
+		03D5343A26C380CC000C3F77 /* TestWebSocketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D5343926C380CC000C3F77 /* TestWebSocketViewController.swift */; };
 		04089A340EA68E17952842A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CB82FFD8CFA86023FDF72A4A /* README.md */; };
 		0D2B1E73D7A994F874FA3F9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFE77AF38D9D5FB03E6F9C0C /* Main.storyboard */; };
 		1CEF473D3903314FCFD9A25C /* Pods_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 567EFB26EFA6FE8CC08926B3 /* Pods_client.framework */; };
@@ -19,12 +21,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03D5343726C37F66000C3F77 /* TestWebSocket.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestWebSocket.storyboard; sourceTree = "<group>"; };
+		03D5343926C380CC000C3F77 /* TestWebSocketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWebSocketViewController.swift; sourceTree = "<group>"; };
 		2965B6AAEC8B72A5AA362A72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		457FCA0F882AD7EB7938EF04 /* project.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = project.yml; sourceTree = "<group>"; };
 		567EFB26EFA6FE8CC08926B3 /* Pods_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75D7FD29996885F4A28ACB1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B7069323F590DF7E7827FC7 /* Pods-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client.debug.xcconfig"; path = "Target Support Files/Pods-client/Pods-client.debug.xcconfig"; sourceTree = "<group>"; };
-		8173C5CD325C99327C79430F /* .gitignore */ = {isa = PBXFileReference; path = .gitignore; sourceTree = "<group>"; };
+		8173C5CD325C99327C79430F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		933C27CBD861086CECFA76EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		985A186F9637DFB32852805B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B0471D2EC685D174BC88A13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -47,6 +51,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03D5343626C37E7D000C3F77 /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				03D5343726C37F66000C3F77 /* TestWebSocket.storyboard */,
+				03D5343926C380CC000C3F77 /* TestWebSocketViewController.swift */,
+			);
+			path = Sample;
+			sourceTree = "<group>";
+		};
 		6E59BFCA88967E518FB9DDD8 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +76,7 @@
 		739C76D43A92331916BE4CE7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				03D5343626C37E7D000C3F77 /* Sample */,
 				985A186F9637DFB32852805B /* AppDelegate.swift */,
 				75D7FD29996885F4A28ACB1A /* Assets.xcassets */,
 				933C27CBD861086CECFA76EE /* Info.plist */,
@@ -80,7 +94,6 @@
 				7B7069323F590DF7E7827FC7 /* Pods-client.debug.xcconfig */,
 				C8B622ABCAD492B3CE399A2E /* Pods-client.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -129,8 +142,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1200;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = EE0361824CAD5BF6769F9CC2 /* Build configuration list for PBXProject "client" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -159,6 +170,7 @@
 				E574D1BBA5A7E53FD819B426 /* LaunchScreen.storyboard in Resources */,
 				0D2B1E73D7A994F874FA3F9D /* Main.storyboard in Resources */,
 				04089A340EA68E17952842A0 /* README.md in Resources */,
+				03D5343826C37F66000C3F77 /* TestWebSocket.storyboard in Resources */,
 				BB3497CEDE2E7F8FBDA9AEF7 /* project.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +226,7 @@
 			files = (
 				D0882114975ADC451A807CF9 /* AppDelegate.swift in Sources */,
 				5415E8531290A6818B0988F4 /* SceneDelegate.swift in Sources */,
+				03D5343A26C380CC000C3F77 /* TestWebSocketViewController.swift in Sources */,
 				2F523F1E7F04E990C267D8FE /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,38 +23,35 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FaL-wX-cpz">
-                                <rect key="frame" x="183" y="481" width="44" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcT-Q4-XhP">
+                                <rect key="frame" x="154" y="689" width="107" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Action"/>
+                                <state key="normal" title="TestWebSocket"/>
                                 <connections>
-                                    <action selector="tapButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="k1L-SX-U17"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Crb-iM-GNV">
-                                <rect key="frame" x="176" y="551" width="59" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Connect"/>
-                                <connections>
-                                    <action selector="connectButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="inN-XI-MRX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgf-eV-czF">
-                                <rect key="frame" x="165" y="612" width="80" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="DisConnect"/>
-                                <connections>
-                                    <action selector="disconnectButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rVw-7v-8cH"/>
+                                    <action selector="toTestButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5nN-QG-5kq"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <segue destination="ylz-0f-Z8A" kind="show" identifier="toTest" id="Nec-3K-eeQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="20" y="88"/>
+        </scene>
+        <!--TestWebSocket-->
+        <scene sceneID="IJ1-bI-C28">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TestWebSocket" id="ylz-0f-Z8A" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Epp-HF-EGW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="djw-mZ-nUB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="689" y="-44"/>
         </scene>
     </scenes>
     <resources>
