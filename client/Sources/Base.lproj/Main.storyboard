@@ -23,14 +23,35 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcT-Q4-XhP">
+                                <rect key="frame" x="154" y="689" width="107" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="TestWebSocket"/>
+                                <connections>
+                                    <action selector="toTestButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5nN-QG-5kq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <segue destination="ylz-0f-Z8A" kind="show" identifier="toTest" id="Nec-3K-eeQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="20" y="88"/>
+        </scene>
+        <!--TestWebSocket-->
+        <scene sceneID="IJ1-bI-C28">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TestWebSocket" id="ylz-0f-Z8A" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Epp-HF-EGW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="djw-mZ-nUB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="689" y="-44"/>
         </scene>
     </scenes>
     <resources>
