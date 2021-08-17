@@ -17,12 +17,10 @@ for i in range(1, 12):
         f"https://www.soumu.go.jp/main_sosiki/joho_tsusin/security/glossary/{i:02d}.html"
     )
     soup = BeautifulSoup(resp.content, "lxml")
-    dom_dt = soup.find_all("dt")
-    dom_dd = soup.find_all("dd")
-    size_A = len(dom_dt)
-    for j in range(size_A):
-        dt = dom_dt[j].get_text()  # 答え
-        dd = dom_dd[j].get_text(strip=True)  # 問題文
+    for dom_dt in soup.find_all("dt"):
+        dom_dd = dom_dt.find_next_sibling("dd")
+        dt = dom_dt.get_text()  # 答え
+        dd = dom_dd.get_text(strip=True)  # 問題文
 
         match_brace = re.match(
             r"""
