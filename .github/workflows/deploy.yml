@@ -16,5 +16,10 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           sudo chmod 600 ~/.ssh/id_ed25519
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install pm2
+        run: sudo npm install -g pm2
       - name: Deploy
         run: pm2 deploy pm2.config.js production
