@@ -35,7 +35,6 @@ class TestWebSocketViewController: UIViewController {
         }
         socket.connect()
         
-        apiClient.request()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -53,6 +52,9 @@ class TestWebSocketViewController: UIViewController {
     }
     @IBAction func disconnectButtonAction(_ sender: Any) {
         socket.disconnect()
+    }
+    @IBAction func tapGetQuestionButton(_ sender: Any) {
+        apiClient.request()
     }
 }
 
