@@ -1,7 +1,5 @@
 import csv
-import random
 import re
-import time
 
 import jaconv
 import requests
@@ -63,7 +61,6 @@ for i in range(1, 12):
             dd0 = dd
 
         container.append([dt, dd0])
-    time.sleep(5 + random.random())
 
 with open("soumu.csv", "w", encoding="utf_8_sig", newline="") as f:
     writer = csv.writer(f)
