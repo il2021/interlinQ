@@ -54,7 +54,7 @@ class Scrape:
                     self._getContents()
                     content = self.soup.find(id="Summary")
 
-                    if content == None:
+                    if content is None:
                         continue
 
                     word = content.strong.string
