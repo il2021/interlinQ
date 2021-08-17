@@ -1,7 +1,7 @@
 import fastify from 'fastify';
 import { Server } from 'socket.io';
 import { v4 as uuid } from 'uuid';
-import { sample, sampleSize } from 'lodash';
+import { sample, sampleSize, countBy } from 'lodash';
 import fs from 'fs';
 
 const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map(line => {
@@ -12,7 +12,6 @@ const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map
 interface Member {
     id: string; // Don't pass to clients!
     name: string;
-    score: number;
     answerPermitted: boolean;
 }
 
@@ -25,6 +24,7 @@ interface ActiveRoom {
     roomId: string;
     members: Member[];
     problemIds: string[];
+    solverIds: (string | null)[];
 }
 
 const waitRooms: WaitRoom[] = [];
@@ -48,10 +48,19 @@ app.get<{
     };
 }>('/api/problems/next', async (request, reply) => {
     const roomId = request.query.roomId;
-    const room = activeRooms.filter(room => room.roomId === roomId)[0];
+    const rooms = activeRooms.filter(room => room.roomId === roomId);
+    if (rooms.length === 0) {
+        return {
+            available: false,
+        };
+    }
+    const room = rooms[0];
     const latestProblemId = room.problemIds.slice(-1)[0];
     const latestProblem = problems.filter(problem => problem.id === latestProblemId); // 遅そ〜。index できる db に入れたいね
-    return latestProblem;
+    return {
+        available: true,
+        ...latestProblem
+    };
 });
 
 const io = new Server(app.server, {
@@ -75,7 +84,11 @@ io.on('connection', socket => {
             io.to(room.roomId).emit('room-updated', res);
             io.to(room.roomId).emit('room-ready', res);
             const firstProblem = sample(problems)!.id;
-            activeRooms.push({ ...room, problemIds: [ firstProblem ] });
+            activeRooms.push({
+                ...room,
+                problemIds: [firstProblem],
+                solverIds: [],
+            });
         } else {
             const roomId = uuid();
             waitRooms.push({
@@ -84,7 +97,6 @@ io.on('connection', socket => {
                     {
                         id: userId,
                         name: userName,
-                        score: 0,
                         answerPermitted: true,
                     },
                 ],
@@ -107,36 +119,38 @@ io.on('connection', socket => {
         const isCorrect = params.isCorrect as boolean;
         io.to(roomId).emit('answer-unblocked');
         if (isCorrect) {
-            const nextProblem = sample(problems)!.id;
-            const updatedMembers = room.members.map(member => {
-                if (member.id === userId) {
-                    member.score += 1;
-                }
-                member.answerPermitted = true;
-                return member;
-            });
-            activeRooms.push({
-                roomId,
-                members: updatedMembers,
-                problemIds: [...room.problemIds, nextProblem],
-            });
+            if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
+                const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
+                const winnerId = Object.entries(solvesDict).sort((a, b) => a < b ? 1 : -1)[0][0];
+                const winnerName = room.members.filter(member => member.id === winnerId)[0].name;
+                io.to(roomId).emit('room-closed', {
+                    succeeded: true,
+                    winnerName: winnerName,
+                });
+            } else {
+                const nextProblem = sample(problems)!.id;
+                room.solverIds.push(userId);
+                room.members.forEach(member => {
+                    member.answerPermitted = true;
+                });
+                activeRooms.push({
+                    ...room,
+                    problemIds: [...room.problemIds, nextProblem],
+                });
+            }
         } else {
-            const updatedMembers = room.members.map(member => {
+            room.members.forEach(member => {
                 if (member.id === userId) {
                     member.answerPermitted = false;
                 }
-                return member;
             });
-            activeRooms[activeRooms.length - 1].members = updatedMembers;
             if (room.members.every(member => member.answerPermitted === false)) {
                 const nextProblem = sample(problems)!.id;
-                const updatedMembers = room.members.map(member => {
+                room.members.forEach(member => {
                     member.answerPermitted = true;
-                    return member;
                 });
                 activeRooms.push({
-                    roomId,
-                    members: updatedMembers,
+                    ...room,
                     problemIds: [...room.problemIds, nextProblem],
                 });
             }
