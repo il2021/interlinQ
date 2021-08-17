@@ -19,7 +19,6 @@ class TestWebSocketViewController: UIViewController {
     let userId = UIDevice.current.identifierForVendor!
     @IBOutlet weak var logConsoleField: UITextView!
     
-    var roomReady = false
     override func viewDidLoad() {
         super.viewDidLoad()
         socket = manager.defaultSocket
