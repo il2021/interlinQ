@@ -63,14 +63,8 @@ for i in range(1, 12):
         if len(dd0) < 20:
             dd0 = dd
 
-<<<<<<< HEAD
-with open('soumu.csv', 'w', encoding="utf_8_sig", newline = '') as f:
-   writer = csv.writer(f)
-   writer.writerows(C)
-=======
         container.append([dt, dd0])
     time.sleep(5 + random.random())
->>>>>>> caca85537136400c77722dad76eb92a93fa64ebd
 
 with open("soumu.csv", "w", encoding="utf_8_sig", newline="") as f:
     writer = csv.writer(f)
