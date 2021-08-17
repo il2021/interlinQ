@@ -8,6 +8,7 @@ module.exports = {
     deploy: {
         production: {
             key: '~/.ssh/id_ed25519',
+            ssh_options: 'StrictHostKeyChecking=no',
             user: 'yasumoto',
             host: productionHost,
             ref: 'origin/main',
