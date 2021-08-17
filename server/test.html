@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang='ja'>
+    <head>
+        <meta charset='utf-8' />
+    </head>
     <body>
+        <input id='userId' placeholder='Your user id' />
         <pre id='log'></pre>
+        <button onclick="
+            const userId = document.getElementById('userId').value;
+            socket.emit('join-room', { userId });
+            log('Joined room.');
+        ">入室</button>
         <script src="http://localhost:8080/socket.io/socket.io.js"></script>
         <script>
+            const userId = document.getElementById('userId').value;
             const logElement = document.getElementById('log');
             const log = text => {
                 logElement.innerHTML += text += '\n';
@@ -15,8 +25,11 @@
             socket.on('disconnect', () => {
                 log('Socket disconnected.');
             });
-            socket.on('from_server', data => {
-                log(data);
+            socket.on('room-created', param => {
+                log(`Room created: ${param.roomId}`);
+            });
+            socket.on('room-ready', params => {
+                log(`Room ready: ${param.roomId}`);
             });
         </script>
     </body>
