@@ -11,11 +11,14 @@ for target in range(2003, 2014 + 1):
     index = 0
 
     while True:
-        response = requests.get(BASE_URL, params={
-            'formname': 'lite_search',
-            'target': target,
-            'page': page,
-        })
+        response = requests.get(
+            BASE_URL,
+            params={
+                "formname": "lite_search",
+                "target": target,
+                "page": page,
+            },
+        )
 
         dom = html.fromstring(response.text)
 
@@ -30,7 +33,7 @@ for target in range(2003, 2014 + 1):
             print("\t".join((qid, question, answer)))
 
         if total is None:
-            sel = '.pb-5 > p:nth-child(1) > strong:nth-child(1)'
+            sel = ".pb-5 > p:nth-child(1) > strong:nth-child(1)"
             total = int(dom.cssselect(sel)[0].text_content())
 
         page += 1
