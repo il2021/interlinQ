@@ -7,6 +7,7 @@ module.exports = {
     }],
     deploy: {
         production: {
+            key: '~/.ssh/id_ed25519',
             user: 'yasumoto',
             host: productionHost,
             ref: 'origin/main',
