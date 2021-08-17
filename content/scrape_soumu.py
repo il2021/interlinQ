@@ -1,6 +1,8 @@
 import csv
 import random
+import re
 import time
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -32,16 +34,25 @@ for i in range(1, 12):
         dt = dom_dt[j].get_text()  # 答え
         dd = dom_dd[j].get_text(strip=True)  # 問題文
 
-        # Find the first opening brace and store its position as pos
-        for pos in range(len(dt)):  # ()部分がある場合、（）内にひらがな表記があるためそれを抽出
-            if dt[pos] == "（" or dt[pos] == "(":
-                break
+        match_brace = re.match(
+            r"""
+               ^
+                   ([^（(]*)  # normal
+                   [（(]      # opening brace
+                   (.*)       # kana
+                   .          # XXX: closing brace
+               $
+            """,
+            dt,
+            re.X | re.M | re.S,
+        )
 
-        if pos != len(dt) - 1:  # ()があったら
-            kana = dt[pos + 1:-1]
-            normal = dt[0:pos]
+        if match_brace:
+            normal = match_brace.group(1)
+            kana = match_brace.group(2)
             # dt = kana + "(" + normal + ")"
             dt = kana
+
         dt = kata_to_hira(dt)
         print(dt)
 
