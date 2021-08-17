@@ -61,7 +61,7 @@ for i in range(1,12):
     C.append([dt, dd0])
   time.sleep(5+random.random())
 
-with open('keisatsu.csv', 'w', encoding="utf_8_sig", newline = '') as f:
+with open('soumu.csv', 'w', encoding="utf_8_sig", newline = '') as f:
    writer = csv.writer(f)
    writer.writerows(C)
 
