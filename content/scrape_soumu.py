@@ -13,11 +13,8 @@ from bs4 import BeautifulSoup
 container = []
 
 for i in range(1, 12):
-    num_str = "%02d" % (i,)
     resp = requests.get(
-        "https://www.soumu.go.jp/main_sosiki/joho_tsusin/security/glossary/"
-        + num_str
-        + ".html"
+        f"https://www.soumu.go.jp/main_sosiki/joho_tsusin/security/glossary/{i:02d}.html"
     )
     soup = BeautifulSoup(resp.content, "lxml")
     dom_dt = soup.find_all("dt")
