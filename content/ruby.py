@@ -115,5 +115,5 @@ def to_kana(question, answer):
 
 
 for line in fileinput.input():
-    (question, answer) = line.strip().split("\t")
-    print("\t".join((question, answer, to_kana(question, answer))))
+    (qid, question, answer) = line.strip().split("\t")
+    print("\t".join((qid, question, answer, to_kana(question, answer))))
