@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03BBD42426CBBE9F0034B86B /* QuizClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BBD42326CBBE9F0034B86B /* QuizClient.swift */; };
 		03BBD42626CBD5D90034B86B /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BBD42526CBD5D90034B86B /* Quiz.swift */; };
+		03BBD42826CBD8620034B86B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BBD42726CBD8620034B86B /* HomeViewController.swift */; };
 		04089A340EA68E17952842A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CB82FFD8CFA86023FDF72A4A /* README.md */; };
 		0D2B1E73D7A994F874FA3F9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFE77AF38D9D5FB03E6F9C0C /* Main.storyboard */; };
 		2F523F1E7F04E990C267D8FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5C1882863D650D3D18DDA6 /* ViewController.swift */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		03BBD42326CBBE9F0034B86B /* QuizClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizClient.swift; sourceTree = "<group>"; };
 		03BBD42526CBD5D90034B86B /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
+		03BBD42726CBD8620034B86B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0ECAF456A1041DED820140FB /* TestWebSocketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWebSocketViewController.swift; sourceTree = "<group>"; };
 		2965B6AAEC8B72A5AA362A72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2EC9E8A2113E19BC756FBF58 /* Pods-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client.release.xcconfig"; path = "Target Support Files/Pods-client/Pods-client.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				2990200C22BBE35E9716B638 /* LaunchScreen.storyboard */,
 				BFE77AF38D9D5FB03E6F9C0C /* Main.storyboard */,
 				BE64C5234FBB1A84DE287F24 /* SceneDelegate.swift */,
+				03BBD42726CBD8620034B86B /* HomeViewController.swift */,
 				CC5C1882863D650D3D18DDA6 /* ViewController.swift */,
 				03BBD42326CBBE9F0034B86B /* QuizClient.swift */,
 				03BBD42526CBD5D90034B86B /* Quiz.swift */,
@@ -235,6 +238,7 @@
 				03BBD42626CBD5D90034B86B /* Quiz.swift in Sources */,
 				8D92D5E68147EB401BDA69E6 /* TestWebSocketViewController.swift in Sources */,
 				03BBD42426CBBE9F0034B86B /* QuizClient.swift in Sources */,
+				03BBD42826CBD8620034B86B /* HomeViewController.swift in Sources */,
 				2F523F1E7F04E990C267D8FE /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

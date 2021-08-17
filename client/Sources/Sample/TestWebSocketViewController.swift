@@ -13,7 +13,6 @@ class TestWebSocketViewController: UIViewController {
 
     let manager = SocketManager(socketURL: URL(string:"http://localhost:8080/")!, config: [.log(true), .compress])
     var socket : SocketIOClient!
-    var dataList :NSMutableArray! = []
     #if DEBUG
     var roomId = "test"
     #endif
@@ -45,7 +44,7 @@ class TestWebSocketViewController: UIViewController {
         socket.on("room-ready"){ data, ack in
             if let arr = data as? [[String: Any]] {
                 if let roomId = arr[0]["roomId"] as? String {
-                    print("あなたのroomId: \(roomId)")
+
                     self.roomId = roomId
                 }
             }
@@ -101,6 +100,8 @@ class TestWebSocketViewController: UIViewController {
             print(quiz ?? "値なし")
             
         }
+        
+        
     }
     
     
