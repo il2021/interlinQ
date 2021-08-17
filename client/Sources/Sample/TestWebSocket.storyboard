@@ -40,6 +40,14 @@
                                     <action selector="disconnectButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="ZZr-03-h70"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BsO-Jp-lAs">
+                                <rect key="frame" x="166" y="304" width="85" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="getQuestion"/>
+                                <connections>
+                                    <action selector="tapGetQuestionButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="VLg-ep-709"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
