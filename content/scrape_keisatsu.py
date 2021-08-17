@@ -5,11 +5,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-# ひらがな部分をカタカナに変換する関数
-def kata_to_hira(strj):
-    return "".join([chr(ord(ch) + 96) if ("ぁ" <= ch <= "ゔ") else ch for ch in strj])
-
-
 # 警察庁のページをスクレイピング
 
 container = []

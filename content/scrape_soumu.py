@@ -3,13 +3,9 @@ import random
 import re
 import time
 
+import jaconv
 import requests
 from bs4 import BeautifulSoup
-
-
-# ひらがな部分をカタカナに変換する関数
-def kata_to_hira(strj):
-    return "".join([chr(ord(ch) + 96) if ("ぁ" <= ch <= "ゔ") else ch for ch in strj])
 
 
 # 総務省のページをスクレイピング
@@ -53,7 +49,7 @@ for i in range(1, 12):
             # dt = kana + "(" + normal + ")"
             dt = kana
 
-        dt = kata_to_hira(dt)
+        dt = jaconv.hira2kata(dt)
         print(dt)
 
         start_pos = -1
