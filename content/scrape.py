@@ -29,5 +29,5 @@ for target in range(2003, 2014 + 1):
 
         page += 1
 
-        if page * 100 < total:
+        if page * 100 > total:
             break
