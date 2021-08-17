@@ -5,8 +5,7 @@ import { sample, sampleSize } from 'lodash';
 import fs from 'fs';
 
 const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map(line => {
-    const [ question, answer, answerInKana ] = line.split('\t');
-    const id = 'TODO:';
+    const [ id, question, answer, answerInKana ] = line.split('\t');
     return { id, question, answer, answerInKana };
 });
 
