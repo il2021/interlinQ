@@ -16,6 +16,7 @@ app.get<{
         n?: number;
     };
 }>('/api/problems/random', async (request, reply) => {
+    console.warn('This endpoint is deprecated.');
     const n = request.query.n || 5;
     return sampleSize(problems, n);
 });
@@ -25,9 +26,9 @@ app.get<{
         roomId: string;
     };
 }>('/api/problems/next', async (request, reply) => {
-    const roomId = request.query.roomId;
-    // TODO: 既出は出さない
-    return sampleSize(problems, 1);
+    // TODO:
+    const problem = problems[0];
+    return problem;
 });
 
 const io = new Server(app.server, {
