@@ -16,6 +16,24 @@ class HomeViewController: UIViewController {
     
     @IBAction func tapGoButton(_ sender: Any) {
 
+class HomeViewModel: NSObject {
+    @objc dynamic private(set) var labelText: String?
+    @objc dynamic private(set) var buttonIsEnabled: Bool = false
+    @objc dynamic private(set) var isLoading: Bool = false
+    var observers: [NSKeyValueObservation] = []
+    let userId = UIDevice.current.identifierForVendor!
+    
+    var webSocketManager: WebSocketManager = WebSocketManager.shared
+    
+
+    func buttonPressed() {
+        isLoading = true
+        labelText = "検索中"
+            
+        webSocketManager.isConnect ? webSocketManager.disconnect() : webSocketManager.connect()
+    }
+}
+
 import SocketIO
 final class WebSocketManager {
     
