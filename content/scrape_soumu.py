@@ -1,7 +1,5 @@
 import csv
-import random
 import re
-import time
 
 import jaconv
 import requests
@@ -17,12 +15,10 @@ for i in range(1, 12):
         f"https://www.soumu.go.jp/main_sosiki/joho_tsusin/security/glossary/{i:02d}.html"
     )
     soup = BeautifulSoup(resp.content, "lxml")
-    dom_dt = soup.find_all("dt")
-    dom_dd = soup.find_all("dd")
-    size_A = len(dom_dt)
-    for j in range(size_A):
-        dt = dom_dt[j].get_text()  # 答え
-        dd = dom_dd[j].get_text(strip=True)  # 問題文
+    for dom_dt in soup.find_all("dt"):
+        dom_dd = dom_dt.find_next_sibling("dd")
+        dt = dom_dt.get_text()  # 答え
+        dd = dom_dd.get_text(strip=True)  # 問題文
 
         match_brace = re.match(
             r"""
@@ -46,26 +42,15 @@ for i in range(1, 12):
         dt = jaconv.hira2kata(dt)
         print(dt)
 
-        start_pos = -1
-        for pos in range(len(dd)):  # そのまま答えのため「〜の省略」の文は省く
-            if dd[pos] == "。":
-                start_pos = pos
-            if dd[pos] == "略":
-                break
+        dd_sentences = re.split(r"(?<=。)(?!$)", dd, re.U)
 
-        if pos != len(dd) - 1:
-            dd = dd[: start_pos + 1] + dd[pos + 2:]
-
-        dd0 = ""
-        for pos in range(len(dd)):  # 最初の１文だけ抽出
-            if dd[pos] == "。":
-                dd0 = dd[0:pos] + "。"
-                break
+        # そのまま答えのため「〜の省略」の文は省く
+        dd_sentences = [x for x in dd_sentences if not x.endswith("略。")]
+        dd0 = dd_sentences[0]  # 最初の１文だけ抽出
         if len(dd0) < 20:
-            dd0 = dd
+            dd0 = "".join(dd_sentences)
 
         container.append([dt, dd0])
-    time.sleep(5 + random.random())
 
 with open("soumu.csv", "w", encoding="utf_8_sig", newline="") as f:
     writer = csv.writer(f)
