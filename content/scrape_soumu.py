@@ -1,13 +1,11 @@
 import csv
 import random
+import re
 import time
+
+import jaconv
 import requests
 from bs4 import BeautifulSoup
-
-
-# ひらがな部分をカタカナに変換する関数
-def kata_to_hira(strj):
-    return "".join([chr(ord(ch) + 96) if ("ぁ" <= ch <= "ゔ") else ch for ch in strj])
 
 
 # 総務省のページをスクレイピング
@@ -15,14 +13,8 @@ def kata_to_hira(strj):
 container = []
 
 for i in range(1, 12):
-    if i < 10:
-        num_str = "0" + str(i)
-    else:
-        num_str = str(i)
     resp = requests.get(
-        "https://www.soumu.go.jp/main_sosiki/joho_tsusin/security/glossary/"
-        + num_str
-        + ".html"
+        f"https://www.soumu.go.jp/main_sosiki/joho_tsusin/security/glossary/{i:02d}.html"
     )
     soup = BeautifulSoup(resp.content, "lxml")
     dom_dt = soup.find_all("dt")
@@ -32,17 +24,26 @@ for i in range(1, 12):
         dt = dom_dt[j].get_text()  # 答え
         dd = dom_dd[j].get_text(strip=True)  # 問題文
 
-        # Find the first opening brace and store its position as pos
-        for pos in range(len(dt)):  # ()部分がある場合、（）内にひらがな表記があるためそれを抽出
-            if dt[pos] == "（" or dt[pos] == "(":
-                break
+        match_brace = re.match(
+            r"""
+               ^
+                   ([^（(]*)  # normal
+                   [（(]      # opening brace
+                   (.*)       # kana
+                   .          # XXX: closing brace
+               $
+            """,
+            dt,
+            re.X | re.M | re.S,
+        )
 
-        if pos != len(dt) - 1:  # ()があったら
-            kana = dt[pos + 1:-1]
-            normal = dt[0:pos]
+        if match_brace:
+            normal = match_brace.group(1)
+            kana = match_brace.group(2)
             # dt = kana + "(" + normal + ")"
             dt = kana
-        dt = kata_to_hira(dt)
+
+        dt = jaconv.hira2kata(dt)
         print(dt)
 
         start_pos = -1
@@ -63,14 +64,8 @@ for i in range(1, 12):
         if len(dd0) < 20:
             dd0 = dd
 
-<<<<<<< HEAD
-with open('soumu.csv', 'w', encoding="utf_8_sig", newline = '') as f:
-   writer = csv.writer(f)
-   writer.writerows(C)
-=======
         container.append([dt, dd0])
     time.sleep(5 + random.random())
->>>>>>> caca85537136400c77722dad76eb92a93fa64ebd
 
 with open("soumu.csv", "w", encoding="utf_8_sig", newline="") as f:
     writer = csv.writer(f)

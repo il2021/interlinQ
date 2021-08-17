@@ -8,6 +8,7 @@
 import UIKit
 import SocketIO
 import Alamofire
+
 class TestWebSocketViewController: UIViewController {
 
     let manager = SocketManager(socketURL: URL(string:"http://localhost:8080/")!, config: [.log(true), .compress])
@@ -16,6 +17,8 @@ class TestWebSocketViewController: UIViewController {
     var apiClient = APIClient()
     var roomId = ""
     let userId = UIDevice.current.identifierForVendor!
+    @IBOutlet weak var logConsoleField: UITextView!
+    
     var roomReady = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +40,7 @@ class TestWebSocketViewController: UIViewController {
         }
         
         
-        // MARK: roomIdはまだ、変化する。
+        // MARK: 部屋の準備が整った時
         socket.on("room-ready"){ data, ack in
             if let arr = data as? [[String: Any]] {
                 if let roomId = arr[0]["roomId"] as? String {
@@ -45,6 +48,11 @@ class TestWebSocketViewController: UIViewController {
                     self.roomId = roomId
                 }
             }
+            
+            // 次の画面にPush
+
+            
+            
         }
         
         socket.on("room-created"){ data, ack in
@@ -61,7 +69,11 @@ class TestWebSocketViewController: UIViewController {
     }
     
     func log() {
-        print(roomId)
+        DispatchQueue.main.async {
+            self.logConsoleField.text = ""
+            self.logConsoleField.text += self.userId.uuidString + "\n"
+            self.logConsoleField.text += self.roomId
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -69,9 +81,11 @@ class TestWebSocketViewController: UIViewController {
     }
     @IBAction func tapButtonAction(_ sender: Any) {
         
-        socket.emit("join-room", "testid") {
+        socket.emit("join-room", userId.uuidString) {
             print("送信完了")
         }
+        log()
+        
     }
     
     @IBAction func connectButtonAction(_ sender: Any) {
@@ -84,11 +98,13 @@ class TestWebSocketViewController: UIViewController {
     @IBAction func tapGetQuestionButton(_ sender: Any) {
         apiClient.request()
     }
+    
+    
 }
 
 class APIClient {
-    var questions: [Question] = []
-    
+     var question: Question? = nil
+     var questions: [Question] = []
     func request() {
         let request = AF.request("http://localhost:8080/api/problems/random")
         request.responseJSON { response in
@@ -109,6 +125,8 @@ class APIClient {
         
         
     }
+    
+    
 }
 
 struct Question: Codable {

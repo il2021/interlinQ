@@ -1,11 +1,8 @@
 import csv
+import re
+
 import requests
 from bs4 import BeautifulSoup
-
-
-# ひらがな部分をカタカナに変換する関数
-def kata_to_hira(strj):
-    return "".join([chr(ord(ch) + 96) if ("ぁ" <= ch <= "ゔ") else ch for ch in strj])
 
 
 # 警察庁のページをスクレイピング
@@ -22,20 +19,27 @@ for li in soup.find_all("li"):
         answer = anchor[0].get_text()
         question = paragraph[0].get_text()
 
-        for pos in range(len(answer)):
-            if answer[pos] == "（" or answer[pos] == "(":
-                break
-        if pos != len(answer) - 1:
-            kana = answer[pos + 1:-1]
-            normal = answer[0:pos]
+        match_brace = re.match(
+            r"""
+               ^
+                   ([^（(]*)  # normal
+                   [（(]      # opening brace
+                   (.*)       # kana
+                   .          # closing brace
+               $
+            """,
+            answer,
+            re.X | re.M | re.S,
+        )
+
+        if match_brace:
+            normal = match_brace.group(1)
+            kana = match_brace.group(2)
             answer = kana + "(" + normal + ")"
             print(answer)
 
-        for i in range(len(question)):
-            if question[i] == "略":
-                break
-        if i != len(question) - 1:
-            question = question[i + 2:]
+        if '略' in question:
+            question = question[question.index('略') + 2:]  # 2 for "。"
 
         container.append([answer, question])
 
