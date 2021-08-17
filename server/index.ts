@@ -21,7 +21,7 @@ app.get<{
 
 const io = new Server(app.server, {
     cors: {
-        origin: '*',
+        origin: '*', // for local test
     },
 });
 
