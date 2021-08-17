@@ -40,7 +40,7 @@ for i in range(len(Answers)):
   problem = Problems[i]
   answer = Answers[i]
   answer_kana = Answers_kana[i]
-  string = "quiz_database"+ str(i) +"\t"  + problem + "\t" + answer + "\t" + answer_kana
+  string = "quiz_database" + "\t" + str(i) +"\t"  + problem + "\t" + answer + "\t" + answer_kana
   Data_output.append([string])
 
 with open("quiz_refine.tsv", "w", encoding="utf_8_sig", newline="") as f:

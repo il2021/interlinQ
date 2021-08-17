@@ -1,5 +1,6 @@
 import fastify from 'fastify';
 import { Server } from 'socket.io';
+import { v4 as uuid } from 'uuid';
 import { sampleSize } from 'lodash';
 import fs from 'fs';
 
@@ -15,8 +16,19 @@ app.get<{
         n?: number;
     };
 }>('/api/problems/random', async (request, reply) => {
+    console.warn('This endpoint is deprecated.');
     const n = request.query.n || 5;
     return sampleSize(problems, n);
+});
+
+app.get<{
+    Querystring: {
+        roomId: string;
+    };
+}>('/api/problems/next', async (request, reply) => {
+    // TODO:
+    const problem = problems[0];
+    return problem;
 });
 
 const io = new Server(app.server, {
@@ -25,22 +37,24 @@ const io = new Server(app.server, {
     },
 });
 
+const waitRooms: string[] = [];
+
 io.on('connection', socket => {
-    console.log('Connected');
-    socket.on('disconnect', () => {
-        console.log('Disconnected');
-    });
-    socket.on('from_client', obj => {
-        console.log('Received data from client: ', obj);
+    socket.on('join-room', params => {
+        const { userId } = params;
+        // TODO: 同一ユーザーはカウントしない
+        if (waitRooms.length > 0) {
+            const roomId = waitRooms[0];
+            waitRooms.shift();
+            socket.join(roomId);
+            io.to(roomId).emit('room-ready', { roomId });
+        } else {
+            const roomId = uuid();
+            waitRooms.push(roomId);
+            socket.join(roomId);
+            io.to(roomId).emit('room-created', { roomId });
+        }
     });
 });
 
-const sendServerTime = () => {
-    const now = new Date();
-    io.emit('from_server', now.toLocaleString());
-    console.log(now.toLocaleString());
-    setTimeout(sendServerTime, 1000);
-};
-sendServerTime();
-
-app.listen(8080);
+app.listen(8080, '0.0.0.0');
