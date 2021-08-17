@@ -12,6 +12,8 @@ const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map
 interface Member {
     id: string; // Don't pass to clients!
     name: string;
+    score: number;
+    answerPermitted: boolean;
 }
 
 interface WaitRoom {
@@ -82,11 +84,62 @@ io.on('connection', socket => {
                     {
                         id: userId,
                         name: userName,
+                        score: 0,
+                        answerPermitted: true,
                     },
                 ],
             });
             socket.join(roomId);
             io.to(roomId).emit('room-created', { roomId });
+        }
+    });
+    socket.on('start-answer', params => {
+        const userId = params.userId as string;
+        const roomId = params.roomId as string;
+        const room = activeRooms.filter(room => room.roomId === roomId)[0];
+        const user = room.members.filter(member => member.id === userId)[0];
+        io.to(roomId).emit('answer-blocked', { answeringUserName: user.name });
+    });
+    socket.on('submit-answer', params => {
+        const userId = params.userId as string;
+        const roomId = params.roomId as string;
+        const room = activeRooms.filter(room => room.roomId === roomId)[0];
+        const isCorrect = params.isCorrect as boolean;
+        io.to(roomId).emit('answer-unblocked');
+        if (isCorrect) {
+            const nextProblem = sample(problems)!.id;
+            const updatedMembers = room.members.map(member => {
+                if (member.id === userId) {
+                    member.score += 1;
+                }
+                member.answerPermitted = true;
+                return member;
+            });
+            activeRooms.push({
+                roomId,
+                members: updatedMembers,
+                problemIds: [...room.problemIds, nextProblem],
+            });
+        } else {
+            const updatedMembers = room.members.map(member => {
+                if (member.id === userId) {
+                    member.answerPermitted = false;
+                }
+                return member;
+            });
+            activeRooms[activeRooms.length - 1].members = updatedMembers;
+            if (room.members.every(member => member.answerPermitted === false)) {
+                const nextProblem = sample(problems)!.id;
+                const updatedMembers = room.members.map(member => {
+                    member.answerPermitted = true;
+                    return member;
+                });
+                activeRooms.push({
+                    roomId,
+                    members: updatedMembers,
+                    problemIds: [...room.problemIds, nextProblem],
+                });
+            }
         }
     });
 });
