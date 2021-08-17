@@ -19,6 +19,14 @@ class HomeViewController: UIViewController {
     }
     
 
+struct StartAnswer: SocketData {
+    let userId: String
+    let roomId: String
+    
+    func socketRepresentation() -> SocketData {
+        return ["userId": userId, "roomId": roomId]
+    }
+}
 
 struct Answer: SocketData {
     let userId: String
