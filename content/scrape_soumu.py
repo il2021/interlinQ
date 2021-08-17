@@ -13,10 +13,7 @@ from bs4 import BeautifulSoup
 container = []
 
 for i in range(1, 12):
-    if i < 10:
-        num_str = "0" + str(i)
-    else:
-        num_str = str(i)
+    num_str = "%02d" % (i,)
     resp = requests.get(
         "https://www.soumu.go.jp/main_sosiki/joho_tsusin/security/glossary/"
         + num_str
