@@ -14,8 +14,9 @@ class TestWebSocketViewController: UIViewController {
     let manager = SocketManager(socketURL: URL(string:"http://localhost:8080/")!, config: [.log(true), .compress])
     var socket : SocketIOClient!
     var dataList :NSMutableArray! = []
-    var apiClient = APIClient()
-    var roomId = ""
+    #if DEBUG
+    var roomId = "test"
+    #endif
     let userId = UIDevice.current.identifierForVendor!
     @IBOutlet weak var logConsoleField: UITextView!
     
@@ -95,45 +96,16 @@ class TestWebSocketViewController: UIViewController {
     @IBAction func disconnectButtonAction(_ sender: Any) {
         socket.disconnect()
     }
-    @IBAction func tapGetQuestionButton(_ sender: Any) {
-        apiClient.request()
-    }
-    
-    
-}
-
-class APIClient {
-     var question: Question? = nil
-     var questions: [Question] = []
-    func request() {
-        let request = AF.request("http://localhost:8080/api/problems/random")
-        request.responseJSON { response in
-            let decoder: JSONDecoder = JSONDecoder()
-            if let data = response.data {
-                do {
-                    self.questions = try decoder.decode([Question].self, from: data)
-                    print(self.questions)
-                } catch {
-                    print("failed")
-                }
-            } else {
-                print("データ未取得")
-            }
+    @IBAction func tapGetQuizButton(_ sender: Any) {
+        QuizClient.fetchNextQuiz(roomId: roomId) {  quiz in
+            print(quiz ?? "値なし")
             
         }
-        
-        
-        
     }
     
     
 }
 
-struct Question: Codable {
-    let question: String
-    let answer: String
-    let answerInKana: String
-}
 
 struct CustomData : SocketData {
     let name: String
