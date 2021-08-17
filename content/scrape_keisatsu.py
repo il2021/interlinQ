@@ -10,36 +10,35 @@ def kata_to_hira(strj):
 
 # 警察庁のページをスクレイピング
 
-C = []
+container = []
 
-r = requests.get("https://www.npa.go.jp/cyberpolice/words/index.html")
-soup = BeautifulSoup(r.content, "lxml")
-S = soup.find_all("li")
+resp = requests.get("https://www.npa.go.jp/cyberpolice/words/index.html")
+soup = BeautifulSoup(resp.content, "lxml")
 
-for T in S:
-    A = T.find_all("a", id=lambda value: value and value.startswith(""))
-    B = T.find_all("p")
-    if len(A) > 0 and len(B) > 0:
-        a = A[0].get_text()  # 答え
-        b = B[0].get_text()  # 問題文
+for li in soup.find_all("li"):
+    anchor = li.find_all("a", id=lambda value: value and value.startswith(""))
+    paragraph = li.find_all("p")
+    if len(anchor) > 0 and len(paragraph) > 0:
+        answer = anchor[0].get_text()
+        question = paragraph[0].get_text()
 
-        for k in range(len(a)):
-            if a[k] == "（" or a[k] == "(":
+        for pos in range(len(answer)):
+            if answer[pos] == "（" or answer[pos] == "(":
                 break
-        if k != len(a) - 1:
-            kana = a[k + 1 : -1]
-            normal = a[0:k]
-            a = kana + "(" + normal + ")"
-            print(a)
+        if pos != len(answer) - 1:
+            kana = answer[pos + 1:-1]
+            normal = answer[0:pos]
+            answer = kana + "(" + normal + ")"
+            print(answer)
 
-        for i in range(len(b)):
-            if b[i] == "略":
+        for i in range(len(question)):
+            if question[i] == "略":
                 break
-        if i != len(b) - 1:
-            b = b[i + 2 :]
+        if i != len(question) - 1:
+            question = question[i + 2:]
 
-        C.append([a, b])
+        container.append([answer, question])
 
 with open("keisatsu.csv", "w", encoding="utf_8_sig", newline="") as f:
     writer = csv.writer(f)
-    writer.writerows(C)
+    writer.writerows(container)
