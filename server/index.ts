@@ -33,22 +33,7 @@ io.on('connection', socket => {
     socket.on('from_client', obj => {
         console.log('Received data from client: ', obj);
     });
-
-    socket.on('getQuestion', () => {
-        socket.on('getQuestion', () => {
-            console.log('リクエストを受け取った');
-            sendQuestion();
-        })
-    });
-
 });
-
-const sendQuestion = () => {
-    io.emit('responseQuestion', "問題：回答");
-    console.log('問題送信');
-};
-
-
 
 const sendServerTime = () => {
     const now = new Date();
