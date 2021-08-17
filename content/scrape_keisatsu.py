@@ -1,9 +1,6 @@
 # requestsというライブラリを読み込む
 # HTTPへのアクセスを簡易に提供するライブラリ
 import csv
-import random
-import re
-import time
 
 import requests
 from bs4 import BeautifulSoup
