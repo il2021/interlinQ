@@ -34,7 +34,6 @@ class TestWebSocketViewController: UIViewController {
         socket.on("from_server"){ data, ack in
             if let message = data as? [String] {
                 print(message[0])
-                self.dataList.insert(message[0],at: 0)
                 
             }
         }
