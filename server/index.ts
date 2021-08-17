@@ -127,6 +127,7 @@ io.on('connection', socket => {
                     succeeded: true,
                     winnerName: winnerName,
                 });
+                activeRooms.splice(activeRooms.findIndex(room => room.roomId), 1);
             } else {
                 const nextProblem = sample(problems)!.id;
                 room.solverIds.push(userId);
