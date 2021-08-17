@@ -12,7 +12,7 @@ module.exports = {
             ref: 'origin/main',
             repo: 'git@github.com:ernix/interlinQ.git',
             path: '/home/yasumoto/test',
-            'post-deploy': 'cd server && npm install && npm run build',
+            'post-deploy': 'cd server && npm install && npm run build && pm2 start pm2.config.js',
         },
     },
 };

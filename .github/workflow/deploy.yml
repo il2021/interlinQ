@@ -1,0 +1,20 @@
+name: Auto deploy
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up SSH
+        run: |
+          mkdir ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          sudo chmod 600 ~/.ssh/id_ed25519
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      - name: Deploy
+        run: pm2 deploy pm2.config.js production
