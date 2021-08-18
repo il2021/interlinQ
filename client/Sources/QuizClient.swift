@@ -13,7 +13,7 @@ import Alamofire
 class QuizClient {
     
     static func fetchNextQuiz(roomId: String, completion: @escaping (Quiz) -> Void) {
-        var quiz: Quiz = Quiz(id: "f", available: true, question: "", answer: "f", answerInKana: "f")
+        var quiz: Quiz = Quiz(id: "testid", available: nil, question: nil, answer: nil, answerInKana: nil)
         let request = AF.request(QuizRepository.nextQURL.queryItemAdded(name: "roomId", value: roomId)!.absoluteString)
         request.responseJSON { response in
             //            debugPrint(response)
@@ -24,7 +24,7 @@ class QuizClient {
                     quiz = try decoder.decode(Quiz.self, from: data)
                     completion(quiz)
                 } catch {
-                    print("failed")
+                    print("fetchNextQuiz:failed")
                 }
             } else {
                 print("データ未取得")

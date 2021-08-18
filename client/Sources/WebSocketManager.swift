@@ -9,8 +9,9 @@ import Foundation
 import SocketIO
 
 protocol WebSocketDelegate: AnyObject {
-    func ready()
-    func createRoom()
+    func connect()
+    func ready(_ quiz: Quiz)
+    func createRoom(_ roomId: String)
 }
 
 final class WebSocketManager {
@@ -37,6 +38,7 @@ final class WebSocketManager {
             //ack:確認応答フラグ
             print("socket connected.\ndata: \(data)\n\(ack)")
             self.isConnect = true
+            self.connect()
         }
         socket.on(clientEvent: .disconnect){data, ack in
             print("socket disconnected!")
@@ -54,44 +56,41 @@ final class WebSocketManager {
 //         MARK: 部屋の準備が整った時
         socket.on("room-ready"){ data, ack in
             if let arr = data as? [[String: Any]] {
-                if let roomId = arr[0]["roomId"] as? String {
-                    self.roomId = roomId
-                }
-
                 if let memberNames = arr[0]["memberNames"] as? [String] {
                     self.memberNames = memberNames
+                }
+                
+                if let roomId = arr[0]["roomId"] as? String {
+                    self.roomId = roomId
+                    
+                    QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
+                        precondition(quiz.available != false)
+                        self.quiz = quiz
+                        self.delegate?.ready(quiz)
+                    }
+                    
+                    
                 }
 
             }
 
             self.isWaiting = false
             self.canStart = true
-            self.delegate?.ready()
+           
         }
         
         socket.on("room-created"){ data, ack in
             if let arr = data as? [[String: Any]] {
                 if let roomId = arr[0]["roomId"] as? String {
                     self.roomId = roomId
+                    print("room-created内: \(roomId)")
+                    self.delegate?.createRoom(roomId)
                 }
                 print("room作成完了")
             }
-            self.delegate?.createRoom()
-        }
-        
-        socket.on("room-updated"){ data, ack in
-            if let arr = data as? [[String: Any]] {
-                if let roomId = arr[0]["roomId"] as? String {
-                    self.roomId = roomId
-                }
-                if let memberNames = arr[0]["memberNames"] as? [String] {
-                    self.memberNames = memberNames
-                }
-            }
             
-            print("room-updated 参加者の名前の配列")
         }
-        
+
         socket.on("room-blocked"){ data, ack in
             if let arr = data as? [[String: Any]] {
                 if let answeringUserName = arr[0]["answeringUserName"] as? String {
