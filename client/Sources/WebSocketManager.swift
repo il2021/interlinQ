@@ -10,6 +10,7 @@ import SocketIO
 
 protocol WebSocketDelegate: AnyObject {
     func connect()
+    func disconnect()
     func ready(_ quiz: Quiz, roomId: String)
     func createRoom(_ roomId: String)
 }
@@ -164,11 +165,13 @@ final class WebSocketManager {
     func connect() {
         socket.connect()
         print("接続処理")
+        delegate?.connect()
     }
     
     func disconnect() {
         socket.disconnect()
         print("切断処理")
+        delegate?.disconnect()
     }
     
     
