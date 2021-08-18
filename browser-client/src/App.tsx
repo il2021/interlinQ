@@ -21,8 +21,9 @@ const App = () => {
     const [userName, setUserName] = useState<string>('名無し');
     const [roomId, setRoomId] = useState<string | null>(null);
     const [memberNames, setMemberNames] = useState<string[]>([userName]);
-    const [status, setStatus] = useState<'waiting' | 'attending' | null>(null);
+    const [status, setStatus] = useState<'waiting' | 'attending' | 'answering' | null>(null);
     const [currentProblem, setCurrentProblem] = useState<Problem | null>(null);
+    const [answerBlocked, setAnswerBlocked] = useState(false);
     const [socket, setSocket] = useState<Socket | null>(null);
     socket?.on('connect', () => {
         addLog('Connected.');
@@ -41,13 +42,13 @@ const App = () => {
             });
             socket?.on('room-created', param => {
                 addLog(`[room-created] Room id: ${param.roomId}`);
-                setRoomId(param.roomId);
             });
             socket?.on('room-updated', param => {
                 addLog(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
             });
             socket?.on('room-ready', param => {
                 addLog(`[room-ready] Room id: ${param.roomId} Current members: ${param.memberNames.join(', ')}`);
+                setRoomId(param.roomId);
                 setMemberNames(param.memberNames);
                 setStatus('attending');
                 addLog('Set status as attending.');
@@ -74,9 +75,11 @@ const App = () => {
             }
             socket?.on('answer-blocked', param => {
                 addLog(`[answer-blocked] Answering member: ${param.answeringUserName}`);
+                setAnswerBlocked(true);
             });
             socket?.on('problem-answered', param => {
                 addLog(`[problem-answered] User name: ${param.userName} isCorrect: ${param.isCorrect}`);
+                setAnswerBlocked(false);
             });
             socket?.on('room-closed', param => {
                 addLog(`[room-closed] Succeeded: ${param.succeeded} Winner name: ${param.winnerName}`);
@@ -110,13 +113,23 @@ const App = () => {
                 {status === 'waiting' &&
                     <p>待機中…</p>
                 }
-                {status === 'attending' &&
+                {(status === 'attending' || status === 'answering') &&
                     <div>
                         <p>参加者: {memberNames.join(', ')}</p>
                         {currentProblem && (
                             <div>
                                 <h2>問題</h2>
                                 <p>{currentProblem?.question}</p>
+                                <button
+                                    disabled={answerBlocked}
+                                    onClick={() => {
+                                        setStatus('answering');
+                                        socket?.emit('start-answer', { userId, roomId });
+                                        addLog('Emitted start-answer.');
+                                    }}
+                                >
+                                    解答
+                                </button>
                             </div>
                         )}
                     </div>
