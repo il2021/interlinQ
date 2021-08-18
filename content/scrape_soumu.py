@@ -52,6 +52,6 @@ for i in range(1, 12):
 
         container.append([dt, dd0])
 
-with open("soumu.csv", "w", encoding="utf_8_sig", newline="") as f:
+with open("soumu.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerows(container)
