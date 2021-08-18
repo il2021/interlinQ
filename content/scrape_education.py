@@ -31,6 +31,8 @@ class Scrape:
         self.save_file_name_csv = "quiz_education.csv"
         self.save_file_name_tsv = "quiz_education.tsv"
         self.num_of_question = 1
+        self.soup = None
+
         self.exceptional_question = {
             4: "通信回線のデータ転送速度を表す単位を何というでしょう？",
             12: "広く普及しているネットワークシステムとして標準化されているLAN規格の一つを何というでしょう？",
