@@ -16,7 +16,6 @@
 import csv
 import random
 import time
-import unicodedata
 from urllib import request
 
 from bs4 import BeautifulSoup
