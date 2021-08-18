@@ -28,6 +28,21 @@ const makeChoices = (correctChar: string) => {
     return shuffle(choices.map(choice => String.fromCharCode(choice)));
 };
 
+const fetchNextProblem = async (roomId: string) => {
+    const res = await fetch(`${HOST}/api/problems/next?roomId=${roomId}`);
+    const data = await res.json();
+    if (data.available) {
+        const problem: Problem = {
+            id: data.id,
+            question: data.question,
+            answer: data.answer,
+            answerInKana: data.answerInKana,
+        };
+        return problem;
+    }
+    return null;
+};
+
 const App: React.FC = () => {
     const [log, setLog] = useState<string>('');
     const addLog = (s: string) => { setLog(log + '\n' + s); };
@@ -71,21 +86,12 @@ const App: React.FC = () => {
         }
         if (status === 'attending') {
             if (currentProblem === null) {
-                fetch(`${HOST}/api/problems/next?roomId=${roomId}`).then(res => res.json()).then(data => {
-                    if (data.available) {
-                        const problem: Problem = {
-                            id: data.id,
-                            question: data.question,
-                            answer: data.answer,
-                            answerInKana: data.answerInKana,
-                        };
-                        addLog('Problem fecthed successfully.');
+                fetchNextProblem(roomId!).then(problem => {
+                    if (problem) {
                         setCurrentProblem(problem);
                     } else {
-                        addLog('Next problem unavailable.');
+                        setStatus('waiting');
                     }
-                }).catch(e => {
-                    addLog(e);
                 });
             }
             socket?.on('answer-blocked', param => {
@@ -96,13 +102,18 @@ const App: React.FC = () => {
                 addLog(`[problem-answered] User name: ${param.userName} isCorrect: ${param.isCorrect}`);
                 setAnswerBlocked(false);
             });
-            socket?.on('room-closed', param => {
-                addLog(`[room-closed] Succeeded: ${param.succeeded} Winner name: ${param.winnerName}`);
-                setStatus(null);
-                setRoomId(null);
+            socket?.on('problem-closed', param => {
+                addLog('[problem-closed]');
+                setAnswerBlocked(false);
+                setCurrentProblem(null);
             });
         }
-    }, [status]);
+        socket?.on('room-closed', param => {
+            addLog(`[room-closed] Succeeded: ${param.succeeded} Winner name: ${param.winnerName}`);
+            setStatus(null);
+            setRoomId(null);
+        });
+    }, [status, currentProblem]);
     if (currentProblem) {
         console.log('答え: ' + currentProblem?.answerInKana); // 不正用
     }
@@ -159,47 +170,31 @@ const App: React.FC = () => {
                                     </p>
                                 }
                                 {status === 'answering' &&
-                                    makeChoices(currentProblem.answerInKana[myAnswer.length]).map(choice =>
+                                    makeChoices(currentProblem.answerInKana[myAnswer.length]).map((choice, i) =>
                                         <button
-                                            key={choice}
+                                            key={i}
                                             onClick={() => {
                                                 const updatedAnswer = myAnswer + choice;
                                                 if (currentProblem.answerInKana.startsWith(updatedAnswer)) {
                                                     if (currentProblem.answerInKana === updatedAnswer) { // 解答終了・正答
-                                                        setMyAnswer('');
                                                         socket?.emit('submit-answer', {
                                                             userId,
                                                             roomId,
                                                             isCorrect: true,
                                                         });
                                                         setStatus('attending');
-                                                        fetch(`${HOST}/api/problems/next?roomId=${roomId}`).then(res => res.json()).then(data => {
-                                                            if (data.available) {
-                                                                const problem: Problem = {
-                                                                    id: data.id,
-                                                                    question: data.question,
-                                                                    answer: data.answer,
-                                                                    answerInKana: data.answerInKana,
-                                                                };
-                                                                addLog('Problem fecthed successfully.');
-                                                                setCurrentProblem(problem);
-                                                            } else {
-                                                                addLog('Next problem unavailable.');
-                                                            }
-                                                        }).catch(e => {
-                                                            addLog(e);
-                                                        });
+                                                        setCurrentProblem(null);
                                                     } else { // 解答途中
                                                         setMyAnswer(myAnswer + choice);
                                                     }
                                                 } else { // 誤答
-                                                    setMyAnswer('');
                                                     socket?.emit('submit-answer', {
                                                         userId,
                                                         roomId,
                                                         isCorrect: false,
                                                     });
                                                     setStatus('attending');
+                                                    setAnswerBlocked(true);
                                                 }
                                             }}
                                             style={{
