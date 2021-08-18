@@ -8,22 +8,41 @@
 import UIKit
 
 class PlayViewController: UIViewController {
-
+    var viewModel = PlayViewModel()
+    @IBOutlet weak var quizDiscription: UITextView!
+    var webSocketManager = WebSocketManager.shared
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        quizDiscription.text = webSocketManager.quiz.question
+       
+    }
+    
+    @IBAction func quitButton(_ sender: Any) {
+        dismiss(animated: true) {
+            self.viewModel.buttonPressed()
+        }
     }
     
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+
+class PlayViewModel: NSObject {
+    var webSocketManager = WebSocketManager.shared
+    
+    @objc dynamic private(set) var buttonIsEnabled: Bool = false
+    @objc dynamic private(set) var isLoading: Bool = false
+    @objc dynamic private(set) var waiting: Bool = false
+    
+    var observers: [NSKeyValueObservation] = []
+    let userId = UIDevice.current.identifierForVendor!
+    
+    
+    func buttonPressed() {
+        webSocketManager.disconnect()
+        webSocketManager.connect()
     }
-    */
-
+    
+    
 }

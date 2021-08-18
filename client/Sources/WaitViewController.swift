@@ -13,8 +13,11 @@ class WaitViewController: UIViewController {
     var webSocketManager = WebSocketManager.shared
     var viewModel = WaitViewModel()
     var observers: [NSKeyValueObservation] = []
+    var roomId = ""
+    var memberNames:[String] = []
     
     override func viewDidLoad() {
+       
         super.viewDidLoad()
 
         let observer2 = viewModel.observe(\.canStart) { [weak self] (viewModel, _) in
@@ -23,6 +26,30 @@ class WaitViewController: UIViewController {
             }
             
         }
+        
+        // MARK: 部屋の準備が整った時
+        webSocketManager.socket.on("room-ready"){ [self] data, ack in
+            if let arr = data as? [[String: Any]] {
+                if let roomId = arr[0]["roomId"] as? String {
+                    self.roomId = roomId
+                }
+                
+                if let memberNames = arr[0]["memberNames"] as? [String] {
+                    self.memberNames = memberNames
+                }
+                
+                
+            }
+        
+            self.performSegue(withIdentifier: "toPlay", sender: self)
+            
+            print("roomId:\(self.roomId)")
+            print("room-ready:2人集まった \(self.memberNames)")
+            QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
+                webSocketManager.quiz = quiz
+            }
+        }
+
         
         
         observers = [observer2]
