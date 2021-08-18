@@ -47,9 +47,6 @@ class Scrape:
         re_hiragana = re.compile("[" + hiragana + "]", re.U)
         return bool(re_hiragana.search(string))
 
-    def _change_enc(self, string, enc="utf-8"):
-        return string.encode(enc).decode(enc)
-
     def _save(self):
         with open(self.save_file_name, "a", encoding="utf-8") as f:
             writer = csv.writer(f)
@@ -63,11 +60,11 @@ class Scrape:
         self.url = url1
         self._get_contents()
         self.words = [
-            self._change_enc(str(word.string))
+            str(word.string)
             for word in self.soup.find(id="contentsMain").find_all("h4")
         ]
         self.meaning = [
-            self._change_enc(str(meaning.string))
+            str(meaning.string)
             for meaning in self.soup.find(id="contentsMain").find_all("p")
         ]
         self._save()
@@ -77,11 +74,11 @@ class Scrape:
         self.url = url2
         self._get_contents()
         self.words = [
-            self._change_enc(str(word.string))[1:-1]
+            str(word.string)[1:-1]
             for word in self.soup.find(id="contentsMain").find_all("h2")
         ][:-1]
         self.meaning = [
-            self._change_enc(str(meaning.string))[1:]
+            str(meaning.string)[1:]
             for meaning in self.soup.find(id="contentsMain").find_all("p")
         ][:-1]
         for i in range(len(self.meaning)):
