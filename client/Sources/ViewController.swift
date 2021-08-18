@@ -89,12 +89,6 @@ class ViewController: UIViewController {
             buttonFlag = false
         }
     }
-    @IBAction func allDisplay(_ sender: Any) {
-        if (!displaying) {
-            start(interval: 0.05)
-            displaying = true
-        }
-    }
     
     /*
      ## TIPS
