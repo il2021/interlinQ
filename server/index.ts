@@ -179,6 +179,7 @@ io.on('connection', socket => {
     socket.on('close-room', params => {
         const roomId = params.roomId as string;
         activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
+        io.to(roomId).emit('room-closed');
     });
 });
 
