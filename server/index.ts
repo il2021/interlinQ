@@ -1,23 +1,13 @@
 import fastify from 'fastify';
-import fastifyCors from 'fastify-cors';
 import { Server } from 'socket.io';
 import { v4 as uuid } from 'uuid';
 import { sample, sampleSize, countBy } from 'lodash';
 import fs from 'fs';
 
-interface Problem {
-    id: string;
-    question: string;
-    answer: string;
-    answerInKana: string;
-}
-
-const problems: Problem[] = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map(line => {
-    const [id, question, answer, answerInKana] = line.split('\t');
+const problems = fs.readFileSync('../content/quiz.tsv', 'utf-8').split('\n').map(line => {
+    const [ id, question, answer, answerInKana ] = line.split('\t');
     return { id, question, answer, answerInKana };
 });
-
-const getOneRandomProblem = () => sample(problems) as Problem;
 
 interface Member {
     id: string; // Don't pass to clients!
@@ -41,15 +31,12 @@ const waitRooms: WaitRoom[] = [];
 const activeRooms: ActiveRoom[] = [];
 
 const app = fastify();
-app.register(fastifyCors, {
-    origin: '*',
-});
 
 app.get<{
     Querystring: {
         n?: number;
     };
-}>('/api/problems/random', async request => {
+}>('/api/problems/random', async (request, reply) => {
     console.warn('This endpoint is deprecated.');
     const n = request.query.n || 5;
     return sampleSize(problems, n);
@@ -59,7 +46,7 @@ app.get<{
     Querystring: {
         roomId: string;
     };
-}>('/api/problems/next', async request => {
+}>('/api/problems/next', async (request, reply) => {
     const roomId = request.query.roomId;
     const rooms = activeRooms.filter(room => room.roomId === roomId);
     if (rooms.length === 0) {
@@ -69,7 +56,7 @@ app.get<{
     }
     const room = rooms[0];
     const latestProblemId = room.problemIds.slice(-1)[0];
-    const latestProblem = problems.filter(problem => problem.id === latestProblemId)[0]; // 遅そ〜。index できる db に入れたいね
+    const latestProblem = problems.filter(problem => problem.id === latestProblemId); // 遅そ〜。index できる db に入れたいね
     return {
         available: true,
         ...latestProblem
@@ -89,11 +76,6 @@ io.on('connection', socket => {
         if (waitRooms.length > 0) {
             // とりあえず2人部屋のみとするので、直ちに ready 化
             const room = waitRooms.shift() as WaitRoom;
-            room.members.push({
-                id: userId,
-                name: userName,
-                answerPermitted: true,
-            });
             socket.join(room.roomId);
             const res = {
                 roomId: room.roomId,
@@ -102,7 +84,7 @@ io.on('connection', socket => {
             console.log(res.roomId);
             io.to(room.roomId).emit('room-updated', res);
             io.to(room.roomId).emit('room-ready', res);
-            const firstProblem = getOneRandomProblem().id;
+            const firstProblem = sample(problems)!.id;
             activeRooms.push({
                 ...room,
                 problemIds: [firstProblem],
@@ -129,7 +111,7 @@ io.on('connection', socket => {
         const userId = params.userId as string;
         const room = activeRooms.filter(room => room.roomId === roomId)[0];
         const user = room.members.filter(member => member.id === userId)[0];
-        socket.to(roomId).emit('answer-blocked', { answeringUserName: user.name });
+        io.to(roomId).emit('answer-blocked', { answeringUserName: user.name });
     });
     socket.on('submit-answer', params => {
         const roomId = params.roomId as string;
@@ -141,6 +123,7 @@ io.on('connection', socket => {
             userName: user.name,
             isCorrect,
         });
+        // io.to(roomId).emit('answer-unblocked'); // DEPRECATED
         if (isCorrect) {
             if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
                 const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
@@ -152,11 +135,14 @@ io.on('connection', socket => {
                 });
                 activeRooms.splice(activeRooms.findIndex(room => room.roomId), 1);
             } else {
-                const nextProblem = getOneRandomProblem().id;
-                room.problemIds.push(nextProblem);
+                const nextProblem = sample(problems)!.id;
                 room.solverIds.push(userId);
                 room.members.forEach(member => {
                     member.answerPermitted = true;
+                });
+                activeRooms.push({
+                    ...room,
+                    problemIds: [...room.problemIds, nextProblem],
                 });
             }
         } else {
@@ -166,11 +152,13 @@ io.on('connection', socket => {
                 }
             });
             if (room.members.every(member => member.answerPermitted === false)) {
-                const nextProblem = getOneRandomProblem().id;
-                room.problemIds.push(nextProblem);
-                room.solverIds.push(null);
+                const nextProblem = sample(problems)!.id;
                 room.members.forEach(member => {
                     member.answerPermitted = true;
+                });
+                activeRooms.push({
+                    ...room,
+                    problemIds: [...room.problemIds, nextProblem],
                 });
             }
         }
