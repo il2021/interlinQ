@@ -7,6 +7,7 @@
 
 import Foundation
 import SocketIO
+
 final class WebSocketManager {
     
     static let shared = WebSocketManager()
@@ -111,7 +112,7 @@ final class WebSocketManager {
                 
             }
             
-            print("相手のの回答が正解か不正解か")
+            print("相手の回答が正解か不正解か")
 
         }
         

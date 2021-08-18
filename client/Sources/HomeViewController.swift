@@ -66,7 +66,7 @@ class HomeViewModel: NSObject {
         labelText = "検索中"
         print(userId)
         webSocketManager.connect()
-        webSocketManager.joinRoom(userId: userId, userName: userId.uuidString)
+        webSocketManager.joinRoom(userId: userId, userName: "テストユーザー")
         isLoading = webSocketManager.isConnect
         waiting = webSocketManager.isWaiting
     }
