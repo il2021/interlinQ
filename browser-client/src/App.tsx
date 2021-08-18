@@ -78,8 +78,8 @@ const App: React.FC = () => {
             });
         }
         if (status === 'attending') {
-            if (currentProblem === null) {
-                fetchNextProblem(roomId!).then(problem => {
+            if (currentProblem === null && roomId) {
+                fetchNextProblem(roomId).then(problem => {
                     if (problem) {
                         setCurrentProblem(problem);
                     } else {
