@@ -1,4 +1,5 @@
 import fastify from 'fastify';
+import fastifyCors from 'fastify-cors';
 import { Server } from 'socket.io';
 import { v4 as uuid } from 'uuid';
 import { sample, sampleSize, countBy } from 'lodash';
@@ -40,6 +41,9 @@ const waitRooms: WaitRoom[] = [];
 const activeRooms: ActiveRoom[] = [];
 
 const app = fastify();
+app.register(fastifyCors, {
+    origin: '*',
+});
 
 app.get<{
     Querystring: {
@@ -65,7 +69,7 @@ app.get<{
     }
     const room = rooms[0];
     const latestProblemId = room.problemIds.slice(-1)[0];
-    const latestProblem = problems.filter(problem => problem.id === latestProblemId); // 遅そ〜。index できる db に入れたいね
+    const latestProblem = problems.filter(problem => problem.id === latestProblemId)[0]; // 遅そ〜。index できる db に入れたいね
     return {
         available: true,
         ...latestProblem
