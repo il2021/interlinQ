@@ -7,7 +7,24 @@
 
 import UIKit
 
+enum inputButton: Int {
+    case input0 = 0
+    case input1 = 1
+    case input2 = 2
+    case input3 = 3
+}
+
 class PlayViewController: UIViewController, PlayingDelegate {
+    func startAnswer() {
+        print("自分が回答を始めた ")
+        stackButtons.isHidden = false
+        stackButtons.backgroundColor = .blue
+        answerButton.isEnabled = false
+        answerButton.backgroundColor = .gray
+        
+        
+    }
+    
     
     func problemClosed() {
         print("次の問題のリクエスト")
@@ -20,7 +37,12 @@ class PlayViewController: UIViewController, PlayingDelegate {
         
     }
     
+    
     func nextQuiz() {
+        answerButton.isEnabled = true
+        answerButton.backgroundColor = .blue
+        stackButtons.isHidden = true
+        
         count += 1
         if count < 5 {
             yomiageTimer.invalidate()
@@ -38,10 +60,12 @@ class PlayViewController: UIViewController, PlayingDelegate {
         answeringUser = userName
         print("\(answeringUser)が回答中")
         answerButton.isEnabled = false
+        answerButton.backgroundColor = .gray
         stackButtons.isHidden = true
-        //TODO:テキスト読み上げ停止
+        //TODO:テキスト読み上げ一時停止
     }
-
+    
+    
     @IBOutlet weak var stackButtons: UIStackView!
     @IBOutlet weak var answerButton: UIButton!
     var point = 0
@@ -64,8 +88,14 @@ class PlayViewController: UIViewController, PlayingDelegate {
         prg.progress = 1.0
         
         displaySentence()
-               
+        
     }
+    
+    @IBAction func tapanswerButton(_ sender: Any) {
+        print("回答")
+        webSocketManager.startAnswer(userId: userId, roomId: roomId)
+    }
+    
     
     
     @IBAction func quitButton(_ sender: Any) {
@@ -81,6 +111,26 @@ class PlayViewController: UIViewController, PlayingDelegate {
         if roomId == "" { fatalError() }
         webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: true)
     }
+    
+    
+    @IBAction func inputButtonAction(_ sender: Any) {
+        if let button = sender as? UIButton {
+            if let tag = inputButton(rawValue: button.tag) {
+                
+                switch tag {
+                case .input0:
+                    print("input0")
+                case .input1:
+                    print("input1")
+                case .input2:
+                    print("input2")
+                case .input3:
+                    print("input3")
+                }
+            }
+        }
+    }
+    
     
 }
 
@@ -103,7 +153,7 @@ extension PlayViewController {
     }
 }
 
-
+//残り時間機能
 extension PlayViewController {
     
     //タイマーの中身

@@ -10,6 +10,7 @@ import SocketIO
 
 protocol WebSocketDelegate: AnyObject {
     func connect()
+    func disconnect()
     func ready(_ quiz: Quiz, roomId: String)
     func createRoom(_ roomId: String)
 }
@@ -17,6 +18,7 @@ protocol WebSocketDelegate: AnyObject {
 protocol PlayingDelegate: AnyObject {
     func answering(userName: String)
     func problemClosed()
+    func startAnswer()
 }
 
 final class WebSocketManager {
@@ -104,7 +106,6 @@ final class WebSocketManager {
                 }
             }
             print("誰かが回答中 \(self.answeringUserName)")
-            //TODO:回答者のみがボタンを押せる
         }
         
         socket.on("problem-closed"){ data, ack in
@@ -146,11 +147,7 @@ final class WebSocketManager {
             print("ルームを閉じる")
             
         }
-        
-        
-        
-        
-    
+
         socket.connect()
         
     }
@@ -164,17 +161,20 @@ final class WebSocketManager {
     func connect() {
         socket.connect()
         print("接続処理")
+        delegate?.connect()
     }
     
     func disconnect() {
         socket.disconnect()
         print("切断処理")
+        delegate?.disconnect()
     }
     
     
     func startAnswer(userId: String, roomId: String) {
         socket.emit("start-answer", StartAnswer(userId: userId, roomId: roomId)) {
-            self.isWaiting = true
+            self.playingdelegate?.startAnswer()
+            
         }
         print("回答を始める")
     }

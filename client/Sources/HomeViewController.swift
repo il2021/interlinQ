@@ -10,13 +10,13 @@ import UIKit
 class HomeViewController: UIViewController, WebSocketDelegate {
     
     func connect() {
-        DispatchQueue.main.async {
-            self.ActivityIndicator.startAnimating()
-        }
-        
+        self.ActivityIndicator.startAnimating()
+    }
+    func disconnect() {
+        self.ActivityIndicator.stopAnimating()
     }
     
-
+    
     var quiz: Quiz = Quiz(id: nil, available: nil, question: nil, answer: nil, answerInKana: nil)
     
     var roomId = ""
@@ -40,8 +40,8 @@ class HomeViewController: UIViewController, WebSocketDelegate {
         
         //Viewに追加
         self.view.addSubview(ActivityIndicator)
-
-       
+        
+        
     }
     
     func ready(_ quiz: Quiz, roomId: String) {
@@ -76,7 +76,7 @@ class HomeViewController: UIViewController, WebSocketDelegate {
 }
 
 class HomeViewModel: NSObject {
-
+    
     @objc dynamic private(set) var buttonIsEnabled: Bool = false
     @objc dynamic private(set) var isLoading: Bool = false
     @objc dynamic private(set) var waiting: Bool = false
@@ -85,14 +85,14 @@ class HomeViewModel: NSObject {
     let userId = UIDevice.current.identifierForVendor!
     
     var webSocketManager: WebSocketManager = WebSocketManager.shared
-
+    
     func buttonPressed() {
         print("ユーザーID:\(userId)")
         webSocketManager.connect()
         webSocketManager.joinRoom(userId: userId, userName: "テストユーザー")
         isLoading = webSocketManager.isConnect
         waiting = webSocketManager.isWaiting
-
+        
     }
     
     
