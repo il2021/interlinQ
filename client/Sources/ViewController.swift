@@ -100,12 +100,12 @@ class ViewController: UIViewController {
      ## TIPS
      * hide -> answer -> 各選択肢　（ボタンの押し方）
      ## TODO
-     * ひらがなとカタカナごちゃまぜ
-     * 数字とか記号とかには対応してない
+     * 記号には対応してない
      * 画面遷移時のイベントはhideボタンで対応
      * 答えるボタンを押すとisHidden=falseをあとに実行しているはずなのに一瞬setTitleされていないボタンが表示されてしまう
      ## PARAM
      * answer: 答え
+     * ancChar: 正解の文字
      * currentCharIndex: その時までに表示した文字数
      * ansLen: 答えの文字列の長さ
      * answerChoices: 答えの選択肢
@@ -118,7 +118,10 @@ class ViewController: UIViewController {
      */
     var hira:String = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
     var kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
-    var answer:String = "あいうえお"
+    var alpha:String = "abcdefghijklmnopqrstuvwxyz"
+    var num:String = "0123456789"
+    var answer:String = "あいうエオカabc123"
+    var ansChar = ""
     var currentCharIndex:Int = 0
     var ansLen:Int = 0
     var answerChoices: [String] = ["", "", "", ""]
@@ -150,8 +153,18 @@ class ViewController: UIViewController {
     }
     
     func generateChoicesRandomly() {
-        var tmp = hira + kata  // 本番は使わない？だろうのでtmp
+        var tmp = ""  // 答えの文字の種類の要素一覧
+        if (hira.contains(ansChar)) {
+            tmp = hira
+        } else if (kata.contains(ansChar)) {
+            tmp = kata
+        } else if (alpha.contains(ansChar)) {
+            tmp = alpha
+        } else {
+            tmp = num
+        }
         var tmpLen = tmp.count
+        
         for i in 0..<4 {
             while (answerChoices[i] == "") {
                 var index = Int.random(in: 0 ..< tmpLen)
@@ -165,7 +178,7 @@ class ViewController: UIViewController {
     
     func displayChoicesRandomly() {
         if (currentCharIndex < ansLen){
-            var ansChar = strAccess(str: answer, index: currentCharIndex)  // 正解の文字
+            ansChar = strAccess(str: answer, index: currentCharIndex)  // 正解の文字
             var ansIndex = Int.random(in: 0 ..< 4)  // 正解が入る場所(1-4)
             answerChoices[ansIndex] = ansChar
             generateChoicesRandomly()
