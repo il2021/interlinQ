@@ -298,6 +298,7 @@
                                 </state>
                                 <connections>
                                     <action selector="showIndicator:" destination="chf-99-qCv" eventType="touchUpInside" id="e0N-sD-lJY"/>
+                                    <action selector="tapanswerButton:" destination="chf-99-qCv" eventType="touchUpInside" id="tJc-vY-G3r"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="qBo-3g-fVL">

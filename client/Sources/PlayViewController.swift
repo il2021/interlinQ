@@ -8,6 +8,11 @@
 import UIKit
 
 class PlayViewController: UIViewController, PlayingDelegate {
+    func startAnswer() {
+        print("自分が回答を始めた ")
+        
+    }
+    
     
     func problemClosed() {
         print("次の問題のリクエスト")
@@ -66,6 +71,12 @@ class PlayViewController: UIViewController, PlayingDelegate {
         displaySentence()
                
     }
+    
+    @IBAction func tapanswerButton(_ sender: Any) {
+        print("回答")
+        webSocketManager.startAnswer(userId: userId, roomId: roomId)
+    }
+    
     
     
     @IBAction func quitButton(_ sender: Any) {

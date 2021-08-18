@@ -18,6 +18,7 @@ protocol WebSocketDelegate: AnyObject {
 protocol PlayingDelegate: AnyObject {
     func answering(userName: String)
     func problemClosed()
+    func startAnswer()
 }
 
 final class WebSocketManager {
@@ -147,11 +148,7 @@ final class WebSocketManager {
             print("ルームを閉じる")
             
         }
-        
-        
-        
-        
-    
+
         socket.connect()
         
     }
@@ -177,7 +174,8 @@ final class WebSocketManager {
     
     func startAnswer(userId: String, roomId: String) {
         socket.emit("start-answer", StartAnswer(userId: userId, roomId: roomId)) {
-            self.isWaiting = true
+            self.playingdelegate?.startAnswer()
+            
         }
         print("回答を始める")
     }
