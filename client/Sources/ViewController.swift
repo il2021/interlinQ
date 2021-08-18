@@ -41,6 +41,7 @@ class ViewController: UIViewController {
                prg.setProgress(0, animated: true)
                // タイマーを停止させます
                timerPrg.invalidate()
+            // TODO: WebSocketのsubmit-answer
         } else {
                prg.setProgress(newValue, animated: true)
         }

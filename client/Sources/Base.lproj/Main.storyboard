@@ -112,13 +112,12 @@
                         <outlet property="answerButton3" destination="ZkT-q9-OFP" id="mVT-tw-7qV"/>
                         <outlet property="answerButton4" destination="dIj-PL-5wt" id="zbF-j7-eIu"/>
                         <outlet property="prg" destination="hJK-4E-LRF" id="JLg-VA-06d"/>
-                        <outlet property="questionSentence" destination="yGj-Rl-USz" id="nUe-G3-l1K"/>
                         <segue destination="ylz-0f-Z8A" kind="show" identifier="toTest" id="Nec-3K-eeQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="18.840579710144929" y="87.723214285714278"/>
+            <point key="canvasLocation" x="3339" y="-44"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="vo9-jp-3eH">
@@ -273,7 +272,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="djw-mZ-nUB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="689" y="-44"/>
+            <point key="canvasLocation" x="4342" y="-220"/>
         </scene>
         <!--Play View Controller-->
         <scene sceneID="kcG-MY-hVX">
@@ -305,6 +304,9 @@
                                 <state key="normal" title="回答">
                                     <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="showIndicator:" destination="chf-99-qCv" eventType="touchUpInside" id="e0N-sD-lJY"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="qBo-3g-fVL">
                                 <rect key="frame" x="59" y="687" width="296" height="60"/>
@@ -412,6 +414,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="YYj-Ez-the"/>
                     <connections>
+                        <outlet property="prg" destination="Bz3-Qx-hSg" id="flJ-ao-F8a"/>
                         <outlet property="quizDiscription" destination="Nbh-Nc-OUO" id="r7p-Rl-q68"/>
                     </connections>
                 </viewController>
