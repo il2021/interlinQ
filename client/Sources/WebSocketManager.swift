@@ -126,7 +126,6 @@ final class WebSocketManager {
                     self.winnerName = winnerName
                 }
                 
-                
             }
             
             print("ルームを閉じる")
@@ -139,7 +138,7 @@ final class WebSocketManager {
     }
     
     func joinRoom(userId: UUID, userName: String) {
-        socket.emit("join-room", userId.uuidString) {
+        socket.emit("join-room", JoinRoom(userId: userId.uuidString, userName: userName)) {
             self.isWaiting = true
         }
     }
