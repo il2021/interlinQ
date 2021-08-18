@@ -9,6 +9,7 @@ import UIKit
 
 class PlayViewController: UIViewController {
     var viewModel = PlayViewModel()
+    var quiz: Quiz!
     @IBOutlet weak var quizDiscription: UITextView!
     var webSocketManager = WebSocketManager.shared
     override func viewDidLoad() {

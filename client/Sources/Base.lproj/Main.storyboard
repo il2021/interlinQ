@@ -162,12 +162,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RoomId" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXN-U9-tgp">
+                                <rect key="frame" x="186" y="314" width="59" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="M7x-3K-MRX"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="3m1-oI-ltG"/>
                     <connections>
+                        <outlet property="roomIdText" destination="TXN-U9-tgp" id="02S-oo-xNn"/>
                         <outlet property="waitingText" destination="tNa-sy-Ii3" id="Tj2-YA-bNC"/>
                         <segue destination="chf-99-qCv" kind="presentation" identifier="toPlay" modalPresentationStyle="fullScreen" id="oTQ-8R-noX"/>
                     </connections>
