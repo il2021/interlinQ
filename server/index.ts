@@ -141,23 +141,24 @@ io.on('connection', socket => {
             isCorrect,
         });
         if (isCorrect) {
+            room.solverIds.push(userId);
+            room.members.forEach(member => {
+                member.answerPermitted = true;
+            });
             io.to(roomId).emit('problem-closed');
             if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
                 const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
                 const winnerId = Object.entries(solvesDict).sort((a, b) => a < b ? 1 : -1)[0][0];
                 const winnerName = room.members.filter(member => member.id === winnerId)[0].name;
+                room.problemIds = [];
+                activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
                 io.to(roomId).emit('room-closed', {
                     succeeded: true,
                     winnerName: winnerName,
                 });
-                activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
             } else {
                 const nextProblem = getOneRandomProblem().id;
                 room.problemIds.push(nextProblem);
-                room.solverIds.push(userId);
-                room.members.forEach(member => {
-                    member.answerPermitted = true;
-                });
             }
         } else {
             room.members.forEach(member => {
