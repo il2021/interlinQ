@@ -86,6 +86,7 @@ io.on('connection', socket => {
     socket.on('join-room', params => {
         const userId = params.userId as string;
         const userName = params.userName as string;
+        console.log(userId, userName);
         if (waitRooms.length > 0) {
             // とりあえず2人部屋のみとするので、直ちに ready 化
             const room = waitRooms.shift() as WaitRoom;
