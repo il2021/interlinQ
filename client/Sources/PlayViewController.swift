@@ -8,18 +8,21 @@
 import UIKit
 
 class PlayViewController: UIViewController {
+    var yomiageTimer = Timer()
+    var currentCharNum = 0
     var quiz: Quiz!
     var timerPrg:Timer = Timer()
     @IBOutlet weak var prg: UIProgressView!
     
-    @IBOutlet weak var quizDiscription: UITextView!
+    @IBOutlet weak var questionSentence: UITextView!
     var webSocketManager = WebSocketManager.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         prg.progress = 1.0
         
+        displaySentence()
         DispatchQueue.main.async {
-            self.quizDiscription.text = self.quiz.question
+//            self.questionSentence.text = self.quiz.question
         }
         
        
@@ -35,6 +38,25 @@ class PlayViewController: UIViewController {
     }
     
 
+}
+
+//読みあげ機能
+extension PlayViewController {
+    
+    func displaySentence() {
+        yomiageTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(showDelayText(time:)), userInfo: quiz.question, repeats: true)
+    }
+    
+    @objc func showDelayText(time: Timer) {
+        let message = time.userInfo as! String
+        questionSentence.text = String(message.prefix(currentCharNum))
+        if message.count <= currentCharNum {
+            time.invalidate()
+            currentCharNum = 0
+            return
+        }
+        currentCharNum += 1
+    }
 }
 
 

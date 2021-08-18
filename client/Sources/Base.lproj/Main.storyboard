@@ -415,7 +415,7 @@
                     <navigationItem key="navigationItem" id="YYj-Ez-the"/>
                     <connections>
                         <outlet property="prg" destination="Bz3-Qx-hSg" id="flJ-ao-F8a"/>
-                        <outlet property="quizDiscription" destination="Nbh-Nc-OUO" id="r7p-Rl-q68"/>
+                        <outlet property="questionSentence" destination="Nbh-Nc-OUO" id="b8W-gI-jah"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BTY-T9-jwn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
