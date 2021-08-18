@@ -106,7 +106,6 @@ final class WebSocketManager {
                 }
             }
             print("誰かが回答中 \(self.answeringUserName)")
-            //TODO:回答者のみがボタンを押せる
         }
         
         socket.on("problem-closed"){ data, ack in
