@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { v4 as uuid } from 'uuid';
+import { range, sampleSize, shuffle } from 'lodash';
 
 interface Problem {
     id: string;
@@ -14,7 +15,20 @@ interface Problem {
 const HOST = 'http://localhost:8080';
 // const HOST = 'http://tk2-221-20494.vs.sakura.ne.jp:8080';
 
-const App = () => {
+const makeChoices = (correctChar: string) => {
+    const correctCharCode = correctChar.charCodeAt(0);
+    const choices = [correctCharCode];
+    if (47 <= correctCharCode && correctCharCode < 58) { // 数字
+        choices.push(...sampleSize(range(47, 58), 3));
+    } else if (12449 <= correctCharCode && correctCharCode < 12534) { // カタカナ (ァ-ヶ)
+        choices.push(...sampleSize(range(12449, 12535), 3));
+    } else { // ひらがなとみなす
+        choices.push(...sampleSize(range(12353, 12435), 3)); // ぁ-ん
+    }
+    return shuffle(choices.map(choice => String.fromCharCode(choice)));
+};
+
+const App: React.FC = () => {
     const [log, setLog] = useState<string>('');
     const addLog = (s: string) => { setLog(log + '\n' + s); };
     const [userId, setUserId] = useState<string>('');
@@ -23,6 +37,7 @@ const App = () => {
     const [memberNames, setMemberNames] = useState<string[]>([userName]);
     const [status, setStatus] = useState<'waiting' | 'attending' | 'answering' | null>(null);
     const [currentProblem, setCurrentProblem] = useState<Problem | null>(null);
+    const [myAnswer, setMyAnswer] = useState('');
     const [answerBlocked, setAnswerBlocked] = useState(false);
     const [socket, setSocket] = useState<Socket | null>(null);
     socket?.on('connect', () => {
@@ -88,6 +103,7 @@ const App = () => {
             });
         }
     }, [status]);
+    console.log('答え: ' + currentProblem?.answerInKana); // 不正用
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>interlinQ Browser Client</h1>
@@ -120,16 +136,65 @@ const App = () => {
                             <div>
                                 <h2>問題</h2>
                                 <p>{currentProblem?.question}</p>
-                                <button
-                                    disabled={answerBlocked}
-                                    onClick={() => {
-                                        setStatus('answering');
-                                        socket?.emit('start-answer', { userId, roomId });
-                                        addLog('Emitted start-answer.');
-                                    }}
-                                >
-                                    解答
-                                </button>
+                                {status === 'attending' &&
+                                    <button
+                                        disabled={answerBlocked}
+                                        onClick={() => {
+                                            setStatus('answering');
+                                            setMyAnswer('');
+                                            socket?.emit('start-answer', { userId, roomId });
+                                            addLog('Emitted start-answer.');
+                                        }}
+                                    >
+                                        解答
+                                    </button>
+                                }
+                                {status === 'answering' &&
+                                    <p style={{
+                                        fontSize: 16,
+                                    }}>
+                                        {myAnswer}
+                                    </p>
+                                }
+                                {status === 'answering' &&
+                                    makeChoices(currentProblem.answerInKana[myAnswer.length]).map(choice =>
+                                        <button
+                                            key={choice}
+                                            onClick={() => {
+                                                const updatedAnswer = myAnswer + choice;
+                                                if (currentProblem.answerInKana.startsWith(updatedAnswer)) {
+                                                    if (currentProblem.answerInKana === updatedAnswer) { // 解答終了・正答
+                                                        setMyAnswer('');
+                                                        socket?.emit('submit-answer', {
+                                                            userId,
+                                                            roomId,
+                                                            isCorrect: true,
+                                                        });
+                                                        setStatus('attending');
+                                                    } else { // 解答途中
+                                                        setMyAnswer(myAnswer + choice);
+                                                    }
+                                                } else { // 誤答
+                                                    setMyAnswer('');
+                                                    socket?.emit('submit-answer', {
+                                                        userId,
+                                                        roomId,
+                                                        isCorrect: false,
+                                                    });
+                                                    setStatus('attending');
+                                                }
+                                            }}
+                                            style={{
+                                                width: 40,
+                                                height: 40,
+                                                margin: 10,
+                                                fontSize: 16,
+                                            }}
+                                        >
+                                            {choice}
+                                        </button>
+                                    ).flat()
+                                }
                             </div>
                         )}
                     </div>
