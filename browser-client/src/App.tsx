@@ -28,25 +28,35 @@ const makeChoices = (correctChar: string) => {
     return shuffle(choices.map(choice => String.fromCharCode(choice)));
 };
 
+const fetchNextProblem = async (roomId: string) => {
+    const res = await fetch(`${HOST}/api/problems/next?roomId=${roomId}`);
+    const data = await res.json();
+    if (data.available) {
+        const problem: Problem = {
+            id: data.id,
+            question: data.question,
+            answer: data.answer,
+            answerInKana: data.answerInKana,
+        };
+        return problem;
+    }
+    return null;
+};
+
 const App: React.FC = () => {
-    const [log, setLog] = useState<string>('');
-    const addLog = (s: string) => { setLog(log + '\n' + s); };
     const [userId, setUserId] = useState<string>('');
     const [userName, setUserName] = useState<string>('名無し');
     const [roomId, setRoomId] = useState<string | null>(null);
     const [memberNames, setMemberNames] = useState<string[]>([userName]);
-    const [status, setStatus] = useState<'waiting' | 'attending' | 'answering' | null>(null);
+    const [status, setStatus] = useState<'waiting' | 'attending' | 'answering' | 'result' | null>(null);
     const [currentProblem, setCurrentProblem] = useState<Problem | null>(null);
     const [myAnswer, setMyAnswer] = useState('');
     const [answerBlocked, setAnswerBlocked] = useState(false);
+    const [score, setScore] = useState({ me: 0, opponent: 0 });
     const [socket, setSocket] = useState<Socket | null>(null);
-    socket?.on('connect', () => {
-        addLog('Connected.');
-    });
     useEffect(() => {
         const id = uuid();
         setUserId(id);
-        addLog(`Your userId is ${id}`);
         const s = io(HOST);
         setSocket(s);
     }, []);
@@ -55,54 +65,52 @@ const App: React.FC = () => {
             socket?.emit('join-room', {
                 userId, userName,
             });
-            socket?.on('room-created', param => {
-                addLog(`[room-created] Room id: ${param.roomId}`);
-            });
-            socket?.on('room-updated', param => {
-                addLog(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
-            });
+            // socket?.on('room-created', param => {
+            //     console.log(`[room-created] Room id: ${param.roomId}`);
+            // });
+            // socket?.on('room-updated', param => {
+            //     console.log(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
+            // });
             socket?.on('room-ready', param => {
-                addLog(`[room-ready] Room id: ${param.roomId} Current members: ${param.memberNames.join(', ')}`);
                 setRoomId(param.roomId);
                 setMemberNames(param.memberNames);
                 setStatus('attending');
-                addLog('Set status as attending.');
             });
         }
         if (status === 'attending') {
-            if (currentProblem === null) {
-                fetch(`${HOST}/api/problems/next?roomId=${roomId}`).then(res => res.json()).then(data => {
-                    if (data.available) {
-                        const problem: Problem = {
-                            id: data.id,
-                            question: data.question,
-                            answer: data.answer,
-                            answerInKana: data.answerInKana,
-                        };
-                        addLog('Problem fecthed successfully.');
+            if (currentProblem === null && roomId) {
+                fetchNextProblem(roomId).then(problem => {
+                    if (problem) {
                         setCurrentProblem(problem);
                     } else {
-                        addLog('Next problem unavailable.');
+                        setStatus('result');
                     }
-                }).catch(e => {
-                    addLog(e);
                 });
             }
+        }
+        if (status === 'attending') {
             socket?.on('answer-blocked', param => {
-                addLog(`[answer-blocked] Answering member: ${param.answeringUserName}`);
                 setAnswerBlocked(true);
             });
             socket?.on('problem-answered', param => {
-                addLog(`[problem-answered] User name: ${param.userName} isCorrect: ${param.isCorrect}`);
                 setAnswerBlocked(false);
+                if (param.isCorrect) {
+                    setScore({
+                        me: score.me,
+                        opponent: score.opponent + 1,
+                    });
+                }
             });
-            socket?.on('room-closed', param => {
-                addLog(`[room-closed] Succeeded: ${param.succeeded} Winner name: ${param.winnerName}`);
-                setStatus(null);
-                setRoomId(null);
+            socket?.on('problem-closed', param => {
+                setAnswerBlocked(false);
+                setCurrentProblem(null);
             });
         }
-    }, [status]);
+        socket?.on('room-closed', param => {
+            setStatus(null);
+            setRoomId(null);
+        });
+    }, [status, currentProblem]);
     if (currentProblem) {
         console.log('答え: ' + currentProblem?.answerInKana); // 不正用
     }
@@ -112,7 +120,6 @@ const App: React.FC = () => {
             <div>
                 status: {status || 'null'}
             </div>
-            <pre>{log}</pre>
             <div style={{ margin: '1em 0' }}>
                 <label htmlFor='userName'>ユーザー名: </label>
                 <input
@@ -123,10 +130,7 @@ const App: React.FC = () => {
             </div>
             <div>
                 {status === null &&
-                    <button onClick={() => {
-                        setStatus('waiting');
-                        addLog('Set status as waiting.');
-                    }}>入室する</button>
+                    <button onClick={() => { setStatus('waiting'); }}>入室する</button>
                 }
                 {status === 'waiting' &&
                     <p>待機中…</p>
@@ -145,7 +149,6 @@ const App: React.FC = () => {
                                             setStatus('answering');
                                             setMyAnswer('');
                                             socket?.emit('start-answer', { userId, roomId });
-                                            addLog('Emitted start-answer.');
                                         }}
                                     >
                                         解答
@@ -159,47 +162,35 @@ const App: React.FC = () => {
                                     </p>
                                 }
                                 {status === 'answering' &&
-                                    makeChoices(currentProblem.answerInKana[myAnswer.length]).map(choice =>
+                                    makeChoices(currentProblem.answerInKana[myAnswer.length]).map((choice, i) =>
                                         <button
-                                            key={choice}
+                                            key={i}
                                             onClick={() => {
                                                 const updatedAnswer = myAnswer + choice;
                                                 if (currentProblem.answerInKana.startsWith(updatedAnswer)) {
                                                     if (currentProblem.answerInKana === updatedAnswer) { // 解答終了・正答
-                                                        setMyAnswer('');
                                                         socket?.emit('submit-answer', {
                                                             userId,
                                                             roomId,
                                                             isCorrect: true,
                                                         });
-                                                        setStatus('attending');
-                                                        fetch(`${HOST}/api/problems/next?roomId=${roomId}`).then(res => res.json()).then(data => {
-                                                            if (data.available) {
-                                                                const problem: Problem = {
-                                                                    id: data.id,
-                                                                    question: data.question,
-                                                                    answer: data.answer,
-                                                                    answerInKana: data.answerInKana,
-                                                                };
-                                                                addLog('Problem fecthed successfully.');
-                                                                setCurrentProblem(problem);
-                                                            } else {
-                                                                addLog('Next problem unavailable.');
-                                                            }
-                                                        }).catch(e => {
-                                                            addLog(e);
+                                                        setScore({
+                                                            me: score.me + 1,
+                                                            opponent: score.opponent
                                                         });
+                                                        setStatus('attending');
+                                                        setCurrentProblem(null);
                                                     } else { // 解答途中
                                                         setMyAnswer(myAnswer + choice);
                                                     }
                                                 } else { // 誤答
-                                                    setMyAnswer('');
                                                     socket?.emit('submit-answer', {
                                                         userId,
                                                         roomId,
                                                         isCorrect: false,
                                                     });
                                                     setStatus('attending');
+                                                    setAnswerBlocked(true);
                                                 }
                                             }}
                                             style={{
@@ -215,6 +206,12 @@ const App: React.FC = () => {
                                 }
                             </div>
                         )}
+                    </div>
+                }
+                {status === 'result' &&
+                    <div>
+                        <p>あなたの点数: {score.me}</p>
+                        <p>相手の点数: {score.opponent}</p>
                     </div>
                 }
             </div>

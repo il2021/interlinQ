@@ -99,7 +99,6 @@ io.on('connection', socket => {
                 roomId: room.roomId,
                 memberNames: room.members.map(member => member.name),
             };
-            console.log(res.roomId);
             io.to(room.roomId).emit('room-updated', res);
             io.to(room.roomId).emit('room-ready', res);
             const firstProblem = getOneRandomProblem().id;
@@ -137,27 +136,29 @@ io.on('connection', socket => {
         const room = activeRooms.filter(room => room.roomId === roomId)[0];
         const user = room.members.filter(member => member.id === userId)[0];
         const isCorrect = params.isCorrect as boolean;
-        io.to(roomId).emit('problem-answered', {
+        socket.to(roomId).emit('problem-answered', {
             userName: user.name,
             isCorrect,
         });
         if (isCorrect) {
+            room.solverIds.push(userId);
+            room.members.forEach(member => {
+                member.answerPermitted = true;
+            });
+            io.to(roomId).emit('problem-closed');
             if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
                 const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
                 const winnerId = Object.entries(solvesDict).sort((a, b) => a < b ? 1 : -1)[0][0];
                 const winnerName = room.members.filter(member => member.id === winnerId)[0].name;
+                room.problemIds = [];
+                activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
                 io.to(roomId).emit('room-closed', {
                     succeeded: true,
                     winnerName: winnerName,
                 });
-                activeRooms.splice(activeRooms.findIndex(room => room.roomId), 1);
             } else {
                 const nextProblem = getOneRandomProblem().id;
                 room.problemIds.push(nextProblem);
-                room.solverIds.push(userId);
-                room.members.forEach(member => {
-                    member.answerPermitted = true;
-                });
             }
         } else {
             room.members.forEach(member => {
@@ -166,6 +167,7 @@ io.on('connection', socket => {
                 }
             });
             if (room.members.every(member => member.answerPermitted === false)) {
+                io.to(roomId).emit('problem-closed');
                 const nextProblem = getOneRandomProblem().id;
                 room.problemIds.push(nextProblem);
                 room.solverIds.push(null);
@@ -174,6 +176,11 @@ io.on('connection', socket => {
                 });
             }
         }
+    });
+    socket.on('close-room', params => {
+        const roomId = params.roomId as string;
+        activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
+        io.to(roomId).emit('room-closed');
     });
 });
 
