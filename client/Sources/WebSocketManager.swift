@@ -131,7 +131,7 @@ final class WebSocketManager {
         
         
         self.isWaiting = true
-//        socket.connect()
+        socket.connect()
         
     }
     
