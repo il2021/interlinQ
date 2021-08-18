@@ -131,11 +131,45 @@
                     </view>
                     <connections>
                         <outlet property="searchingText" destination="2Ui-fl-l6L" id="ITc-Yy-vuO"/>
+                        <segue destination="EhD-Pw-1SL" kind="presentation" identifier="toWait" id="Xvf-NT-e5q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oGK-19-0XG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="18.840579710144929" y="766.74107142857144"/>
+        </scene>
+        <!--Wait View Controller-->
+        <scene sceneID="Pao-wE-AHu">
+            <objects>
+                <viewController id="EhD-Pw-1SL" customClass="WaitViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LOq-y7-4Cf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggB-RY-Bbe">
+                                <rect key="frame" x="192" y="596" width="31" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="戻る"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="検索中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tNa-sy-Ii3">
+                                <rect key="frame" x="181" y="410" width="52" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="M7x-3K-MRX"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3m1-oI-ltG"/>
+                    <connections>
+                        <outlet property="waitingText" destination="tNa-sy-Ii3" id="Tj2-YA-bNC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8QB-yq-ccV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="938" y="774"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="JYI-Y1-I3Z">
@@ -285,7 +319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BTY-T9-jwn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="982.60869565217399" y="766.74107142857144"/>
+            <point key="canvasLocation" x="1877" y="767"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="bSA-ty-hBU">
@@ -371,7 +405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sfQ-Y9-QeB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1988" y="767"/>
+            <point key="canvasLocation" x="2881" y="767"/>
         </scene>
     </scenes>
     <resources>
