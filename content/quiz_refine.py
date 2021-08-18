@@ -5,8 +5,8 @@ import csv
 Data_input = []
 
 with open("quiz.tsv", encoding="utf-8", newline="") as f:
-    for cols in csv.reader(f):
-        Data_input.append(cols)
+    for row in csv.reader(f, delimiter="\t"):
+        Data_input.append(row)
 
 ID = []
 Problems = []
@@ -15,23 +15,8 @@ Answers_kana = []
 
 NG_Words = ["今年", "去年"]
 
-for L in Data_input:
-    sentence = L[0]
-    index1 = -1
-    index2 = -1
-    index3 = -1
-    for i in range(len(sentence)):
-        if sentence[i] == "\t":
-            if index1 == -1:
-                index1 = i
-            elif index2 == -1:
-                index2 = i
-            else:
-                index3 = i
-    id = sentence[0:index1]
-    problem = sentence[index1 + 1 : index2]
-    answer = sentence[index2 + 1 : index3]
-    answer_kana = sentence[index3 + 1 :]
+for id, problem, answer, answer_kana in Data_input:
+    sentence = "\t".join([id, problem, answer, answer_kana])
     if answer == "" or sentence in NG_Words:
         continue
     ID.append(id)
