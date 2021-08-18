@@ -31,7 +31,7 @@ class Scrape:
         self.save_file_name_csv = "quiz_education.csv"
         self.save_file_name_tsv = "quiz_education.tsv"
         self.num_of_question = 1
-        self.exceptinal_question = {
+        self.exceptional_question = {
             4: "通信回線のデータ転送速度を表す単位を何というでしょう？",
             12: "広く普及しているネットワークシステムとして標準化されているLAN規格の一つを何というでしょう？",
             21: "社会的生産基盤のことであり、ダム・道路・港湾・発電所・通信施設などの産業基盤、および学校・病院・公園などの社会福祉・環境施設を表す略語を何というでしょう？",
@@ -95,8 +95,8 @@ class Scrape:
 
                 id = tmp + str(self.num_of_question)
                 question = meaning.split("。")[0] + "を何というでしょう？"
-                if self.num_of_question in self.exceptinal_question:
-                    question = self.exceptinal_question[self.num_of_question]
+                if self.num_of_question in self.exceptional_question:
+                    question = self.exceptional_question[self.num_of_question]
                 writer_tsv.writerow([id, question, word])
 
                 self.num_of_question += 1
