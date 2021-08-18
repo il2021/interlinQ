@@ -53,12 +53,14 @@ class HomeViewModel: NSObject {
     let userId = UIDevice.current.identifierForVendor!
     
     var webSocketManager: WebSocketManager = WebSocketManager.shared
-    
 
     func buttonPressed() {
-        isLoading = true
         labelText = "検索中"
-            
-        webSocketManager.isConnect ? webSocketManager.disconnect() : webSocketManager.connect()
+        print(userId)
+        webSocketManager.connect()
+        webSocketManager.joinRoom(userId: userId, userName: userId.uuidString)
+        isLoading = webSocketManager.isConnect
     }
+    
+    
 }
