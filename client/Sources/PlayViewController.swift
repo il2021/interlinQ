@@ -15,7 +15,10 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        quizDiscription.text = webSocketManager.quiz.question
+        DispatchQueue.main.async {
+            self.quizDiscription.text = self.quiz.question
+        }
+        
        
     }
     
