@@ -18,6 +18,7 @@
 
 import csv
 import re
+from collections import OrderedDict
 from urllib import request
 
 from bs4 import BeautifulSoup
@@ -25,8 +26,7 @@ from bs4 import BeautifulSoup
 
 class Scrape:
     def __init__(self):
-        self.words = []
-        self.meaning = []
+        self._dict = OrderedDict()
         self.url = ""
         self.save_file_name_csv = "quiz_education.csv"
         self.save_file_name_tsv = "quiz_education.tsv"
@@ -47,6 +47,16 @@ class Scrape:
             104: "いつでもどこでも情報にアクセスできるような環境のことを何というでしょう？",
             105: "電子をそこに閉じ込めることにより、その性質を完全に制御することができる10ナノメートル程度の箱を何というでしょう？",
         }
+
+    # backward compat
+    @property
+    def words(self):
+        return list(self._dict.keys())
+
+    # backward compat
+    @property
+    def meaning(self):
+        return list(self._dict.values())
 
     def _init(self):
         self._init_save_file(self.save_file_name_csv)
@@ -73,26 +83,23 @@ class Scrape:
         return bool(re_hiragana.search(string))
 
     def _save(self):
-        with open(
-            self.save_file_name_csv, "a", encoding="utf-8", newline="\n"
-        ) as f_csv:
-            with open(
-                self.save_file_name_tsv, "a", encoding="utf-8", newline="\n"
-            ) as f_tsv:
-                writer_csv = csv.writer(f_csv, lineterminator="\n")
-                writer_tsv = csv.writer(f_tsv, delimiter="\t", lineterminator="\n")
-                tmp = "education"
+        csv_file = self.save_file_name_csv
+        tsv_file = self.save_file_name_tsv
+        with open(csv_file, "a") as f_csv, open(tsv_file, "a") as f_tsv:
+            writer_csv = csv.writer(f_csv, lineterminator="\n")
+            writer_tsv = csv.writer(f_tsv, delimiter="\t", lineterminator="\n")
+            tmp = "education"
 
-                for i in range(len(self.words)):
-                    writer_csv.writerow([self.meaning[i], self.words[i]])
+            for word, meaning in self._dict.items():
+                writer_csv.writerow([meaning, word])
 
-                    id = tmp + str(self.num_of_question)
-                    question = self.meaning[i].split("。")[0] + "を何というでしょう？"
-                    if self.num_of_question in self.exceptinal_question:
-                        question = self.exceptinal_question[self.num_of_question]
-                    writer_tsv.writerow([id, question, self.words[i]])
+                id = tmp + str(self.num_of_question)
+                question = meaning.split("。")[0] + "を何というでしょう？"
+                if self.num_of_question in self.exceptinal_question:
+                    question = self.exceptinal_question[self.num_of_question]
+                writer_tsv.writerow([id, question, word])
 
-                    self.num_of_question += 1
+                self.num_of_question += 1
 
     def _get_contents_in_ministry_of_education(self):
         url1 = "https://www.mext.go.jp/b_menu/shingi/gijyutu/gijyutu4/toushin/attach/1337927.htm"
@@ -100,34 +107,28 @@ class Scrape:
 
         self.url = url1
         self._get_contents()
-        self.words = [
-            str(word.string)
-            for word in self.soup.find(id="contentsMain").find_all("h4")
-        ]
-        self.meaning = [
-            str(meaning.string)
-            for meaning in self.soup.find(id="contentsMain").find_all("p")
-        ]
-        self._save()
+        contents_main = self.soup.find(id="contentsMain")
+        for h4 in contents_main.find_all("h4"):
+            sibling = h4.find_next_sibling("p")
+            self._dict[h4.string] = sibling.get_text(strip=True)
         # print(self.words)
         # print(self.meaning)
 
         self.url = url2
         self._get_contents()
-        self.words = [
-            str(word.string)[1:-1]
-            for word in self.soup.find(id="contentsMain").find_all("h2")
-        ][:-1]
-        self.meaning = [
-            str(meaning.string)[1:]
-            for meaning in self.soup.find(id="contentsMain").find_all("p")
-        ][:-1]
-        for i in range(len(self.meaning)):
-            if not self._contain_japaneses(str(self.meaning[i]).split("。")[0]):
-                tmp = str(self.meaning[i]).split("。")
-                self.meaning[i] = ""
-                for j in range(1, len(tmp)):
-                    self.meaning[i] += tmp[j]
+        contents_main = self.soup.find(id="contentsMain")
+        for h2 in contents_main.find_all("h2", class_=None):
+            word = str(h2.string)[1:-1]
+            sibling = h2.find_next_sibling("p")
+            meaning = sibling.get_text(strip=True)
+
+            meaning_lst = meaning.split("。")
+            if self._contain_japaneses(meaning_lst[0]):
+                self._dict[word] = meaning
+            else:
+                # XXX: "。" will be disappeared
+                self._dict[word] = "".join(meaning_lst[1:])
+
         self._save()
         # print(self.words)
         # print(self.meaning)
