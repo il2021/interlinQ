@@ -136,11 +136,12 @@ io.on('connection', socket => {
         const room = activeRooms.filter(room => room.roomId === roomId)[0];
         const user = room.members.filter(member => member.id === userId)[0];
         const isCorrect = params.isCorrect as boolean;
-        io.to(roomId).emit('problem-answered', {
+        socket.to(roomId).emit('problem-answered', {
             userName: user.name,
             isCorrect,
         });
         if (isCorrect) {
+            io.to(roomId).emit('problem-closed');
             if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
                 const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
                 const winnerId = Object.entries(solvesDict).sort((a, b) => a < b ? 1 : -1)[0][0];
@@ -165,6 +166,7 @@ io.on('connection', socket => {
                 }
             });
             if (room.members.every(member => member.answerPermitted === false)) {
+                io.to(roomId).emit('problem-closed');
                 const nextProblem = getOneRandomProblem().id;
                 room.problemIds.push(nextProblem);
                 room.solverIds.push(null);
