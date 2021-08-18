@@ -85,18 +85,7 @@ final class WebSocketManager {
             self.delegate?.createRoom()
         }
         
-        socket.on("room-updated"){ data, ack in
-            if let arr = data as? [[String: Any]] {
-                if let roomId = arr[0]["roomId"] as? String {
-                    self.roomId = roomId
-                }
-                if let memberNames = arr[0]["memberNames"] as? [String] {
-                    self.memberNames = memberNames
-                }
-            }
-            
-            print("room-updated 参加者の名前の配列")
-        }
+
         
         socket.on("room-blocked"){ data, ack in
             if let arr = data as? [[String: Any]] {
