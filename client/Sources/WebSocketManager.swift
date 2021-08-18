@@ -19,6 +19,10 @@ final class WebSocketManager {
     var isConnect = false
     var answeringUserName = ""
     var echoUserName = ""
+    var echoIsCorrect = false
+    var winnerName = ""
+    var succeeded = false
+    
     private init() {
         
         socket = manager.defaultSocket
@@ -92,10 +96,26 @@ final class WebSocketManager {
                     self.echoUserName = echoUserName
                 }
                 
+                if let echoIsCorrect = arr[0]["isCorrect"] as? Bool {
+                    self.echoIsCorrect = echoIsCorrect
+                }
+                
+            }
+
+        }
+        
+        socket.on("room-closed"){ data, ack in
+            if let arr = data as? [[String: Any]] {
+                if let succeeded = arr[0]["succeeded"] as? Bool {
+                    self.succeeded = succeeded
+                }
+                
+                if let winnerName = arr[0]["winnerName"] as? String {
+                    self.winnerName = winnerName
+                }
                 
                 
             }
-            
             
         }
         
