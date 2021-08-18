@@ -16,8 +16,9 @@ Answers_kana = []
 NG_Words = ["今年", "去年"]
 
 for id, problem, answer, answer_kana in Data_input:
-    sentence = "\t".join([id, problem, answer, answer_kana])
-    if answer == "" or sentence in NG_Words:
+    if answer == "":
+        continue
+    if any(word in problem for word in NG_Words):
         continue
     ID.append(id)
     Problems.append(problem)
