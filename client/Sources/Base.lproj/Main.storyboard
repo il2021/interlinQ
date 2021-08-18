@@ -305,7 +305,6 @@
                                     <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="answerButton:" destination="chf-99-qCv" eventType="touchUpInside" id="mzU-7D-uFw"/>
                                     <action selector="showIndicator:" destination="chf-99-qCv" eventType="touchUpInside" id="e0N-sD-lJY"/>
                                 </connections>
                             </button>
