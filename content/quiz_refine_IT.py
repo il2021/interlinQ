@@ -1,5 +1,4 @@
-# quiz.tsv の中で不適な問題を除外するコード
-
+# quiz_refine.tsv の中でITに関するコードのみを抽出
 import csv
 
 Data_input = []
@@ -15,7 +14,7 @@ Answers_kana = []
 
 IT_Words = ["インターネット","コンピュータ","ユーザー", "ネットワーク", "パソコン","検索エンジン","ソフトウェア","ウェブサイト","プログラ"]
 
-NG_Words = ["今年","去年","田中角栄","アポトーシス","廬武鉉"]
+NG_Words = ["田中角栄","アポトーシス","廬武鉉"] #IT_Wordsを含んでもダメなものを除外
 
 for L in Data_input:
   sentence = L[0]
@@ -66,7 +65,7 @@ for i in range(len(Answers)):
   string = id +"\t"  + problem + "\t" + answer + "\t" + answer_kana
   Data_output.append([string])
 
-with open("quiz_abcgo_IT.tsv", "w", encoding="utf_8_sig", newline="") as f:
+with open("quiz_abcgo_IT.tsv", "w", encoding = "utf_8_sig", newline="") as f:
     writer = csv.writer(f)
     writer.writerows(Data_output)
 
