@@ -1,0 +1,62 @@
+http-status-codes1	「Continue」を表すHTTPのステータスコードは何か	100	100
+http-status-codes2	「Switching Protocols」を表すHTTPのステータスコードは何か	101	101
+http-status-codes3	「Processing」を表すHTTPのステータスコードは何か	102	102
+http-status-codes4	「Early Hints」を表すHTTPのステータスコードは何か	103	103
+http-status-codes6	「OK」を表すHTTPのステータスコードは何か	200	200
+http-status-codes7	「Created」を表すHTTPのステータスコードは何か	201	201
+http-status-codes8	「Accepted」を表すHTTPのステータスコードは何か	202	202
+http-status-codes9	「Non-Authoritative Information」を表すHTTPのステータスコードは何か	203	203
+http-status-codes10	「No Content」を表すHTTPのステータスコードは何か	204	204
+http-status-codes11	「Reset Content」を表すHTTPのステータスコードは何か	205	205
+http-status-codes12	「Partial Content」を表すHTTPのステータスコードは何か	206	206
+http-status-codes13	「Multi-Status」を表すHTTPのステータスコードは何か	207	207
+http-status-codes14	「Already Reported」を表すHTTPのステータスコードは何か	208	208
+http-status-codes16	「IM Used」を表すHTTPのステータスコードは何か	226	226
+http-status-codes18	「Multiple Choices」を表すHTTPのステータスコードは何か	300	300
+http-status-codes19	「Moved Permanently」を表すHTTPのステータスコードは何か	301	301
+http-status-codes20	「Found」を表すHTTPのステータスコードは何か	302	302
+http-status-codes21	「See Other」を表すHTTPのステータスコードは何か	303	303
+http-status-codes22	「Not Modified」を表すHTTPのステータスコードは何か	304	304
+http-status-codes23	「Use Proxy」を表すHTTPのステータスコードは何か	305	305
+http-status-codes24	「(Unused)」を表すHTTPのステータスコードは何か	306	306
+http-status-codes25	「Temporary Redirect」を表すHTTPのステータスコードは何か	307	307
+http-status-codes26	「Permanent Redirect」を表すHTTPのステータスコードは何か	308	308
+http-status-codes28	「Bad Request」を表すHTTPのステータスコードは何か	400	400
+http-status-codes29	「Unauthorized」を表すHTTPのステータスコードは何か	401	401
+http-status-codes30	「Payment Required」を表すHTTPのステータスコードは何か	402	402
+http-status-codes31	「Forbidden」を表すHTTPのステータスコードは何か	403	403
+http-status-codes32	「Not Found」を表すHTTPのステータスコードは何か	404	404
+http-status-codes33	「Method Not Allowed」を表すHTTPのステータスコードは何か	405	405
+http-status-codes34	「Not Acceptable」を表すHTTPのステータスコードは何か	406	406
+http-status-codes35	「Proxy Authentication Required」を表すHTTPのステータスコードは何か	407	407
+http-status-codes36	「Request Timeout」を表すHTTPのステータスコードは何か	408	408
+http-status-codes37	「Conflict」を表すHTTPのステータスコードは何か	409	409
+http-status-codes38	「Gone」を表すHTTPのステータスコードは何か	410	410
+http-status-codes39	「Length Required」を表すHTTPのステータスコードは何か	411	411
+http-status-codes40	「Precondition Failed」を表すHTTPのステータスコードは何か	412	412
+http-status-codes41	「Payload Too Large」を表すHTTPのステータスコードは何か	413	413
+http-status-codes42	「URI Too Long」を表すHTTPのステータスコードは何か	414	414
+http-status-codes43	「Unsupported Media Type」を表すHTTPのステータスコードは何か	415	415
+http-status-codes44	「Range Not Satisfiable」を表すHTTPのステータスコードは何か	416	416
+http-status-codes45	「Expectation Failed」を表すHTTPのステータスコードは何か	417	417
+http-status-codes47	「Misdirected Request」を表すHTTPのステータスコードは何か	421	421
+http-status-codes48	「Unprocessable Entity」を表すHTTPのステータスコードは何か	422	422
+http-status-codes49	「Locked」を表すHTTPのステータスコードは何か	423	423
+http-status-codes50	「Failed Dependency」を表すHTTPのステータスコードは何か	424	424
+http-status-codes51	「Too Early」を表すHTTPのステータスコードは何か	425	425
+http-status-codes52	「Upgrade Required」を表すHTTPのステータスコードは何か	426	426
+http-status-codes54	「Precondition Required」を表すHTTPのステータスコードは何か	428	428
+http-status-codes55	「Too Many Requests」を表すHTTPのステータスコードは何か	429	429
+http-status-codes57	「Request Header Fields Too Large」を表すHTTPのステータスコードは何か	431	431
+http-status-codes59	「Unavailable For Legal Reasons」を表すHTTPのステータスコードは何か	451	451
+http-status-codes61	「Internal Server Error」を表すHTTPのステータスコードは何か	500	500
+http-status-codes62	「Not Implemented」を表すHTTPのステータスコードは何か	501	501
+http-status-codes63	「Bad Gateway」を表すHTTPのステータスコードは何か	502	502
+http-status-codes64	「Service Unavailable」を表すHTTPのステータスコードは何か	503	503
+http-status-codes65	「Gateway Timeout」を表すHTTPのステータスコードは何か	504	504
+http-status-codes66	「HTTP Version Not Supported」を表すHTTPのステータスコードは何か	505	505
+http-status-codes67	「Variant Also Negotiates」を表すHTTPのステータスコードは何か	506	506
+http-status-codes68	「Insufficient Storage」を表すHTTPのステータスコードは何か	507	507
+http-status-codes69	「Loop Detected」を表すHTTPのステータスコードは何か	508	508
+http-status-codes71	「Not Extended」を表すHTTPのステータスコードは何か	510	510
+http-status-codes72	「Network Authentication Required」を表すHTTPのステータスコードは何か	511	511
