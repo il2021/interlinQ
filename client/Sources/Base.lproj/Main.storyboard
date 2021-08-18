@@ -110,6 +110,13 @@
                                     <action selector="allDisplay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wcs-5f-ziO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="answer field" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1LW-aR-DHL">
+                                <rect key="frame" x="31" y="399" width="132" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -119,6 +126,7 @@
                         <outlet property="answerButton2" destination="Kwp-3a-WMf" id="tDm-ZP-JXq"/>
                         <outlet property="answerButton3" destination="ZkT-q9-OFP" id="mVT-tw-7qV"/>
                         <outlet property="answerButton4" destination="dIj-PL-5wt" id="zbF-j7-eIu"/>
+                        <outlet property="answerField" destination="1LW-aR-DHL" id="aIf-P1-DOf"/>
                         <outlet property="prg" destination="hJK-4E-LRF" id="JLg-VA-06d"/>
                         <outlet property="questionSentence" destination="yGj-Rl-USz" id="ipe-Z1-AVY"/>
                         <segue destination="ylz-0f-Z8A" kind="show" identifier="toTest" id="Nec-3K-eeQ"/>
@@ -126,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2516" y="-105"/>
+            <point key="canvasLocation" x="2515.9420289855075" y="-105.13392857142857"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="vo9-jp-3eH">

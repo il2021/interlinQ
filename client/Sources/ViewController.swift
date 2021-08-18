@@ -122,12 +122,15 @@ class ViewController: UIViewController {
     var currentCharIndex:Int = 0
     var ansLen:Int = 0
     var answerChoices: [String] = ["", "", "", ""]
+    var choicedAnswer: String = ""
     
     @IBOutlet weak var answerButton1: UIButton!
     @IBOutlet weak var answerButton2: UIButton!
     @IBOutlet weak var answerButton3: UIButton!
     @IBOutlet weak var answerButton4: UIButton!
     var ansButtonArray: [UIButton]!
+    
+    @IBOutlet weak var answerField: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -170,22 +173,34 @@ class ViewController: UIViewController {
                 ansButtonArray[i].setTitle(answerChoices[i], for: .normal)
             }
             currentCharIndex += 1
-            answerChoices = ["", "", "", ""]
         }else if (currentCharIndex == ansLen) {
             hideButton()
         }
     }
     
+    func updateAnswerField() {
+        answerField.text = choicedAnswer
+        answerChoices = ["", "", "", ""]
+    }
+    
     @IBAction func answer1(_ sender: Any) {
+        choicedAnswer += answerChoices[0]
+        updateAnswerField()
         displayChoicesRandomly()
     }
     @IBAction func answer2(_ sender: Any) {
+        choicedAnswer += answerChoices[1]
+        updateAnswerField()
         displayChoicesRandomly()
     }
     @IBAction func answer3(_ sender: Any) {
+        choicedAnswer += answerChoices[2]
+        updateAnswerField()
         displayChoicesRandomly()
     }
     @IBAction func answer4(_ sender: Any) {
+        choicedAnswer += answerChoices[3]
+        updateAnswerField()
         displayChoicesRandomly()
     }
     
