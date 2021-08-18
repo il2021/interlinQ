@@ -140,7 +140,6 @@ io.on('connection', socket => {
             userName: user.name,
             isCorrect,
         });
-        // io.to(roomId).emit('answer-unblocked'); // DEPRECATED
         if (isCorrect) {
             if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
                 const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
@@ -153,13 +152,10 @@ io.on('connection', socket => {
                 activeRooms.splice(activeRooms.findIndex(room => room.roomId), 1);
             } else {
                 const nextProblem = getOneRandomProblem().id;
+                room.problemIds.push(nextProblem);
                 room.solverIds.push(userId);
                 room.members.forEach(member => {
                     member.answerPermitted = true;
-                });
-                activeRooms.push({
-                    ...room,
-                    problemIds: [...room.problemIds, nextProblem],
                 });
             }
         } else {
