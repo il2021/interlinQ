@@ -166,12 +166,10 @@ io.on('connection', socket => {
             });
             if (room.members.every(member => member.answerPermitted === false)) {
                 const nextProblem = getOneRandomProblem().id;
+                room.problemIds.push(nextProblem);
+                room.solverIds.push(null);
                 room.members.forEach(member => {
                     member.answerPermitted = true;
-                });
-                activeRooms.push({
-                    ...room,
-                    problemIds: [...room.problemIds, nextProblem],
                 });
             }
         }
