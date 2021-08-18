@@ -1,5 +1,5 @@
 {
-  "name": "browser-client",
+  "name": "interlinq-browser-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
