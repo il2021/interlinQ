@@ -61,9 +61,11 @@ class ViewController: UIViewController {
     var timer = Timer()
     var currentCharNum = 0
     var question:String = "Hello, world!"
+    var displaying:Bool = true
+    var buttonFlag:Bool = true  // 問題切り替わるたびにtrueにする
         
-    func displaySentence() {
-        timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(showDelayText(time:)), userInfo: question, repeats: true)
+    func displaySentence(interval: Double=0.3) {
+        timer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(showDelayText(time:)), userInfo: question, repeats: true)
     }
         
     @objc func showDelayText(time: Timer) {
@@ -71,16 +73,27 @@ class ViewController: UIViewController {
         questionSentence.text = String(message.prefix(currentCharNum))
         if message.count <= currentCharNum {
             time.invalidate()
-            currentCharNum = 0
             return
         }
-        currentCharNum += 1
+        if (displaying) {
+            currentCharNum += 1
+        }
     }
     
     @IBOutlet weak var questionSentence: UITextView!
     
     @IBAction func buttonPressed(_ sender: Any) {
-        displaySentence()
+        if (buttonFlag) {
+            currentCharNum = 0
+            displaySentence()
+            buttonFlag = false
+        }
+    }
+    @IBAction func allDisplay(_ sender: Any) {
+        if (!displaying) {
+            start(interval: 0.05)
+            displaying = true
+        }
     }
     
     /*
@@ -93,7 +106,7 @@ class ViewController: UIViewController {
      * 答えるボタンを押すとisHidden=falseをあとに実行しているはずなのに一瞬setTitleされていないボタンが表示されてしまう
      ## PARAM
      * answer: 答え
-     * currentCharNum: その時までに表示した文字数
+     * currentCharIndex: その時までに表示した文字数
      * ansLen: 答えの文字列の長さ
      * answerChoices: 答えの選択肢
      * ansButtonArray: 選択肢のボタンが入った配列
@@ -106,7 +119,7 @@ class ViewController: UIViewController {
     var hira:String = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
     var kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
     var answer:String = "あいうえお"
-
+    var currentCharIndex:Int = 0
     var ansLen:Int = 0
     var answerChoices: [String] = ["", "", "", ""]
     
@@ -148,17 +161,17 @@ class ViewController: UIViewController {
     }
     
     func displayChoicesRandomly() {
-        if (currentCharNum < ansLen){
-            var ansChar = strAccess(str: answer, index: currentCharNum)  // 正解の文字
+        if (currentCharIndex < ansLen){
+            var ansChar = strAccess(str: answer, index: currentCharIndex)  // 正解の文字
             var ansIndex = Int.random(in: 0 ..< 4)  // 正解が入る場所(1-4)
             answerChoices[ansIndex] = ansChar
             generateChoicesRandomly()
             for i in 0..<4 {
                 ansButtonArray[i].setTitle(answerChoices[i], for: .normal)
             }
-            currentCharNum += 1
+            currentCharIndex += 1
             answerChoices = ["", "", "", ""]
-        }else if (currentCharNum == ansLen) {
+        }else if (currentCharIndex == ansLen) {
             hideButton()
         }
     }
@@ -177,6 +190,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func go(_ sender: Any) {
+        displaying = false
         displayChoicesRandomly()
         answerButton1.isHidden = false
         answerButton2.isHidden = false

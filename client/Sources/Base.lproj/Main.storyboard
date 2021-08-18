@@ -102,6 +102,14 @@
                                     <action selector="answer4:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fR5-7O-9t2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jf9-dv-cHX">
+                                <rect key="frame" x="295" y="525" width="68" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="all display"/>
+                                <connections>
+                                    <action selector="allDisplay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wcs-5f-ziO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -112,6 +120,7 @@
                         <outlet property="answerButton3" destination="ZkT-q9-OFP" id="mVT-tw-7qV"/>
                         <outlet property="answerButton4" destination="dIj-PL-5wt" id="zbF-j7-eIu"/>
                         <outlet property="prg" destination="hJK-4E-LRF" id="JLg-VA-06d"/>
+                        <outlet property="questionSentence" destination="yGj-Rl-USz" id="ipe-Z1-AVY"/>
                         <segue destination="ylz-0f-Z8A" kind="show" identifier="toTest" id="Nec-3K-eeQ"/>
                     </connections>
                 </viewController>
