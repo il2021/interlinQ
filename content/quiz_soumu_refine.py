@@ -1,10 +1,10 @@
-# quiz.tsv の中で不適な問題を除外するコード
+# quiz_soumu.tsv の改行を変更するコード
 
 import csv
 
 Data_input = []
 
-with open('quiz.tsv', encoding='utf-8', newline='') as f:
+with open('quiz_soumu.tsv', encoding='utf-8', newline='') as f:
     for cols in csv.reader(f):
         Data_input.append(cols)
     
@@ -12,9 +12,6 @@ ID = []
 Problems = []
 Answers = []
 Answers_kana = []
-
-NG_Words = ["今年","去年"]
-Set_Problems = set([])
 
 for L in Data_input:
   sentence = L[0]
@@ -33,28 +30,12 @@ for L in Data_input:
   problem = sentence[index1+1:index2]
   answer = sentence[index2+1:index3]
   answer_kana = sentence[index3+1:]
-  
-  if answer == "":
-    continue
-    
-  flag_NG = 0
-  for ng_word in NG_Words:
-    if ng_word in sentence:
-      flag_NG = 1
-  if flag_NG == 1:
-    continue
-    
-  if problem in Set_Problems:
-    continue
     
   ID.append(id)
   Problems.append(problem)
   Answers.append(answer)
   Answers_kana.append(answer_kana)
-  Set_Problems.add(problem)
   print(id,answer)
-  
-  
   
 Data_output = []
   
@@ -66,7 +47,7 @@ for i in range(len(Answers)):
   string = id +"\t"  + problem + "\t" + answer + "\t" + answer_kana
   Data_output.append([string])
 
-with open("quiz_refine.tsv", "w", encoding="utf_8", newline="\n") as f:
+with open("quiz_soumu_refine.tsv", "w", encoding="utf_8", newline="\n") as f:
     writer = csv.writer(f,lineterminator='\n')
     writer.writerows(Data_output)
 
