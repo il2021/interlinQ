@@ -19,6 +19,7 @@ const App = () => {
         setUserId(id);
         addLog(`Your userId is ${id}`);
         const s = io('http://localhost:8080');
+        // const s = io('http://tk2-221-20494.vs.sakura.ne.jp:8080');
         setSocket(s);
     }, []);
     useEffect(() => {
