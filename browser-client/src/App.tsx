@@ -103,7 +103,9 @@ const App: React.FC = () => {
             });
         }
     }, [status]);
-    console.log('答え: ' + currentProblem?.answerInKana); // 不正用
+    if (currentProblem) {
+        console.log('答え: ' + currentProblem?.answerInKana); // 不正用
+    }
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>interlinQ Browser Client</h1>
@@ -171,6 +173,22 @@ const App: React.FC = () => {
                                                             isCorrect: true,
                                                         });
                                                         setStatus('attending');
+                                                        fetch(`${HOST}/api/problems/next?roomId=${roomId}`).then(res => res.json()).then(data => {
+                                                            if (data.available) {
+                                                                const problem: Problem = {
+                                                                    id: data.id,
+                                                                    question: data.question,
+                                                                    answer: data.answer,
+                                                                    answerInKana: data.answerInKana,
+                                                                };
+                                                                addLog('Problem fecthed successfully.');
+                                                                setCurrentProblem(problem);
+                                                            } else {
+                                                                addLog('Next problem unavailable.');
+                                                            }
+                                                        }).catch(e => {
+                                                            addLog(e);
+                                                        });
                                                     } else { // 解答途中
                                                         setMyAnswer(myAnswer + choice);
                                                     }
