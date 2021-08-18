@@ -14,6 +14,7 @@
 """
 
 import csv
+import re
 from urllib import request
 
 from bs4 import BeautifulSoup
@@ -43,10 +44,8 @@ class Scrape:
 
     def _contain_japaneses(self, string):
         hiragana = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
-        for ch in string:
-            if ch in hiragana:
-                return True
-        return False
+        re_hiragana = re.compile("[" + hiragana + "]", re.U)
+        return bool(re_hiragana.search(string))
 
     def _change_enc(self, string, enc="utf-8"):
         return string.encode(enc).decode(enc)
