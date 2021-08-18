@@ -129,7 +129,7 @@ io.on('connection', socket => {
         const userId = params.userId as string;
         const room = activeRooms.filter(room => room.roomId === roomId)[0];
         const user = room.members.filter(member => member.id === userId)[0];
-        io.to(roomId).emit('answer-blocked', { answeringUserName: user.name });
+        socket.to(roomId).emit('answer-blocked', { answeringUserName: user.name });
     });
     socket.on('submit-answer', params => {
         const roomId = params.roomId as string;
@@ -141,7 +141,6 @@ io.on('connection', socket => {
             userName: user.name,
             isCorrect,
         });
-        // io.to(roomId).emit('answer-unblocked'); // DEPRECATED
         if (isCorrect) {
             if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
                 const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
@@ -154,13 +153,10 @@ io.on('connection', socket => {
                 activeRooms.splice(activeRooms.findIndex(room => room.roomId), 1);
             } else {
                 const nextProblem = getOneRandomProblem().id;
+                room.problemIds.push(nextProblem);
                 room.solverIds.push(userId);
                 room.members.forEach(member => {
                     member.answerPermitted = true;
-                });
-                activeRooms.push({
-                    ...room,
-                    problemIds: [...room.problemIds, nextProblem],
                 });
             }
         } else {
@@ -171,12 +167,10 @@ io.on('connection', socket => {
             });
             if (room.members.every(member => member.answerPermitted === false)) {
                 const nextProblem = getOneRandomProblem().id;
+                room.problemIds.push(nextProblem);
+                room.solverIds.push(null);
                 room.members.forEach(member => {
                     member.answerPermitted = true;
-                });
-                activeRooms.push({
-                    ...room,
-                    problemIds: [...room.problemIds, nextProblem],
                 });
             }
         }

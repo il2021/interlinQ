@@ -15,6 +15,7 @@
 
 import csv
 import re
+from collections import OrderedDict
 from urllib import request
 
 from bs4 import BeautifulSoup
@@ -22,10 +23,19 @@ from bs4 import BeautifulSoup
 
 class Scrape:
     def __init__(self):
-        self.words = []
-        self.meaning = []
+        self._dict = OrderedDict()
         self.url = ""
         self.save_file_name = "quiz_education.csv"
+
+    # backward compat
+    @property
+    def words(self):
+        return list(self._dict.keys())
+
+    # backward compat
+    @property
+    def meaning(self):
+        return list(self._dict.values())
 
     def _init(self):
         with open(self.save_file_name, "w", encoding="utf-8") as f:
@@ -50,8 +60,8 @@ class Scrape:
     def _save(self):
         with open(self.save_file_name, "a", encoding="utf-8") as f:
             writer = csv.writer(f)
-            for i in range(len(self.words)):
-                writer.writerow([self.meaning[i], self.words[i]])
+            for word, meaning in self._dict.items():
+                writer.writerow([meaning, word])
 
     def _get_contents_in_ministry_of_education(self):
         url1 = "https://www.mext.go.jp/b_menu/shingi/gijyutu/gijyutu4/toushin/attach/1337927.htm"
@@ -59,34 +69,28 @@ class Scrape:
 
         self.url = url1
         self._get_contents()
-        self.words = [
-            str(word.string)
-            for word in self.soup.find(id="contentsMain").find_all("h4")
-        ]
-        self.meaning = [
-            str(meaning.string)
-            for meaning in self.soup.find(id="contentsMain").find_all("p")
-        ]
-        self._save()
+        contents_main = self.soup.find(id="contentsMain")
+        for h4 in contents_main.find_all("h4"):
+            sibling = h4.find_next_sibling("p")
+            self._dict[h4.string] = sibling.string
         # print(self.words)
         # print(self.meaning)
 
         self.url = url2
         self._get_contents()
-        self.words = [
-            str(word.string)[1:-1]
-            for word in self.soup.find(id="contentsMain").find_all("h2")
-        ][:-1]
-        self.meaning = [
-            str(meaning.string)[1:]
-            for meaning in self.soup.find(id="contentsMain").find_all("p")
-        ][:-1]
-        for i in range(len(self.meaning)):
-            if not self._contain_japaneses(str(self.meaning[i]).split("。")[0]):
-                tmp = str(self.meaning[i]).split("。")
-                self.meaning[i] = ""
-                for j in range(1, len(tmp)):
-                    self.meaning[i] += tmp[j]
+        contents_main = self.soup.find(id="contentsMain")
+        for h2 in contents_main.find_all("h2", class_=None):
+            word = str(h2.string)[1:-1]
+            sibling = h2.find_next_sibling("p")
+            meaning = sibling.get_text(strip=True)
+
+            meaning_lst = meaning.split("。")
+            if self._contain_japaneses(meaning_lst[0]):
+                self._dict[word] = meaning
+            else:
+                # XXX: "。" will be disappeared
+                self._dict[word] = "".join(meaning_lst[1:])
+
         self._save()
         # print(self.words)
         # print(self.meaning)
