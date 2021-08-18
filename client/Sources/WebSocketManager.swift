@@ -59,7 +59,7 @@ final class WebSocketManager {
             
             self.isWaiting = false
             self.canStart = true
-            print("room-ready")
+            print("room-ready:2人集まった \(self.memberNames)")
             
         }
         
@@ -68,6 +68,7 @@ final class WebSocketManager {
                 if let roomId = arr[0]["roomId"] as? String {
                     self.roomId = roomId
                 }
+                print("room作成完了")
             }
         }
         
@@ -80,6 +81,8 @@ final class WebSocketManager {
                     self.memberNames = memberNames
                 }
             }
+            
+            print("room-updated 参加者の名前の配列")
         }
         
         socket.on("room-blocked"){ data, ack in
@@ -88,6 +91,8 @@ final class WebSocketManager {
                     self.answeringUserName = answeringUserName
                 }
             }
+            print("誰かが回答中 \(self.answeringUserName)")
+            //TODO:回答者のみがボタンを押せる
         }
         
         socket.on("problem-answered"){ data, ack in
@@ -101,6 +106,8 @@ final class WebSocketManager {
                 }
                 
             }
+            
+            print("相手のの回答が正解か不正解か")
 
         }
         
@@ -116,6 +123,8 @@ final class WebSocketManager {
                 
                 
             }
+            
+            print("ルームを閉じる")
             
         }
         
@@ -134,10 +143,12 @@ final class WebSocketManager {
     
     func connect() {
         socket.connect()
+        print("接続処理")
     }
     
     func disconnect() {
         socket.disconnect()
+        print("切断処理")
     }
     
     
@@ -145,10 +156,12 @@ final class WebSocketManager {
         socket.emit("start-answer", StartAnswer(userId: userId, roomId: roomId)) {
             self.isWaiting = true
         }
+        print("回答を始める")
     }
     
     func submitAnswer(userId: String, roomId: String, isCorrect: Bool) {
         socket.emit("submit-answer", Answer(userId: userId, roomId: roomId, isCorrect: isCorrect))
+        print("回答を提出する")
     }
 }
 
