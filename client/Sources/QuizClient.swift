@@ -22,15 +22,13 @@ class QuizClient {
             if let data = response.data {
                 do {
                     quiz = try decoder.decode(Quiz.self, from: data)
-                    
+                    completion(quiz)
                 } catch {
                     print("failed")
                 }
             } else {
                 print("データ未取得")
             }
-            
-            completion(quiz)
             
         }
         

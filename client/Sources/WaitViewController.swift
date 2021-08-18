@@ -7,26 +7,39 @@
 
 import UIKit
 
-class WaitViewController: UIViewController {
+class WaitViewController: UIViewController, WebSocketDelegate {
+    func createRoom() {
+    }
     
+
     @IBOutlet weak var waitingText: UILabel!
+    @IBOutlet weak var roomIdText: UILabel!
     var webSocketManager = WebSocketManager.shared
     var viewModel = WaitViewModel()
     var observers: [NSKeyValueObservation] = []
+    var roomId = ""
+    var memberNames:[String] = []
     
     override func viewDidLoad() {
+        webSocketManager.delegate = self
         super.viewDidLoad()
+        
+        roomIdText.text = webSocketManager.roomId
 
-        let observer2 = viewModel.observe(\.canStart) { [weak self] (viewModel, _) in
-            if viewModel.canStart {
-                print("画面遷移")
-            }
+
+    }
+    
+    func ready() {
+        self.performSegue(withIdentifier: "toPlay", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toPlay"{
+            let nextVC = segue.destination as! PlayViewController
             
+            nextVC.quiz = webSocketManager.quiz
+            print(webSocketManager.quiz)
         }
-        
-        
-        observers = [observer2]
-
     }
     
     
@@ -41,22 +54,9 @@ class WaitViewController: UIViewController {
 
 
 
+
 class WaitViewModel: NSObject {
     var webSocketManager = WebSocketManager.shared
-    
-    @objc dynamic var canStart: Bool {
-        get {
-            return webSocketManager.canStart
-        }
-    }
-    @objc dynamic private(set) var buttonIsEnabled: Bool = false
-    @objc dynamic private(set) var isLoading: Bool = false
-    @objc dynamic private(set) var waiting: Bool = false
-    
-    var observers: [NSKeyValueObservation] = []
-    let userId = UIDevice.current.identifierForVendor!
-    
-    
     func buttonPressed() {
         webSocketManager.disconnect()
         webSocketManager.connect()

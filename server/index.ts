@@ -99,6 +99,7 @@ io.on('connection', socket => {
                 roomId: room.roomId,
                 memberNames: room.members.map(member => member.name),
             };
+            console.log(res.roomId);
             io.to(room.roomId).emit('room-updated', res);
             io.to(room.roomId).emit('room-ready', res);
             const firstProblem = getOneRandomProblem().id;
