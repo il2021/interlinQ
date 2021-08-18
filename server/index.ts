@@ -85,6 +85,11 @@ io.on('connection', socket => {
         if (waitRooms.length > 0) {
             // とりあえず2人部屋のみとするので、直ちに ready 化
             const room = waitRooms.shift() as WaitRoom;
+            room.members.push({
+                id: userId,
+                name: userName,
+                answerPermitted: true,
+            });
             socket.join(room.roomId);
             const res = {
                 roomId: room.roomId,
