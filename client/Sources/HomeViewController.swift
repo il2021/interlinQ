@@ -64,7 +64,7 @@ class HomeViewModel: NSObject {
 
     func buttonPressed() {
         labelText = "検索中"
-        print(userId)
+        print("ユーザーID:\(userId)")
         webSocketManager.connect()
         webSocketManager.joinRoom(userId: userId, userName: "テストユーザー")
         isLoading = webSocketManager.isConnect

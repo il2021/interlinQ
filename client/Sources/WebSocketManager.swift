@@ -56,6 +56,10 @@ final class WebSocketManager {
             if let arr = data as? [[String: Any]] {
                 if let roomId = arr[0]["roomId"] as? String {
                     self.roomId = roomId
+                    QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
+                        precondition(quiz.available != false)
+                        self.quiz = quiz
+                    }
                 }
 
                 if let memberNames = arr[0]["memberNames"] as? [String] {
@@ -76,6 +80,8 @@ final class WebSocketManager {
                 }
                 print("room作成完了")
             }
+            
+            
             self.delegate?.createRoom()
         }
         

@@ -19,26 +19,30 @@ class WaitViewController: UIViewController, WebSocketDelegate {
     var observers: [NSKeyValueObservation] = []
     var roomId = ""
     var memberNames:[String] = []
-    
+    var quiz: Quiz!
     override func viewDidLoad() {
         webSocketManager.delegate = self
         super.viewDidLoad()
         
         roomIdText.text = webSocketManager.roomId
 
-
     }
     
     func ready() {
-        self.performSegue(withIdentifier: "toPlay", sender: self)
+        QuizClient.fetchNextQuiz(roomId: webSocketManager.roomId) { quiz in
+            self.quiz = quiz
+            print(quiz.question)
+            assert(quiz.available != nil)
+            self.performSegue(withIdentifier: "toPlay", sender: self)
+        }
+       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toPlay"{
             let nextVC = segue.destination as! PlayViewController
             
-            nextVC.quiz = webSocketManager.quiz
-            print(webSocketManager.quiz)
+            nextVC.quiz = quiz
         }
     }
     
