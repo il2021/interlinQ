@@ -14,8 +14,6 @@
 """
 
 import csv
-import random
-import time
 from urllib import request
 
 from bs4 import BeautifulSoup
@@ -37,7 +35,6 @@ class Scrape:
         self.res = request.urlopen(self.url)
         self.soup = BeautifulSoup(self.res, features="html.parser")
         self.res.close()
-        time.sleep(5.0 + random.random())
 
     """
     * 日本語が含まれるかどうか判定
