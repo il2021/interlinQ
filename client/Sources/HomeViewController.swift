@@ -16,10 +16,7 @@ class HomeViewController: UIViewController, WebSocketDelegate {
         
     }
     
-    func ready(_ quiz: Quiz, roomId: String) {
-        self.quiz = quiz
-        self.performSegue(withIdentifier: "fromHometoPlay", sender: self)
-    }
+
     var quiz: Quiz = Quiz(id: nil, available: nil, question: nil, answer: nil, answerInKana: nil)
     
     var roomId = ""
@@ -46,6 +43,11 @@ class HomeViewController: UIViewController, WebSocketDelegate {
         self.view.addSubview(ActivityIndicator)
 
        
+    }
+    
+    func ready(_ quiz: Quiz, roomId: String) {
+        self.quiz = quiz
+        self.performSegue(withIdentifier: "fromHometoPlay", sender: self)
     }
     
     func createRoom(_ roomId: String) {
