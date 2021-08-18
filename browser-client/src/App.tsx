@@ -41,13 +41,13 @@ const App = () => {
             });
             socket?.on('room-created', param => {
                 addLog(`[room-created] Room id: ${param.roomId}`);
-                setRoomId(param.roomId);
             });
             socket?.on('room-updated', param => {
                 addLog(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
             });
             socket?.on('room-ready', param => {
                 addLog(`[room-ready] Room id: ${param.roomId} Current members: ${param.memberNames.join(', ')}`);
+                setRoomId(param.roomId);
                 setMemberNames(param.memberNames);
                 setStatus('attending');
                 addLog('Set status as attending.');
