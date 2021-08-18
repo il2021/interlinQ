@@ -24,7 +24,6 @@ class HomeViewController: UIViewController, WebSocketDelegate {
     var ActivityIndicator: UIActivityIndicatorView!
     let viewModel = HomeViewModel()
     var webSocketManager = WebSocketManager.shared
-    @IBOutlet weak var searchingText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +63,6 @@ class HomeViewController: UIViewController, WebSocketDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toWait"{
             let nextVC = segue.destination as! WaitViewController
-            
             nextVC.roomId = self.roomId
         }
         

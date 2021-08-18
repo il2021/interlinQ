@@ -182,20 +182,12 @@
                                 <color key="textColor" systemColor="systemBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="検索中..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ui-fl-l6L">
-                                <rect key="frame" x="160" y="472" width="134" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XZM-xK-GbO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="wRR-vn-q3I"/>
                     <connections>
-                        <outlet property="searchingText" destination="2Ui-fl-l6L" id="ITc-Yy-vuO"/>
                         <segue destination="EhD-Pw-1SL" kind="presentation" identifier="toWait" id="Xvf-NT-e5q"/>
                         <segue destination="chf-99-qCv" kind="presentation" identifier="fromHometoPlay" modalPresentationStyle="fullScreen" id="Mzn-kR-SHz"/>
                     </connections>
