@@ -8,8 +8,8 @@ output_file = "quiz_refine.tsv"
 NG_Words = ["今年", "去年"]
 
 with open(input_file, newline="") as input_f:
-    with open(output_file, "w", encoding="utf_8_sig") as output_f:
-        tsv = csv.writer(output_f, delimiter="\t", lineterminator="\r\n")
+    with open(output_file, "w") as output_f:
+        tsv = csv.writer(output_f, delimiter="\t", lineterminator="\n")
 
         for id, problem, answer, answer_kana in csv.reader(input_f, delimiter="\t"):
             if answer == "":
