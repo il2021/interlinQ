@@ -24,10 +24,10 @@ class Scrape:
         self.words = []
         self.meaning = []
         self.url = ""
-        self.saveFileName = "quiz_education.csv"
+        self.save_file_name = "quiz_education.csv"
 
     def _init(self):
-        with open(self.saveFileName, "w", encoding="utf-8") as f:
+        with open(self.save_file_name, "w", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["**文部科学省のサイトより**"])
 
@@ -52,7 +52,7 @@ class Scrape:
         return string.encode(enc).decode(enc)
 
     def _save(self):
-        with open(self.saveFileName, "a", encoding="utf-8") as f:
+        with open(self.save_file_name, "a", encoding="utf-8") as f:
             writer = csv.writer(f)
             for i in range(len(self.words)):
                 writer.writerow([self.meaning[i], self.words[i]])
