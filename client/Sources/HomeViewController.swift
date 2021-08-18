@@ -7,13 +7,21 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController,WebSocketDelegate {
+
+    func ready() {
+        print("設計ミス")
+    }
+
+    var roomId = ""
     var ActivityIndicator: UIActivityIndicatorView!
     let viewModel = HomeViewModel()
-    var observers: [NSKeyValueObservation] = []
+    var webSocketManager = WebSocketManager.shared
     @IBOutlet weak var searchingText: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        webSocketManager.delegate = self
         ActivityIndicator = UIActivityIndicatorView()
         ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         ActivityIndicator.center = self.view.center
@@ -28,21 +36,26 @@ class HomeViewController: UIViewController {
         self.view.addSubview(ActivityIndicator)
     
 
-        let observer1 = viewModel.observe(\.waiting) { [weak self] (viewModel, _) in
-            if viewModel.waiting {
-                self?.performSegue(withIdentifier: "toWait", sender: self)
-            }
-            
-        }
-        
-        
-        observers = [observer1]
+       
     }
     
+    func createRoom(_ roomId: String) {
+        self.roomId = roomId
+        
+        self.performSegue(withIdentifier: "toWait", sender: self)
+    }
     
     @IBAction func tapGoButton(_ sender: Any) {
         viewModel.isLoading ? ActivityIndicator.startAnimating() : ActivityIndicator.stopAnimating()
         viewModel.buttonPressed()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toWait"{
+            let nextVC = segue.destination as! WaitViewController
+            
+            nextVC.roomId = self.roomId
+        }
     }
     
 }

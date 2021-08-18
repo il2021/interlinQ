@@ -10,7 +10,7 @@ import SocketIO
 
 protocol WebSocketDelegate: AnyObject {
     func ready()
-    func createRoom()
+    func createRoom(_ roomId: String)
 }
 
 final class WebSocketManager {
@@ -77,16 +77,14 @@ final class WebSocketManager {
             if let arr = data as? [[String: Any]] {
                 if let roomId = arr[0]["roomId"] as? String {
                     self.roomId = roomId
+                    print("room-created内: \(roomId)")
+                    self.delegate?.createRoom(roomId)
                 }
                 print("room作成完了")
             }
             
-            
-            self.delegate?.createRoom()
         }
-        
 
-        
         socket.on("room-blocked"){ data, ack in
             if let arr = data as? [[String: Any]] {
                 if let answeringUserName = arr[0]["answeringUserName"] as? String {
