@@ -43,6 +43,6 @@ for li in soup.find_all("li"):
 
         container.append([answer, question])
 
-with open("keisatsu.csv", "w", encoding="utf_8_sig", newline="") as f:
+with open("keisatsu.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerows(container)
