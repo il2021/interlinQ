@@ -44,24 +44,19 @@ const fetchNextProblem = async (roomId: string) => {
 };
 
 const App: React.FC = () => {
-    const [log, setLog] = useState<string>('');
-    const addLog = (s: string) => { setLog(log + '\n' + s); };
     const [userId, setUserId] = useState<string>('');
     const [userName, setUserName] = useState<string>('名無し');
     const [roomId, setRoomId] = useState<string | null>(null);
     const [memberNames, setMemberNames] = useState<string[]>([userName]);
-    const [status, setStatus] = useState<'waiting' | 'attending' | 'answering' | null>(null);
+    const [status, setStatus] = useState<'waiting' | 'attending' | 'answering' | 'result' | null>(null);
     const [currentProblem, setCurrentProblem] = useState<Problem | null>(null);
     const [myAnswer, setMyAnswer] = useState('');
     const [answerBlocked, setAnswerBlocked] = useState(false);
+    const [score, setScore] = useState({ me: 0, opponent: 0 });
     const [socket, setSocket] = useState<Socket | null>(null);
-    socket?.on('connect', () => {
-        addLog('Connected.');
-    });
     useEffect(() => {
         const id = uuid();
         setUserId(id);
-        addLog(`Your userId is ${id}`);
         const s = io(HOST);
         setSocket(s);
     }, []);
@@ -70,18 +65,16 @@ const App: React.FC = () => {
             socket?.emit('join-room', {
                 userId, userName,
             });
-            socket?.on('room-created', param => {
-                addLog(`[room-created] Room id: ${param.roomId}`);
-            });
-            socket?.on('room-updated', param => {
-                addLog(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
-            });
+            // socket?.on('room-created', param => {
+            //     console.log(`[room-created] Room id: ${param.roomId}`);
+            // });
+            // socket?.on('room-updated', param => {
+            //     console.log(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
+            // });
             socket?.on('room-ready', param => {
-                addLog(`[room-ready] Room id: ${param.roomId} Current members: ${param.memberNames.join(', ')}`);
                 setRoomId(param.roomId);
                 setMemberNames(param.memberNames);
                 setStatus('attending');
-                addLog('Set status as attending.');
             });
         }
         if (status === 'attending') {
@@ -90,26 +83,30 @@ const App: React.FC = () => {
                     if (problem) {
                         setCurrentProblem(problem);
                     } else {
-                        setStatus('waiting');
+                        setStatus('result');
                     }
                 });
             }
+        }
+        if (status === 'attending') {
             socket?.on('answer-blocked', param => {
-                addLog(`[answer-blocked] Answering member: ${param.answeringUserName}`);
                 setAnswerBlocked(true);
             });
             socket?.on('problem-answered', param => {
-                addLog(`[problem-answered] User name: ${param.userName} isCorrect: ${param.isCorrect}`);
                 setAnswerBlocked(false);
+                if (param.isCorrect) {
+                    setScore({
+                        me: score.me,
+                        opponent: score.opponent + 1,
+                    });
+                }
             });
             socket?.on('problem-closed', param => {
-                addLog('[problem-closed]');
                 setAnswerBlocked(false);
                 setCurrentProblem(null);
             });
         }
         socket?.on('room-closed', param => {
-            addLog(`[room-closed] Succeeded: ${param.succeeded} Winner name: ${param.winnerName}`);
             setStatus(null);
             setRoomId(null);
         });
@@ -123,7 +120,6 @@ const App: React.FC = () => {
             <div>
                 status: {status || 'null'}
             </div>
-            <pre>{log}</pre>
             <div style={{ margin: '1em 0' }}>
                 <label htmlFor='userName'>ユーザー名: </label>
                 <input
@@ -134,10 +130,7 @@ const App: React.FC = () => {
             </div>
             <div>
                 {status === null &&
-                    <button onClick={() => {
-                        setStatus('waiting');
-                        addLog('Set status as waiting.');
-                    }}>入室する</button>
+                    <button onClick={() => { setStatus('waiting'); }}>入室する</button>
                 }
                 {status === 'waiting' &&
                     <p>待機中…</p>
@@ -156,7 +149,6 @@ const App: React.FC = () => {
                                             setStatus('answering');
                                             setMyAnswer('');
                                             socket?.emit('start-answer', { userId, roomId });
-                                            addLog('Emitted start-answer.');
                                         }}
                                     >
                                         解答
@@ -181,6 +173,10 @@ const App: React.FC = () => {
                                                             userId,
                                                             roomId,
                                                             isCorrect: true,
+                                                        });
+                                                        setScore({
+                                                            me: score.me + 1,
+                                                            opponent: score.opponent
                                                         });
                                                         setStatus('attending');
                                                         setCurrentProblem(null);
@@ -210,6 +206,12 @@ const App: React.FC = () => {
                                 }
                             </div>
                         )}
+                    </div>
+                }
+                {status === 'result' &&
+                    <div>
+                        <p>あなたの点数: {score.me}</p>
+                        <p>相手の点数: {score.opponent}</p>
                     </div>
                 }
             </div>
