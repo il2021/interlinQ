@@ -8,8 +8,25 @@
 import UIKit
 
 class PlayViewController: UIViewController, PlayingDelegate {
+    
     func problemClosed() {
         print("次の問題のリクエスト")
+        QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
+            self.quiz = quiz
+            print(quiz)
+        }
+        
+        nextQuiz()
+        
+    }
+    
+    func nextQuiz() {
+        if count < 5 {
+            yomiageTimer.invalidate()
+            displaySentence()
+        } else {
+            
+        }
     }
     
     func answering(userName: String) {
