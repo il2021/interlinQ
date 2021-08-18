@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03BBD43726CD32BF0034B86B /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BBD43626CD32BF0034B86B /* ResultViewController.swift */; };
 		04089A340EA68E17952842A0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CB82FFD8CFA86023FDF72A4A /* README.md */; };
 		04C16654BD9B041B4636030A /* QuizClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69011D4B95B505E9F2340B6 /* QuizClient.swift */; };
 		082B9B3DDCAC06B681512968 /* TestFunction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 636084E6993DBCB69FBCC23E /* TestFunction.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03BBD43626CD32BF0034B86B /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0ECAF456A1041DED820140FB /* TestWebSocketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWebSocketViewController.swift; sourceTree = "<group>"; };
 		1D021F73DE17648F28C0F05D /* WaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitViewController.swift; sourceTree = "<group>"; };
 		2965B6AAEC8B72A5AA362A72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,7 +42,7 @@
 		75D7FD29996885F4A28ACB1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E8B1E606C9F0BB0B1369AE3 /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 		7EE1E11C018211EE3FC2A07A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		8173C5CD325C99327C79430F /* .gitignore */ = {isa = PBXFileReference; path = .gitignore; sourceTree = "<group>"; };
+		8173C5CD325C99327C79430F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		933C27CBD861086CECFA76EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		985A186F9637DFB32852805B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B0471D2EC685D174BC88A13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				4E71045F3DCB39A1138B0D69 /* PlayViewController.swift */,
 				7E8B1E606C9F0BB0B1369AE3 /* Quiz.swift */,
 				A69011D4B95B505E9F2340B6 /* QuizClient.swift */,
+				03BBD43626CD32BF0034B86B /* ResultViewController.swift */,
 				BE64C5234FBB1A84DE287F24 /* SceneDelegate.swift */,
 				636084E6993DBCB69FBCC23E /* TestFunction.storyboard */,
 				CC5C1882863D650D3D18DDA6 /* ViewController.swift */,
@@ -131,7 +134,6 @@
 				3A898CFBF62E0ACBE39726C2 /* Pods-client.debug.xcconfig */,
 				C2900844F9099DD7F05D761D /* Pods-client.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -164,8 +166,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1200;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = EE0361824CAD5BF6769F9CC2 /* Build configuration list for PBXProject "client" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -259,6 +259,7 @@
 				2F523F1E7F04E990C267D8FE /* ViewController.swift in Sources */,
 				589B2448CAE88A2290953AD5 /* WaitViewController.swift in Sources */,
 				3F44431299D017DF6911BBB5 /* WebSocketManager.swift in Sources */,
+				03BBD43726CD32BF0034B86B /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

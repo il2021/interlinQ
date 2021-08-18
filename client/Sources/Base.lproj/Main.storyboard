@@ -117,7 +117,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3339" y="-44"/>
+            <point key="canvasLocation" x="2516" y="-105"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="vo9-jp-3eH">
@@ -194,7 +194,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oGK-19-0XG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="928.98550724637687" y="766.74107142857144"/>
+            <point key="canvasLocation" x="1648" y="755"/>
         </scene>
         <!--Wait View Controller-->
         <scene sceneID="Pao-wE-AHu">
@@ -239,7 +239,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8QB-yq-ccV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2371" y="1552"/>
+            <point key="canvasLocation" x="2539" y="2008"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="JYI-Y1-I3Z">
@@ -418,23 +418,23 @@
                         <outlet property="prg" destination="Bz3-Qx-hSg" id="flJ-ao-F8a"/>
                         <outlet property="questionSentence" destination="Nbh-Nc-OUO" id="b8W-gI-jah"/>
                         <outlet property="stackButtons" destination="qBo-3g-fVL" id="tuD-b2-jwk"/>
+                        <segue destination="VU6-pu-DTT" kind="presentation" identifier="toResult" modalPresentationStyle="fullScreen" id="a5X-EB-mmU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BTY-T9-jwn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3392.753623188406" y="766.74107142857144"/>
+            <point key="canvasLocation" x="2952" y="862"/>
         </scene>
-        <!--View Controller-->
+        <!--Result View Controller-->
         <scene sceneID="bSA-ty-hBU">
             <objects>
-                <viewController id="VU6-pu-DTT" sceneMemberID="viewController">
+                <viewController id="VU6-pu-DTT" customClass="ResultViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9PL-oa-uGP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="結果" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dQ-oo-OvL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結果" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dQ-oo-OvL">
                                 <rect key="frame" x="157" y="115" width="101" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                 <color key="textColor" systemColor="systemBackgroundColor"/>
                                 <nil key="highlightedColor"/>
@@ -489,12 +489,18 @@
                                 <state key="normal" title="ホームへ">
                                     <color key="titleColor" red="0.1289579136" green="0.3700158221" blue="0.7603019754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="returnHomeButton:" destination="VU6-pu-DTT" eventType="touchUpInside" id="SY7-sy-US9"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="86" translatesAutoresizingMaskIntoConstraints="NO" id="b3Z-DN-tuF">
                                 <rect key="frame" x="84" y="216" width="246" height="80"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4u-2p-KYq">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="NHO-fg-loY"/>
+                                        </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-fL-ci1">
                                         <rect key="frame" x="166" y="0.0" width="80" height="80"/>
@@ -504,7 +510,15 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="S1S-0W-k5m"/>
                         <color key="backgroundColor" red="0.1289579136" green="0.3700158221" blue="0.7603019754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="S1S-0W-k5m" firstAttribute="trailing" secondItem="9dQ-oo-OvL" secondAttribute="trailing" constant="156" id="0jG-e7-G5e"/>
+                            <constraint firstItem="9dQ-oo-OvL" firstAttribute="top" secondItem="S1S-0W-k5m" secondAttribute="top" constant="71" id="F03-za-q40"/>
+                            <constraint firstItem="9dQ-oo-OvL" firstAttribute="leading" secondItem="S1S-0W-k5m" secondAttribute="leading" constant="157" id="HHG-TG-0iT"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <segue destination="VrN-7L-im5" kind="presentation" identifier="toHome" modalPresentationStyle="fullScreen" id="TNx-i9-75V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sfQ-Y9-QeB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -512,7 +526,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Mzn-kR-SHz"/>
+        <segue reference="oTQ-8R-noX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
