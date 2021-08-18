@@ -39,7 +39,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
 
     @IBOutlet weak var stackButtons: UIStackView!
     @IBOutlet weak var answerButton: UIButton!
-    
+    var point = 0
+    var count = 0
     var yomiageTimer = Timer()
     var currentCharNum = 0
     var quiz: Quiz!
@@ -51,8 +52,10 @@ class PlayViewController: UIViewController, PlayingDelegate {
     
     @IBOutlet weak var questionSentence: UITextView!
     var webSocketManager = WebSocketManager.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        webSocketManager.playingdelegate = self
         prg.progress = 1.0
         
         displaySentence()
@@ -67,12 +70,10 @@ class PlayViewController: UIViewController, PlayingDelegate {
         }
     }
     
-    @IBAction func tapanswerButton(_ sender: Any) {
-    }
     
     
     @IBAction func testSubmitAnswer(_ sender: Any) {
-        
+        if roomId == "" { fatalError() }
         webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: true)
     }
     
