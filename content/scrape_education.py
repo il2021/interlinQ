@@ -14,7 +14,6 @@
 * 文にダブルクォーテーションが含まれるとうまく取得できないっぽいです。
   * 「認証基盤」：インターネット等のネットワークを利用してデータのやり取りやサービスの授受を行う際、相手方が真にその名義人であるか、内容が改ざんされていないかを相互に保証するための仕組み
   * これは手動でやる必要があるかもしれません。
-  * Windowsで実行するときはwith openの引数にnewline=""が必要
 """
 
 import csv
@@ -54,8 +53,8 @@ class Scrape:
         self._init_save_file(self.save_file_name_tsv)
 
     def _init_save_file(self, file_name):
-        with open(file_name, "w", encoding="utf-8", newline="") as f:
-            writer = csv.writer(f)
+        with open(file_name, "w", encoding="utf-8", newline="\n") as f:
+            writer = csv.writer(f, lineterminator="\n")
             writer.writerow(["**文部科学省のサイトより**"])
 
     def _get_contents(self):
@@ -74,10 +73,10 @@ class Scrape:
         return bool(re_hiragana.search(string))
 
     def _save(self):
-        with open(self.save_file_name_csv, "a", encoding="utf-8", newline="") as f_csv:
-            with open(self.save_file_name_tsv, "a", encoding="utf-8", newline="") as f_tsv:
-                writer_csv = csv.writer(f_csv)
-                writer_tsv = csv.writer(f_tsv, delimiter='\t')
+        with open(self.save_file_name_csv, "a", encoding="utf-8", newline="\n") as f_csv:
+            with open(self.save_file_name_tsv, "a", encoding="utf-8", newline="\n") as f_tsv:
+                writer_csv = csv.writer(f_csv, lineterminator="\n")
+                writer_tsv = csv.writer(f_tsv, delimiter='\t', lineterminator="\n")
                 tmp = 'education'
 
                 for i in range(len(self.words)):
