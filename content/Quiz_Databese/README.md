@@ -4,13 +4,16 @@
 
 ## ABC-GOの問題（同じ問題がないように修正）
 
-    quiz_abdgo.tsv
+    quiz_abcgo.tsv
 
 ## ABC-GOの中のITに関する問題
 
-    quiz_abdgo_IT.tsv
+    quiz_abcgo_IT.tsv
 
 ## 総務省のIT用語ページから作成した問題（出典の表記必要）
 
     quiz_soumu.tsv
 
+## HTTPステータスコードに関する問題
+
+    quiz_http_status_codes.tsv
