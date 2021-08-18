@@ -14,9 +14,14 @@ protocol WebSocketDelegate: AnyObject {
     func createRoom(_ roomId: String)
 }
 
+protocol PlayingDelegate: AnyObject {
+    func answering(userName: String)
+    func problemClosed()
+}
+
 final class WebSocketManager {
     weak var delegate: WebSocketDelegate?
-    
+    weak var playingdelegate: PlayingDelegate?
     static let shared = WebSocketManager()
     var roomId = ""
     let manager = SocketManager(socketURL: URL(string:"http://localhost:8080/")!, config: [.log(true), .compress])
@@ -91,14 +96,21 @@ final class WebSocketManager {
             
         }
 
-        socket.on("room-blocked"){ data, ack in
+        socket.on("answer-blocked"){ data, ack in
             if let arr = data as? [[String: Any]] {
                 if let answeringUserName = arr[0]["answeringUserName"] as? String {
                     self.answeringUserName = answeringUserName
+                    self.playingdelegate?.answering(userName: answeringUserName)
                 }
             }
             print("誰かが回答中 \(self.answeringUserName)")
             //TODO:回答者のみがボタンを押せる
+        }
+        
+        socket.on("problem-closed"){ data, ack in
+            print("次の問題に進む \(self.answeringUserName)")
+            self.playingdelegate?.problemClosed()
+            
         }
         
         socket.on("problem-answered"){ data, ack in
@@ -132,6 +144,9 @@ final class WebSocketManager {
             print("ルームを閉じる")
             
         }
+        
+        
+        
         
     
         socket.connect()

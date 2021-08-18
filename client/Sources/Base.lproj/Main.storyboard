@@ -305,6 +305,7 @@
                                     <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                 </state>
                                 <connections>
+                                    <action selector="answerButton:" destination="chf-99-qCv" eventType="touchUpInside" id="mzU-7D-uFw"/>
                                     <action selector="showIndicator:" destination="chf-99-qCv" eventType="touchUpInside" id="e0N-sD-lJY"/>
                                 </connections>
                             </button>
@@ -422,8 +423,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="YYj-Ez-the"/>
                     <connections>
+                        <outlet property="answerButton" destination="5Gp-m7-sml" id="dfy-uS-ID8"/>
                         <outlet property="prg" destination="Bz3-Qx-hSg" id="flJ-ao-F8a"/>
                         <outlet property="questionSentence" destination="Nbh-Nc-OUO" id="b8W-gI-jah"/>
+                        <outlet property="stackButtons" destination="qBo-3g-fVL" id="tuD-b2-jwk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BTY-T9-jwn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

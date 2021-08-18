@@ -7,14 +7,29 @@
 
 import UIKit
 
-class PlayViewController: UIViewController {
+class PlayViewController: UIViewController, PlayingDelegate {
+    func problemClosed() {
+        print("次の問題のリクエスト")
+    }
+    
+    func answering(userName: String) {
+        answeringUser = userName
+        print("\(answeringUser)が回答中")
+        answerButton.isEnabled = false
+        stackButtons.isHidden = true
+        //TODO:テキスト読み上げ停止
+    }
+
+    @IBOutlet weak var stackButtons: UIStackView!
+    @IBOutlet weak var answerButton: UIButton!
+    
     var yomiageTimer = Timer()
     var currentCharNum = 0
     var quiz: Quiz!
     var roomId: String!
     var timerPrg:Timer = Timer()
     let userId = UIDevice.current.identifierForVendor!.uuidString
-
+    var answeringUser: String = ""
     @IBOutlet weak var prg: UIProgressView!
     
     @IBOutlet weak var questionSentence: UITextView!
@@ -24,11 +39,7 @@ class PlayViewController: UIViewController {
         prg.progress = 1.0
         
         displaySentence()
-        DispatchQueue.main.async {
-//            self.questionSentence.text = self.quiz.question
-        }
-        
-       
+               
     }
     
     
@@ -39,12 +50,13 @@ class PlayViewController: UIViewController {
         }
     }
     
-    
+    @IBAction func tapanswerButton(_ sender: Any) {
+    }
     
     
     @IBAction func testSubmitAnswer(_ sender: Any) {
         
-        
+        webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: true)
     }
     
 }

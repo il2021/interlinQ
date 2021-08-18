@@ -40,6 +40,7 @@ class WaitViewController: UIViewController, WebSocketDelegate {
     func ready(_ quiz: Quiz, roomId: String) {
         QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
             self.quiz = quiz
+            self.roomId = roomId
             print(quiz.question)
             assert(quiz.available != nil)
             self.performSegue(withIdentifier: "toPlay", sender: self)
@@ -50,7 +51,7 @@ class WaitViewController: UIViewController, WebSocketDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toPlay"{
             let nextVC = segue.destination as! PlayViewController
-            
+            nextVC.roomId = roomId
             nextVC.quiz = quiz
         }
     }
