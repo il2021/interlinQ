@@ -21,12 +21,17 @@ class PlayViewController: UIViewController, PlayingDelegate {
     }
     
     func nextQuiz() {
+        count += 1
         if count < 5 {
             yomiageTimer.invalidate()
             displaySentence()
         } else {
-            
+            gameover()
         }
+    }
+    
+    func gameover() {
+        self.performSegue(withIdentifier: "toResult", sender: self)
     }
     
     func answering(userName: String) {
