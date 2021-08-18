@@ -10,7 +10,7 @@ import SocketIO
 
 protocol WebSocketDelegate: AnyObject {
     func connect()
-    func ready(_ quiz: Quiz)
+    func ready(_ quiz: Quiz, roomId: String)
     func createRoom(_ roomId: String)
 }
 
@@ -66,7 +66,7 @@ final class WebSocketManager {
                     QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
                         precondition(quiz.available != false)
                         self.quiz = quiz
-                        self.delegate?.ready(quiz)
+                        self.delegate?.ready(quiz,roomId: roomId)
                     }
                     
                     

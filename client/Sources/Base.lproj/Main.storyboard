@@ -388,6 +388,14 @@
                                     <action selector="quitButton:" destination="chf-99-qCv" eventType="touchUpInside" id="irS-fV-wBy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUO-JZ-Dhz">
+                                <rect key="frame" x="157" y="801" width="100" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="SubMitAnswer"/>
+                                <connections>
+                                    <action selector="testSubmitAnswer:" destination="chf-99-qCv" eventType="touchUpInside" id="Kwe-I2-Z5V"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xPo-mu-XPn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

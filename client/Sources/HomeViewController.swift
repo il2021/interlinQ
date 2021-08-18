@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController,WebSocketDelegate {
+class HomeViewController: UIViewController, WebSocketDelegate {
     
     func connect() {
         DispatchQueue.main.async {
@@ -16,7 +16,7 @@ class HomeViewController: UIViewController,WebSocketDelegate {
         
     }
     
-    func ready(_ quiz: Quiz) {
+    func ready(_ quiz: Quiz, roomId: String) {
         self.quiz = quiz
         self.performSegue(withIdentifier: "fromHometoPlay", sender: self)
     }
@@ -67,7 +67,7 @@ class HomeViewController: UIViewController,WebSocketDelegate {
         
         if segue.identifier == "fromHometoPlay"{
             let nextVC = segue.destination as! PlayViewController
-            
+            nextVC.roomId = self.roomId
             nextVC.quiz = self.quiz
         }
     }

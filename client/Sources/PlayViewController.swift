@@ -11,7 +11,10 @@ class PlayViewController: UIViewController {
     var yomiageTimer = Timer()
     var currentCharNum = 0
     var quiz: Quiz!
+    var roomId: String!
     var timerPrg:Timer = Timer()
+    let userId = UIDevice.current.identifierForVendor!.uuidString
+
     @IBOutlet weak var prg: UIProgressView!
     
     @IBOutlet weak var questionSentence: UITextView!
@@ -29,7 +32,6 @@ class PlayViewController: UIViewController {
     }
     
     
-    
     @IBAction func quitButton(_ sender: Any) {
         dismiss(animated: true) { [self] in
             self.webSocketManager.disconnect()
@@ -37,7 +39,14 @@ class PlayViewController: UIViewController {
         }
     }
     
-
+    
+    
+    
+    @IBAction func testSubmitAnswer(_ sender: Any) {
+        
+        
+    }
+    
 }
 
 //読みあげ機能
@@ -88,5 +97,7 @@ extension PlayViewController {
     @IBAction func showIndicator(_ sender: Any) {
         progress()
     }
+    
+    
     
 }

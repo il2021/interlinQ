@@ -37,8 +37,8 @@ class WaitViewController: UIViewController, WebSocketDelegate {
 
     }
     
-    func ready(_ quiz: Quiz) {
-        QuizClient.fetchNextQuiz(roomId: webSocketManager.roomId) { quiz in
+    func ready(_ quiz: Quiz, roomId: String) {
+        QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
             self.quiz = quiz
             print(quiz.question)
             assert(quiz.available != nil)
