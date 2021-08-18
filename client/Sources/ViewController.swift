@@ -105,7 +105,7 @@ class ViewController: UIViewController {
     var hira:String = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
     var kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
     var answer:String = "あいうえお"
-    var currentCharNum:Int = 0
+
     var ansLen:Int = 0
     var answerChoices: [String] = ["", "", "", ""]
     
