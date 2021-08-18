@@ -150,7 +150,7 @@ io.on('connection', socket => {
                     succeeded: true,
                     winnerName: winnerName,
                 });
-                activeRooms.splice(activeRooms.findIndex(room => room.roomId), 1);
+                activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
             } else {
                 const nextProblem = getOneRandomProblem().id;
                 room.problemIds.push(nextProblem);
@@ -175,6 +175,10 @@ io.on('connection', socket => {
                 });
             }
         }
+    });
+    socket.on('close-room', params => {
+        const roomId = params.roomId as string;
+        activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
     });
 });
 
