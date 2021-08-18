@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="showText"/>
                                 <connections>
-                                    <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MaO-Rq-i02"/>
+                                    <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="euH-qI-hhK"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yGj-Rl-USz">
@@ -43,7 +43,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="showIndicator:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gdg-4K-8CH"/>
+                                    <action selector="showIndicator:" destination="BYZ-38-t0r" eventType="touchUpInside" id="88Y-kV-F0h"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcT-Q4-XhP">
@@ -51,7 +51,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="TestWebSocket"/>
                                 <connections>
-                                    <action selector="toTestButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5nN-QG-5kq"/>
+                                    <action selector="toTestButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="je6-hU-lw5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -59,8 +59,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="prg" destination="hJK-4E-LRF" id="9QG-Ph-57L"/>
-                        <outlet property="questionSentence" destination="yGj-Rl-USz" id="sKc-7o-xWI"/>
+                        <outlet property="prg" destination="hJK-4E-LRF" id="JLg-VA-06d"/>
+                        <outlet property="questionSentence" destination="yGj-Rl-USz" id="nUe-G3-l1K"/>
                         <segue destination="ylz-0f-Z8A" kind="show" identifier="toTest" id="Nec-3K-eeQ"/>
                     </connections>
                 </viewController>
