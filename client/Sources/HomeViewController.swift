@@ -47,6 +47,7 @@ class HomeViewController: UIViewController, WebSocketDelegate {
     
     func ready(_ quiz: Quiz, roomId: String) {
         self.quiz = quiz
+        self.roomId = roomId
         self.performSegue(withIdentifier: "fromHometoPlay", sender: self)
     }
     
