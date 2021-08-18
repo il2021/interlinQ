@@ -32,9 +32,8 @@ class Scrape:
             writer.writerow(["**文部科学省のサイトより**"])
 
     def _get_contents(self):
-        self.res = request.urlopen(self.url)
-        self.soup = BeautifulSoup(self.res, features="html.parser")
-        self.res.close()
+        with request.urlopen(self.url) as resp:
+            self.soup = BeautifulSoup(resp, features="html.parser")
 
     """
     * 日本語が含まれるかどうか判定
