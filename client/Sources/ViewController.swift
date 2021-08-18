@@ -15,9 +15,43 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //indicator
+    
+    @IBOutlet weak var prg: UIProgressView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        prg.progress = 1.0
     }
+    
+    var timerPrg:Timer = Timer()
+    
+    func progress() {
+        prg.progress = 1.0
+        //バーがだんだん短くなっていくようにTimerでリピートさせる
+        timerPrg = Timer.scheduledTimer(timeInterval: 0.03, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
+    }
+    //タイマーの中身
+    @objc func timerFunc() {
+           // prgの現在の数値より少しだけ少ない数値をprgにセット
+        let newValue = prg.progress - 0.01
+           // 10秒ぐらいで0になりますので
+        if (newValue < 0) {
+               // newValueが０より小さくなってしまったら
+               prg.setProgress(0, animated: true)
+               // タイマーを停止させます
+               timerPrg.invalidate()
+        } else {
+               prg.setProgress(newValue, animated: true)
+        }
+    }
+       
+    @IBAction func showIndicator(_ sender: Any) {
+        progress()
+    }
+       
+
+    //display sentence
     
     @IBAction func toTestButtonAction(_ sender: Any) {
         self.performSegue(withIdentifier: "toTest", sender: self)

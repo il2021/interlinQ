@@ -14,7 +14,6 @@ Answers = []
 Answers_kana = []
 
 NG_Words = ["今年","去年"]
-Set_Problems = set([])
 
 for L in Data_input:
   sentence = L[0]
@@ -33,25 +32,12 @@ for L in Data_input:
   problem = sentence[index1+1:index2]
   answer = sentence[index2+1:index3]
   answer_kana = sentence[index3+1:]
-  
-  if answer == "":
+  if answer == "" or sentence in NG_Words:
     continue
-    
-  flag_NG = 0
-  for ng_word in NG_Words:
-    if ng_word in sentence:
-      flag_NG = 1
-  if flag_NG == 1:
-    continue
-    
-  if problem in Set_Problems:
-    continue
-    
   ID.append(id)
   Problems.append(problem)
   Answers.append(answer)
   Answers_kana.append(answer_kana)
-  Set_Problems.add(problem)
   print(id,answer)
   
   
@@ -66,8 +52,8 @@ for i in range(len(Answers)):
   string = id +"\t"  + problem + "\t" + answer + "\t" + answer_kana
   Data_output.append([string])
 
-with open("quiz_refine.tsv", "w", encoding="utf_8", newline="\n") as f:
-    writer = csv.writer(f,lineterminator='\n')
+with open("quiz_refine.tsv", "w", encoding="utf_8_sig", newline="") as f:
+    writer = csv.writer(f)
     writer.writerows(Data_output)
 
 

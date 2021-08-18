@@ -32,15 +32,21 @@ class HomeViewController: UIViewController {
             self?.searchingText.text = viewModel.labelText
         }
         
+        let observer2 = viewModel.observe(\.waiting) { [weak self] (viewModel, _) in
+            if viewModel.waiting {
+                self?.performSegue(withIdentifier: "toWait", sender: self)
+            }
+            
+        }
         
-        observers = [observer1]
+        
+        observers = [observer1, observer2]
     }
     
     
     @IBAction func tapGoButton(_ sender: Any) {
         viewModel.isLoading ? ActivityIndicator.startAnimating() : ActivityIndicator.stopAnimating()
         viewModel.buttonPressed()
-        
     }
     
 }
@@ -49,6 +55,8 @@ class HomeViewModel: NSObject {
     @objc dynamic private(set) var labelText: String?
     @objc dynamic private(set) var buttonIsEnabled: Bool = false
     @objc dynamic private(set) var isLoading: Bool = false
+    @objc dynamic private(set) var waiting: Bool = false
+    
     var observers: [NSKeyValueObservation] = []
     let userId = UIDevice.current.identifierForVendor!
     
@@ -58,8 +66,9 @@ class HomeViewModel: NSObject {
         labelText = "検索中"
         print(userId)
         webSocketManager.connect()
-        webSocketManager.joinRoom(userId: userId, userName: userId.uuidString)
+        webSocketManager.joinRoom(userId: userId, userName: "テストユーザー")
         isLoading = webSocketManager.isConnect
+        waiting = webSocketManager.isWaiting
     }
     
     
