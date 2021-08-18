@@ -108,10 +108,12 @@ final class WebSocketManager {
         }
         
         socket.on("problem-closed"){ data, ack in
-            print("次の問題に進む \(self.answeringUserName)")
+            print("次の問題に進む\(ack)")
+            
             self.playingdelegate?.problemClosed()
             
         }
+        
         
         socket.on("problem-answered"){ data, ack in
             if let arr = data as? [[String: Any]] {
@@ -181,8 +183,21 @@ final class WebSocketManager {
         socket.emit("submit-answer", Answer(userId: userId, roomId: roomId, isCorrect: isCorrect))
         print("回答を提出する")
     }
+    
+    func closeRoom(roomId: String) {
+        socket.emit("submit-answer",RoomId(roomId: roomId) )
+        print("部屋を削除")
+    }
 }
 
+
+struct RoomId: SocketData {
+    let roomId: String
+    
+    func socketRepresentation() -> SocketData {
+        return ["roomId": roomId]
+    }
+}
 struct JoinRoom: SocketData {
     let userId: String
     let userName: String
