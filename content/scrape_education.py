@@ -45,7 +45,7 @@ class Scrape:
             75: "人間が活動する世界にコンピュータをとけこませるというアプローチで、計算機が計算機として人の前に現れるのではなく、人間の現実世界での活動の状況に応じてさりげなく支援を行うインターフェースのことを何というでしょう？",
             96: "インターネットを介して提供されている様々なサービス・情報源への入り口を集めたWebページを実現するシステムのことを何というでしょう？",
             104: "いつでもどこでも情報にアクセスできるような環境のことを何というでしょう？",
-            105: "電子をそこに閉じ込めることにより、その性質を完全に制御することができる10ナノメートル程度の箱を何というでしょう？"
+            105: "電子をそこに閉じ込めることにより、その性質を完全に制御することができる10ナノメートル程度の箱を何というでしょう？",
         }
 
     def _init(self):
@@ -73,11 +73,15 @@ class Scrape:
         return bool(re_hiragana.search(string))
 
     def _save(self):
-        with open(self.save_file_name_csv, "a", encoding="utf-8", newline="\n") as f_csv:
-            with open(self.save_file_name_tsv, "a", encoding="utf-8", newline="\n") as f_tsv:
+        with open(
+            self.save_file_name_csv, "a", encoding="utf-8", newline="\n"
+        ) as f_csv:
+            with open(
+                self.save_file_name_tsv, "a", encoding="utf-8", newline="\n"
+            ) as f_tsv:
                 writer_csv = csv.writer(f_csv, lineterminator="\n")
-                writer_tsv = csv.writer(f_tsv, delimiter='\t', lineterminator="\n")
-                tmp = 'education'
+                writer_tsv = csv.writer(f_tsv, delimiter="\t", lineterminator="\n")
+                tmp = "education"
 
                 for i in range(len(self.words)):
                     writer_csv.writerow([self.meaning[i], self.words[i]])
