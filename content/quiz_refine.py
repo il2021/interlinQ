@@ -11,12 +11,12 @@ with open(input_file, newline="") as input_f:
     with open(output_file, "w") as output_f:
         tsv = csv.writer(output_f, delimiter="\t", lineterminator="\n")
 
-        for id, problem, answer, answer_kana in csv.reader(input_f, delimiter="\t"):
+        for qid, problem, answer, answer_kana in csv.reader(input_f, delimiter="\t"):
             if answer == "":
                 continue
             if any(word in problem for word in NG_Words):
                 continue
 
-            print(id, answer)
+            print(qid, answer)
 
-            tsv.writerow([id, problem, answer, answer_kana])
+            tsv.writerow([qid, problem, answer, answer_kana])
