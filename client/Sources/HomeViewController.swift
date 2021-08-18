@@ -14,7 +14,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var searchingText: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchingText.text = ""
         ActivityIndicator = UIActivityIndicatorView()
         ActivityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         ActivityIndicator.center = self.view.center
@@ -28,11 +27,8 @@ class HomeViewController: UIViewController {
         //Viewに追加
         self.view.addSubview(ActivityIndicator)
     
-        let observer1 = viewModel.observe(\.labelText) { [weak self] (viewModel, _) in
-            self?.searchingText.text = viewModel.labelText
-        }
-        
-        let observer2 = viewModel.observe(\.waiting) { [weak self] (viewModel, _) in
+
+        let observer1 = viewModel.observe(\.waiting) { [weak self] (viewModel, _) in
             if viewModel.waiting {
                 self?.performSegue(withIdentifier: "toWait", sender: self)
             }
@@ -40,7 +36,7 @@ class HomeViewController: UIViewController {
         }
         
         
-        observers = [observer1, observer2]
+        observers = [observer1]
     }
     
     
@@ -52,7 +48,7 @@ class HomeViewController: UIViewController {
 }
 
 class HomeViewModel: NSObject {
-    @objc dynamic private(set) var labelText: String?
+
     @objc dynamic private(set) var buttonIsEnabled: Bool = false
     @objc dynamic private(set) var isLoading: Bool = false
     @objc dynamic private(set) var waiting: Bool = false
@@ -63,12 +59,12 @@ class HomeViewModel: NSObject {
     var webSocketManager: WebSocketManager = WebSocketManager.shared
 
     func buttonPressed() {
-        labelText = "検索中"
         print("ユーザーID:\(userId)")
         webSocketManager.connect()
         webSocketManager.joinRoom(userId: userId, userName: "テストユーザー")
         isLoading = webSocketManager.isConnect
         waiting = webSocketManager.isWaiting
+
     }
     
     
