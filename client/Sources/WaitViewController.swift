@@ -14,6 +14,7 @@ class WaitViewController: UIViewController, WebSocketDelegate {
     }
     
     func createRoom(_ roomId: String) {
+        self.roomId = roomId
     }
     
 
