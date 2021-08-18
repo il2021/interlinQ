@@ -8,12 +8,22 @@
 import UIKit
 
 class HomeViewController: UIViewController,WebSocketDelegate {
-
-    func ready() {
-        print("設計ミス")
+    
+    func connect() {
+        DispatchQueue.main.async {
+            self.ActivityIndicator.startAnimating()
+        }
+        
     }
-
+    
+    func ready(_ quiz: Quiz) {
+        self.quiz = quiz
+        self.performSegue(withIdentifier: "fromHometoPlay", sender: self)
+    }
+    var quiz: Quiz = Quiz(id: nil, available: nil, question: nil, answer: nil, answerInKana: nil)
+    
     var roomId = ""
+    
     var ActivityIndicator: UIActivityIndicatorView!
     let viewModel = HomeViewModel()
     var webSocketManager = WebSocketManager.shared
@@ -34,19 +44,17 @@ class HomeViewController: UIViewController,WebSocketDelegate {
         
         //Viewに追加
         self.view.addSubview(ActivityIndicator)
-    
 
        
     }
     
     func createRoom(_ roomId: String) {
         self.roomId = roomId
-        
         self.performSegue(withIdentifier: "toWait", sender: self)
     }
     
     @IBAction func tapGoButton(_ sender: Any) {
-        viewModel.isLoading ? ActivityIndicator.startAnimating() : ActivityIndicator.stopAnimating()
+        ActivityIndicator.stopAnimating()
         viewModel.buttonPressed()
     }
     
@@ -55,6 +63,12 @@ class HomeViewController: UIViewController,WebSocketDelegate {
             let nextVC = segue.destination as! WaitViewController
             
             nextVC.roomId = self.roomId
+        }
+        
+        if segue.identifier == "fromHometoPlay"{
+            let nextVC = segue.destination as! PlayViewController
+            
+            nextVC.quiz = self.quiz
         }
     }
     

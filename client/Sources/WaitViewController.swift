@@ -8,6 +8,11 @@
 import UIKit
 
 class WaitViewController: UIViewController, WebSocketDelegate {
+
+    
+    func connect() {
+    }
+    
     func createRoom(_ roomId: String) {
     }
     
@@ -32,7 +37,7 @@ class WaitViewController: UIViewController, WebSocketDelegate {
 
     }
     
-    func ready() {
+    func ready(_ quiz: Quiz) {
         QuizClient.fetchNextQuiz(roomId: webSocketManager.roomId) { quiz in
             self.quiz = quiz
             print(quiz.question)

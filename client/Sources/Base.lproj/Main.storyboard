@@ -146,6 +146,7 @@
                     <connections>
                         <outlet property="searchingText" destination="2Ui-fl-l6L" id="ITc-Yy-vuO"/>
                         <segue destination="EhD-Pw-1SL" kind="presentation" identifier="toWait" id="Xvf-NT-e5q"/>
+                        <segue destination="chf-99-qCv" kind="presentation" identifier="fromHometoPlay" modalPresentationStyle="fullScreen" id="Mzn-kR-SHz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oGK-19-0XG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -195,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8QB-yq-ccV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1847.826086956522" y="773.4375"/>
+            <point key="canvasLocation" x="2371" y="1552"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="JYI-Y1-I3Z">
@@ -453,6 +454,9 @@
             <point key="canvasLocation" x="4289.855072463768" y="766.74107142857144"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Mzn-kR-SHz"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <systemColor name="labelColor">
