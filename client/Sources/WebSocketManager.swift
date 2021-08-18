@@ -22,6 +22,7 @@ final class WebSocketManager {
     var echoIsCorrect = false
     var winnerName = ""
     var succeeded = false
+    var quiz = Quiz(id: nil, available: nil, question: nil, answer: nil, answerInKana: nil)
     
     private init() {
         
@@ -45,7 +46,7 @@ final class WebSocketManager {
         }
         
         // MARK: 部屋の準備が整った時
-        socket.on("room-ready"){ data, ack in
+        socket.on("room-ready"){ [self] data, ack in
             if let arr = data as? [[String: Any]] {
                 if let roomId = arr[0]["roomId"] as? String {
                     self.roomId = roomId
@@ -59,8 +60,11 @@ final class WebSocketManager {
             
             self.isWaiting = false
             self.canStart = true
+            print("roomId:\(self.roomId)")
             print("room-ready:2人集まった \(self.memberNames)")
-            
+            QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
+                print(quiz)
+            }
         }
         
         socket.on("room-created"){ data, ack in
