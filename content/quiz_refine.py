@@ -66,8 +66,8 @@ for i in range(len(Answers)):
   string = id +"\t"  + problem + "\t" + answer + "\t" + answer_kana
   Data_output.append([string])
 
-with open("quiz_refine.tsv", "w", encoding="utf_8_sig", newline="") as f:
-    writer = csv.writer(f)
+with open("quiz_refine.tsv", "w", encoding="utf_8", newline="\n") as f:
+    writer = csv.writer(f,lineterminator='\n')
     writer.writerows(Data_output)
 
 
