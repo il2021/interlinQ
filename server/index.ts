@@ -19,6 +19,8 @@ const problems: Problem[] = fs.readFileSync('../content/quiz.tsv', 'utf-8').spli
 
 const getOneRandomProblem = () => sample(problems) as Problem;
 
+const getMostAppearing = (a: unknown[]) => Object.entries(countBy(a)).sort((a, b) => a[1] < b[1] ? 1 : -1)[0];
+
 interface Member {
     id: string; // Don't pass to clients!
     name: string;
@@ -146,9 +148,9 @@ io.on('connection', socket => {
                 member.answerPermitted = true;
             });
             io.to(roomId).emit('problem-closed');
-            if (room.solverIds.filter(solverId => solverId !== null).length === 5) {
-                const solvesDict = countBy(room.solverIds.filter(solverId => solverId !== null));
-                const winnerId = Object.entries(solvesDict).sort((a, b) => a < b ? 1 : -1)[0][0];
+            const [topRunnerId, topRunnerScore] = getMostAppearing(room.solverIds);
+            if (topRunnerScore >= 5) { // Since it's incremental, this will be exactly 5
+                const winnerId = topRunnerId;
                 const winnerName = room.members.filter(member => member.id === winnerId)[0].name;
                 room.problemIds = [];
                 activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
