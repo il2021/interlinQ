@@ -132,10 +132,16 @@ const App: React.FC = () => {
             </div>
             <div>
                 {status === null &&
-                    <button onClick={() => { setStatus('waiting'); }}>入室する</button>
+                    <button onClick={() => { setStatus('waiting'); }} >入室する</button>
                 }
                 {status === 'waiting' &&
                     <p>待機中…</p>
+                }
+                {status !== null &&
+                    <button onClick={() => {
+                        socket?.emit('close-room', { roomId });
+                        setStatus('waiting');
+                    }}>退出する</button>
                 }
                 {(status === 'attending' || status === 'answering') &&
                     <div>
