@@ -22,7 +22,6 @@ class WaitViewController: UIViewController, WebSocketDelegate {
 
 
     @IBOutlet weak var waitingText: UILabel!
-    @IBOutlet weak var roomIdText: UILabel!
     var webSocketManager = WebSocketManager.shared
     var viewModel = WaitViewModel()
     var observers: [NSKeyValueObservation] = []
@@ -32,11 +31,6 @@ class WaitViewController: UIViewController, WebSocketDelegate {
     override func viewDidLoad() {
         webSocketManager.delegate = self
         super.viewDidLoad()
-        
-        DispatchQueue.main.async {
-            self.roomIdText.text = self.roomId
-        }
-       
 
     }
     
