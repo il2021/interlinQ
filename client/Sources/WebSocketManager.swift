@@ -28,7 +28,7 @@ final class WebSocketManager {
     weak var playingdelegate: PlayingDelegate?
     static let shared = WebSocketManager()
     var roomId = ""
-    let manager = SocketManager(socketURL: URL(string:"http://localhost:8080/")!, config: [.log(true), .compress])
+    let manager = SocketManager(socketURL: URL(string:"http://tk2-221-20494.vs.sakura.ne.jp:8080/")!, config: [.log(true), .compress])
     var socket : SocketIOClient!
     var memberNames: [String] = []
     var canStart = false

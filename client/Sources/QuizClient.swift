@@ -37,7 +37,7 @@ class QuizClient {
 }
 
 class QuizRepository {
-    static let nextQURL = URL(string: "http://localhost:8080/api/problems/next")!
+    static let nextQURL = URL(string: "http://tk2-221-20494.vs.sakura.ne.jp:8080/api/problems/next")!
 }
 extension URL {
     /// クエリを一つ追加した新しいURLを返す
