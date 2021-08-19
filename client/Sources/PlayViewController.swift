@@ -43,7 +43,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     func canAnswerState() {
         displaying = true
         answerButton.isEnabled = true
-        answerButton.backgroundColor = .blue
+        answerButton.backgroundColor = UIColor(named: "MainColor")
     }
     
     //他の人が回答中
@@ -62,8 +62,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
     func startAnswer() {
         print("自分が回答を始めた ")
         stackButtons.isHidden = false
-//        stackButtons.backgroundColor = .blue
-        (0..<4).forEach {index in ansButtonArray[index].backgroundColor = .blue}
+
+        (0..<4).forEach {index in ansButtonArray[index].backgroundColor = UIColor(named: "MainColor")}
         answerButton.isEnabled = false
         answerButton.backgroundColor = .gray
         displaying = false
@@ -100,7 +100,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     
     func nextQuiz() {
         answerButton.isEnabled = true
-        answerButton.backgroundColor = .blue
+        answerButton.backgroundColor = UIColor(named: "MainColor")
         stackButtons.isHidden = true
         
         quizCount += 1
