@@ -23,11 +23,13 @@ class PlayViewController: UIViewController, PlayingDelegate {
             canAnswerState()
             player2Point -= 10
         }
-        
+
     }
     
     func submitAnswer() {
         print("提出完了")
+        answerField.text = ""
+        
     }
     
     func canAnswerState() {
