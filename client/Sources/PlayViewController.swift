@@ -225,14 +225,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     }
     
     //画面遷移時or問題が切り替わった時に実行
-//    func setUpQuiz() {
-//        if let answer = quiz.answerInKana {
-//            ansLen = answer.count
-//        } else {
-//            print("クイズなし")
-//        }
-//    }
-    
+
     func judgeAnswer(_ userinputChar: String, answerChar: String) {
         if choicedAnswer == quiz.answerInKana! {
             print("正解")
@@ -243,15 +236,12 @@ class PlayViewController: UIViewController, PlayingDelegate {
             setAnswerChoices()
             settingButton(setStrings: answerChoices)
             progress()
-            
-            
         } else {
             print("不正解")
             //失敗シグナル
             webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: false)
         }
         
-        //ユーザーの入力が合っているかどうか
         
     }
     
