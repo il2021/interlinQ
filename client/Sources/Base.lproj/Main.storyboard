@@ -518,20 +518,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結果" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dQ-oo-OvL">
-                                <rect key="frame" x="157" y="115" width="101" height="60"/>
+                                <rect key="frame" x="156.5" y="115" width="101" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zok-rb-tDS">
-                                <rect key="frame" x="65" y="384" width="76" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="textColor" systemColor="secondarySystemGroupedBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOSE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRG-FJ-KYD">
-                                <rect key="frame" x="252" y="384" width="97" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" systemColor="systemBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -550,24 +538,26 @@
                                     <action selector="returnHomeButton:" destination="VU6-pu-DTT" eventType="touchUpInside" id="SY7-sy-US9"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You LOSE..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a47-9d-el3">
+                                <rect key="frame" x="85" y="418" width="244" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="S1S-0W-k5m"/>
                         <color key="backgroundColor" red="0.1289579136" green="0.3700158221" blue="0.7603019754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="S1S-0W-k5m" firstAttribute="trailing" secondItem="9dQ-oo-OvL" secondAttribute="trailing" constant="156" id="0jG-e7-G5e"/>
-                            <constraint firstItem="pRG-FJ-KYD" firstAttribute="top" secondItem="S1S-0W-k5m" secondAttribute="top" constant="340" id="3Ff-dP-S7v"/>
-                            <constraint firstItem="9dQ-oo-OvL" firstAttribute="top" secondItem="S1S-0W-k5m" secondAttribute="top" constant="71" id="F03-za-q40"/>
-                            <constraint firstItem="9dQ-oo-OvL" firstAttribute="leading" secondItem="S1S-0W-k5m" secondAttribute="leading" constant="157" id="HHG-TG-0iT"/>
-                            <constraint firstItem="Zok-rb-tDS" firstAttribute="top" secondItem="S1S-0W-k5m" secondAttribute="top" constant="340" id="P04-Hv-sTp"/>
-                            <constraint firstItem="Zok-rb-tDS" firstAttribute="leading" secondItem="S1S-0W-k5m" secondAttribute="leading" constant="65" id="Qs1-e0-WAm"/>
+                            <constraint firstItem="9dQ-oo-OvL" firstAttribute="centerX" secondItem="9PL-oa-uGP" secondAttribute="centerX" id="61K-yT-sAd"/>
+                            <constraint firstItem="a47-9d-el3" firstAttribute="centerY" secondItem="9PL-oa-uGP" secondAttribute="centerY" id="9RQ-SO-iF8"/>
+                            <constraint firstItem="9dQ-oo-OvL" firstAttribute="top" secondItem="S1S-0W-k5m" secondAttribute="top" constant="71" id="NHY-8d-6Gq"/>
                             <constraint firstItem="kq9-km-lW6" firstAttribute="centerX" secondItem="9PL-oa-uGP" secondAttribute="centerX" id="apv-hJ-lOa"/>
-                            <constraint firstItem="S1S-0W-k5m" firstAttribute="trailing" secondItem="pRG-FJ-KYD" secondAttribute="trailing" constant="65" id="bTV-hI-3Ig"/>
                             <constraint firstItem="S1S-0W-k5m" firstAttribute="bottom" secondItem="kq9-km-lW6" secondAttribute="bottom" constant="110" id="rdb-mc-DYG"/>
+                            <constraint firstItem="a47-9d-el3" firstAttribute="centerX" secondItem="9PL-oa-uGP" secondAttribute="centerX" id="zH9-6O-4Fg"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="loseLabel" destination="pRG-FJ-KYD" id="iM0-pc-OJT"/>
-                        <outlet property="winLabel" destination="Zok-rb-tDS" id="fHv-oW-WQ8"/>
+                        <outlet property="judgeLabel" destination="a47-9d-el3" id="1FR-xg-YyO"/>
                         <segue destination="VrN-7L-im5" kind="presentation" identifier="toHome" modalPresentationStyle="fullScreen" id="TNx-i9-75V"/>
                     </connections>
                 </viewController>

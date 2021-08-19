@@ -312,6 +312,15 @@ class PlayViewController: UIViewController, PlayingDelegate {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toResult"{
+            let nextVC = segue.destination as! ResultViewController
+            nextVC.player1Point = player1Point
+            nextVC.player2Point = player2Point
+        }
+    }
+    
+    
 }
 
 
