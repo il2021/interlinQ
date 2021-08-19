@@ -197,8 +197,10 @@ class PlayViewController: UIViewController, PlayingDelegate {
 extension PlayViewController {
     
     func updateAnswerField() {
-        answerField.text = choicedAnswer
-        answerChoices = ["", "", "", ""]
+        DispatchQueue.main.async {
+            self.answerField.text = self.choicedAnswer
+        }
+        
     }
     
     // 文字列で返す。
