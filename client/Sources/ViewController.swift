@@ -13,6 +13,8 @@
 
 import UIKit
 
+import AVFoundation
+
 class ViewController: UIViewController {
     
     //indicator
@@ -50,7 +52,28 @@ class ViewController: UIViewController {
     @IBAction func showIndicator(_ sender: Any) {
         progress()
     }
-       
+    
+    //sound effect
+
+    var player:AVAudioPlayer?
+    
+    override func didReceiveMemoryWarning() {
+            super.didReceiveMemoryWarning()
+            // Dispose of any resources that can be recreated.
+        }
+
+    @IBAction func Buzzer(_ sender: Any) {
+        // 再生する音声ファイルを指定する
+        let soundURL = Bundle.main.url(forResource: "Buzzer", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
+    }
+
 
     //display sentence
     
