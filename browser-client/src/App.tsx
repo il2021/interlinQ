@@ -23,7 +23,9 @@ const makeChoices = (correctChar: string) => {
     } else if ((12449 <= correctCharCode && correctCharCode < 12534) || correctChar === 'ー') { // カタカナ (ァ-ヶ) か長音 (カタカナのことが多い)
         choices.push(...sampleSize(range(12449, 12535), 3));
     } else if (65313 <= correctCharCode && correctCharCode <= 65339) { // 全角英字 (Ａ-Ｚ)
-        choices.push(...sampleSize(range(65313, 65339)), 3);
+        choices.push(...sampleSize(range(65313, 65339), 3));
+    } else if (65296 <= correctCharCode && correctCharCode < 65306) {
+        choices.push(...sampleSize(range(65296, 65306), 3));
     } else { // ひらがなとみなす
         choices.push(...sampleSize(range(12353, 12435), 3)); // ぁ-ん
     }
@@ -67,12 +69,6 @@ const App: React.FC = () => {
             socket?.emit('join-room', {
                 userId, userName,
             });
-            // socket?.on('room-created', param => {
-            //     console.log(`[room-created] Room id: ${param.roomId}`);
-            // });
-            // socket?.on('room-updated', param => {
-            //     console.log(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
-            // });
             socket?.on('room-ready', param => {
                 setRoomId(param.roomId);
                 setMemberNames(param.memberNames);
@@ -91,7 +87,7 @@ const App: React.FC = () => {
             }
         }
         if (status === 'attending') {
-            socket?.on('answer-blocked', param => {
+            socket?.on('answer-blocked', () => {
                 setAnswerBlocked(true);
             });
             socket?.on('problem-answered', param => {
@@ -103,14 +99,20 @@ const App: React.FC = () => {
                     });
                 }
             });
-            socket?.on('problem-closed', param => {
+            socket?.on('problem-closed', () => {
                 setAnswerBlocked(false);
                 setCurrentProblem(null);
             });
         }
-        socket?.on('room-closed', param => {
-            setStatus(null);
-            setRoomId(null);
+        socket?.on('room-closed', params => {
+            if (!params?.succeeded) {
+                setRoomId(null);
+                setMemberNames([userName]);
+                setStatus(null);
+                setCurrentProblem(null);
+                setMyAnswer('');
+                setScore({ me: 0, opponent: 0 });
+            }
         });
     }, [status, currentProblem]);
     if (currentProblem) {
@@ -140,12 +142,19 @@ const App: React.FC = () => {
                 {status !== null &&
                     <button onClick={() => {
                         socket?.emit('close-room', { roomId });
-                        setStatus('waiting');
+                        setRoomId(null);
+                        setMemberNames([userName]);
+                        setStatus(null);
+                        setCurrentProblem(null);
+                        setMyAnswer('');
+                        setScore({ me: 0, opponent: 0 });
                     }}>退出する</button>
                 }
                 {(status === 'attending' || status === 'answering') &&
                     <div>
                         <p>参加者: {memberNames.join(', ')}</p>
+                        <p>今のあなたの点数: {score.me}</p>
+                        <p>今の相手の点数: {score.opponent}</p>
                         {currentProblem && (
                             <div>
                                 <h2>問題</h2>
