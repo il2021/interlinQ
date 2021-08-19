@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func qustion(_ sender: Any) {
+    @IBAction func question(_ sender: Any) {
         let soundURL = Bundle.main.url(forResource: "Question", withExtension: "mp3")
         do {
             // 効果音を鳴らす
