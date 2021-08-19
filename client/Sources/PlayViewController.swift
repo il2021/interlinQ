@@ -216,30 +216,17 @@ extension PlayViewController {
         let num:String = "0123456789"
         
         var tmp = ""  // 答えの文字の種類の要素一覧
-        if (hira.contains(ansChar)) {
+        if (hira.contains(chartype)) {
             tmp = hira
-        } else if (kata.contains(ansChar)) {
+        } else if (kata.contains(chartype)) {
             tmp = kata
-        } else if (alpha.contains(ansChar)) {
+        } else if (alpha.contains(chartype)) {
             tmp = alpha
         } else {
             tmp = num
         }
-        //tmpLenとは ランダム文字の長さ
-        var tmpLen = tmp.count
-        
-        //この部分でanswerChoices[String]を当てはめている
-        for i in 0..<4 {
-            while (answerChoices[i] == "") {
-                var index = Int.random(in: 0 ..< tmpLen)
-                //あいうえお、アイウエオのどれかの文字
-                var choice = strAccess(str: tmp, index: index)
-                //重複した文字列がはいっていなければ、
-                if (!answerChoices.contains(choice)){
-                    answerChoices[i] = choice
-                }
-            }
-        }
+
+        return strAccess(str: tmp, index: Int.random(in: 0 ..< tmp.count))
     }
     
     
