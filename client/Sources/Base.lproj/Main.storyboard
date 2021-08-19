@@ -183,7 +183,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amQ-bV-kzu">
                                 <rect key="frame" x="107" y="588" width="200" height="84"/>
-                                <color key="backgroundColor" red="0.1289579136" green="0.3700158221" blue="0.7603019754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.43048128489999998" blue="0.73141437769999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="SWE-9s-Dg7"/>
                                 </constraints>
@@ -546,7 +546,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="S1S-0W-k5m"/>
-                        <color key="backgroundColor" red="0.1289579136" green="0.3700158221" blue="0.7603019754" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.43048128489999998" blue="0.73141437769999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9dQ-oo-OvL" firstAttribute="centerX" secondItem="9PL-oa-uGP" secondAttribute="centerX" id="61K-yT-sAd"/>
                             <constraint firstItem="a47-9d-el3" firstAttribute="centerY" secondItem="9PL-oa-uGP" secondAttribute="centerY" id="9RQ-SO-iF8"/>
@@ -567,7 +567,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="oTQ-8R-noX"/>
+        <segue reference="Mzn-kR-SHz"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.43048128489999998" blue="0.73141437769999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
