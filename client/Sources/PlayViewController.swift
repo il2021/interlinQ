@@ -65,10 +65,13 @@ class PlayViewController: UIViewController, PlayingDelegate {
         //TODO:テキスト読み上げ一時停止
     }
     
+    @IBOutlet weak var answerField: UILabel!
     
     @IBOutlet weak var stackButtons: UIStackView!
     @IBOutlet weak var answerButton: UIButton!
-    var point = 0
+    
+    @IBOutlet var ansButtonArray: [UIButton]!
+    
     var count = 0
     var yomiageTimer = Timer()
     var currentCharNum = 0
