@@ -23,6 +23,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         answerButton.backgroundColor = .gray
         stackButtons.isHidden = true
         //TODO: テキスト読み上げ一時停止
+        displaying = false
         
     }
     
@@ -33,6 +34,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         (0..<4).forEach {index in ansButtonArray[index].backgroundColor = .blue}
         answerButton.isEnabled = false
         answerButton.backgroundColor = .gray
+        displaying = false
     }
     
     
@@ -96,6 +98,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     
     @IBOutlet weak var questionSentence: UITextView!
     var webSocketManager = WebSocketManager.shared
+    var displaying: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -210,6 +213,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         } else {
             print("不正解")
             //失敗シグナル
+            displaying = true
         }
         
         //ユーザーの入力が合っているかどうか
@@ -272,11 +276,13 @@ extension PlayViewController {
         questionSentence.text = String(message.prefix(currentCharNum))
         if message.count <= currentCharNum {
             time.invalidate()
-            currentCharNum = 0
             return
         }
-        currentCharNum += 1
+        if (displaying) {
+            currentCharNum += 1
+        }
     }
+    
 }
 
 //残り時間機能
