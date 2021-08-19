@@ -48,6 +48,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         //TODO: テキスト読み上げ一時停止
         displaying = false
         
+        
     }
     
     func startAnswer() {
@@ -66,9 +67,13 @@ class PlayViewController: UIViewController, PlayingDelegate {
         QuizClient.fetchNextQuiz(roomId: roomId) { quiz in
             self.quiz = quiz
             print(quiz)
+            print(quiz.answerInKana)
+            self.currentCharIndex = 0
+            self.currentCharNum = 0
+            self.choicedAnswer = ""
+            self.updateAnswerField()
+            self.nextQuiz()
         }
-        
-        nextQuiz()
         
     }
     
