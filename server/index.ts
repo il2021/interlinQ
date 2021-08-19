@@ -53,13 +53,12 @@ app.get<{
     };
 }>('/api/problems/next', async request => {
     const roomId = request.query.roomId;
-    const rooms = activeRooms.filter(room => room.roomId === roomId);
-    if (rooms.length === 0) {
+    const room = roomIdToRoom(activeRooms, roomId);
+    if (typeof room === 'undefined') {
         return {
             available: false,
         };
     }
-    const room = rooms[0];
     const latestProblemId = room.problemIds.slice(-1)[0];
     const latestProblem = problems.filter(problem => problem.id === latestProblemId)[0]; // 遅そ〜。index できる db に入れたいね
     return {
@@ -67,6 +66,14 @@ app.get<{
         ...latestProblem
     };
 });
+
+type PotentiallyUndefined<T> = T | undefined;
+
+const roomIdToRoom = (activeRooms: ActiveRoom[], roomId: string) =>
+    activeRooms.filter(room => room.roomId === roomId)[0] as PotentiallyUndefined<ActiveRoom>;
+
+const memberIdToMember = (room: ActiveRoom, userId: string) =>
+    room.members.filter(member => member.id === userId)[0] as PotentiallyUndefined<Member>;
 
 const io = new Server(app.server, {
     cors: {
@@ -118,15 +125,31 @@ io.on('connection', socket => {
     socket.on('start-answer', params => {
         const roomId = params.roomId as string;
         const userId = params.userId as string;
-        const room = activeRooms.filter(room => room.roomId === roomId)[0];
-        const user = room.members.filter(member => member.id === userId)[0];
+        const room = roomIdToRoom(activeRooms, roomId);
+        if (typeof room === 'undefined') {
+            io.emit('room-closed', { succeeded: false });
+            return;
+        }
+        const user = memberIdToMember(room, userId);
+        if (typeof user === 'undefined') {
+            io.emit('room-closed', { succeeded: false });
+            return;
+        }
         socket.to(roomId).emit('answer-blocked', { answeringUserName: user.name });
     });
     socket.on('submit-answer', params => {
         const roomId = params.roomId as string;
         const userId = params.userId as string;
-        const room = activeRooms.filter(room => room.roomId === roomId)[0];
-        const user = room.members.filter(member => member.id === userId)[0];
+        const room = roomIdToRoom(activeRooms, roomId);
+        if (typeof room === 'undefined') {
+            io.emit('room-closed', { succeeded: false });
+            return;
+        }
+        const user = memberIdToMember(room, userId);
+        if (typeof user === 'undefined') {
+            io.emit('room-closed', { succeeded: false });
+            return;
+        }
         const isCorrect = params.isCorrect as boolean;
         socket.to(roomId).emit('problem-answered', {
             userName: user.name,
@@ -141,7 +164,12 @@ io.on('connection', socket => {
             const [topRunnerId, topRunnerScore] = getMostAppearing(room.solverIds);
             if (topRunnerScore >= 5) { // Since it's incremental, this will be exactly 5
                 const winnerId = topRunnerId;
-                const winnerName = room.members.filter(member => member.id === winnerId)[0].name;
+                const winner = memberIdToMember(room, winnerId);
+                if (typeof winner === 'undefined') {
+                    io.emit('room-closed', { succeeded: false });
+                    return;
+                }
+                const winnerName = winner.name;
                 room.problemIds = [];
                 activeRooms.splice(activeRooms.findIndex(room => room.roomId === roomId), 1);
                 io.to(roomId).emit('room-closed', {
