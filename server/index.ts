@@ -2,7 +2,7 @@ import fastify from 'fastify';
 import fastifyCors from 'fastify-cors';
 import { Server } from 'socket.io';
 import { v4 as uuid } from 'uuid';
-import { sample, sampleSize, countBy } from 'lodash';
+import { sample, countBy } from 'lodash';
 import fs from 'fs';
 
 interface Problem {
@@ -45,16 +45,6 @@ const activeRooms: ActiveRoom[] = [];
 const app = fastify();
 app.register(fastifyCors, {
     origin: '*',
-});
-
-app.get<{
-    Querystring: {
-        n?: number;
-    };
-}>('/api/problems/random', async request => {
-    console.warn('This endpoint is deprecated.');
-    const n = request.query.n || 5;
-    return sampleSize(problems, n);
 });
 
 app.get<{
