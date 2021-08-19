@@ -205,7 +205,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
             currentCharIndex += 1
             setAnswerChoices()
             settingButton(setStrings: answerChoices)
-            
+            progress()
             
         } else {
             print("不正解")
