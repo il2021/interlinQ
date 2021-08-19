@@ -245,6 +245,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
         if choicedAnswer == quiz.answerInKana! {
             print("正解")
             webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: true)
+            player1Point += 20
+            player1PointText.text = String(player1Point)
             //問題に正解シグナル
         } else if userinputChar == answerChar {
             currentCharIndex += 1
@@ -254,6 +256,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         } else {
             print("不正解")
             //失敗シグナル
+            player1Point -= 5
             webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: false)
         }
         
