@@ -20,8 +20,10 @@ const makeChoices = (correctChar: string) => {
     const choices = [correctCharCode];
     if (47 <= correctCharCode && correctCharCode < 58) { // 数字
         choices.push(...sampleSize(range(47, 58), 3));
-    } else if (12449 <= correctCharCode && correctCharCode < 12534) { // カタカナ (ァ-ヶ)
+    } else if ((12449 <= correctCharCode && correctCharCode < 12534) || correctChar === 'ー') { // カタカナ (ァ-ヶ) か長音 (カタカナのことが多い)
         choices.push(...sampleSize(range(12449, 12535), 3));
+    } else if (65313 <= correctCharCode && correctCharCode <= 65339) { // 全角英字 (Ａ-Ｚ)
+        choices.push(...sampleSize(range(65313, 65339)), 3);
     } else { // ひらがなとみなす
         choices.push(...sampleSize(range(12353, 12435), 3)); // ぁ-ん
     }
