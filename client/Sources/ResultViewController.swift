@@ -9,6 +9,11 @@ import UIKit
 
 class ResultViewController: UIViewController {
 
+    @IBOutlet weak var winLabel: UILabel!
+    @IBOutlet weak var loseLabel: UILabel!
+    var player1Point = 0
+    var player2Point = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
