@@ -19,6 +19,8 @@ protocol PlayingDelegate: AnyObject {
     func answering(userName: String)
     func problemClosed()
     func startAnswer()
+    func submitAnswer()
+    func problemAnswered(isCorrect: Bool)
 }
 
 final class WebSocketManager {
@@ -119,11 +121,12 @@ final class WebSocketManager {
         socket.on("problem-answered"){ data, ack in
             if let arr = data as? [[String: Any]] {
                 if let echoUserName = arr[0]["userName"] as? String {
-                    self.echoUserName = echoUserName
                 }
                 
                 if let echoIsCorrect = arr[0]["isCorrect"] as? Bool {
-                    self.echoIsCorrect = echoIsCorrect
+                    print(echoIsCorrect)
+                    
+                    self.playingdelegate?.problemAnswered(isCorrect: echoIsCorrect)
                 }
                 
             }
@@ -181,6 +184,7 @@ final class WebSocketManager {
     
     func submitAnswer(userId: String, roomId: String, isCorrect: Bool) {
         socket.emit("submit-answer", Answer(userId: userId, roomId: roomId, isCorrect: isCorrect))
+        self.playingdelegate?.submitAnswer()
         print("回答を提出する")
     }
     

@@ -15,6 +15,27 @@ enum inputButton: Int {
 }
 
 class PlayViewController: UIViewController, PlayingDelegate {
+    func problemAnswered(isCorrect: Bool) {
+        print("相手が正解したか\(isCorrect)")
+        if isCorrect {
+            player2Point += 10
+        } else {
+            canAnswerState()
+            player2Point -= 10
+        }
+        
+    }
+    
+    func submitAnswer() {
+        print("提出完了")
+    }
+    
+    func canAnswerState() {
+        displaying = true
+        answerButton.isEnabled = true
+        answerButton.backgroundColor = .blue
+    }
+    
     //他の人が回答中
     func answering(userName: String) {
         answeringUser = userName
@@ -59,6 +80,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         if count < 5 {
             yomiageTimer.invalidate()
             displaySentence()
+            // TODO: 新しい問題用にボタンを更新
         } else {
             gameover()
         }
@@ -80,7 +102,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     //選んだ文字
     var choicedAnswer: String = ""
     var count = 0
-
+    var player2Point = 0
     var currentCharIndex:Int = 0
     var ansLen:Int = 0
     var answerChoices: [String] = ["", "", "", ""]
@@ -191,18 +213,18 @@ class PlayViewController: UIViewController, PlayingDelegate {
     }
     
     //画面遷移時or問題が切り替わった時に実行
-    func setUpQuiz() {
-        if let answer = quiz.answerInKana {
-            ansLen = answer.count
-        } else {
-            print("クイズなし")
-        }
-    }
+//    func setUpQuiz() {
+//        if let answer = quiz.answerInKana {
+//            ansLen = answer.count
+//        } else {
+//            print("クイズなし")
+//        }
+//    }
     
     func judgeAnswer(_ userinputChar: String, answerChar: String) {
         if choicedAnswer == quiz.answerInKana! {
             print("正解")
-           
+            webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: true)
             //問題に正解シグナル
         } else if userinputChar == answerChar {
             currentCharIndex += 1
@@ -210,10 +232,11 @@ class PlayViewController: UIViewController, PlayingDelegate {
             settingButton(setStrings: answerChoices)
             progress()
             
+            
         } else {
             print("不正解")
             //失敗シグナル
-            displaying = true
+            webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: false)
         }
         
         //ユーザーの入力が合っているかどうか

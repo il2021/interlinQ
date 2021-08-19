@@ -13,11 +13,8 @@
 		0D2B1E73D7A994F874FA3F9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFE77AF38D9D5FB03E6F9C0C /* Main.storyboard */; };
 		0F9FFADDAACEF67FD57D8916 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B1E606C9F0BB0B1369AE3 /* Quiz.swift */; };
 		1E0B25AD2D5F243349295285 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094CFBCE92A4A65F594F636 /* ResultViewController.swift */; };
+		28914B1084517DD07066D957 /* Pods_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE5671EDC8C5912A81458C5 /* Pods_client.framework */; };
 		2F523F1E7F04E990C267D8FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5C1882863D650D3D18DDA6 /* ViewController.swift */; };
-		3E8473AF26CDDFAE001DB0F9 /* Buzzer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E8473AE26CDDFAE001DB0F9 /* Buzzer.mp3 */; };
-		3E8473B226CDE0F7001DB0F9 /* Correct_Answer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E8473B126CDE0F7001DB0F9 /* Correct_Answer.mp3 */; };
-		3E8473BC26CDE613001DB0F9 /* Question.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E8473BB26CDE613001DB0F9 /* Question.mp3 */; };
-		3E8473BF26CDE61C001DB0F9 /* Wrong_Answer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3E8473BE26CDE61C001DB0F9 /* Wrong_Answer.mp3 */; };
 		3F44431299D017DF6911BBB5 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C53D27CB3F8017C81B66D /* WebSocketManager.swift */; };
 		5415E8531290A6818B0988F4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE64C5234FBB1A84DE287F24 /* SceneDelegate.swift */; };
 		589B2448CAE88A2290953AD5 /* WaitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D021F73DE17648F28C0F05D /* WaitViewController.swift */; };
@@ -26,32 +23,26 @@
 		97C459D62AEC784F9811A284 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75D7FD29996885F4A28ACB1A /* Assets.xcassets */; };
 		BB3497CEDE2E7F8FBDA9AEF7 /* project.yml in Resources */ = {isa = PBXBuildFile; fileRef = 457FCA0F882AD7EB7938EF04 /* project.yml */; };
 		C005F21D77D01E099F8A835E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1E11C018211EE3FC2A07A /* HomeViewController.swift */; };
-		C78B7810E7BEA9120D4180B1 /* Pods_client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A2E3AE8959185934961FED /* Pods_client.framework */; };
 		D0882114975ADC451A807CF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A186F9637DFB32852805B /* AppDelegate.swift */; };
 		E574D1BBA5A7E53FD819B426 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2990200C22BBE35E9716B638 /* LaunchScreen.storyboard */; };
 		FE0EDF0FAD7F38131608910B /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E71045F3DCB39A1138B0D69 /* PlayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04A2E3AE8959185934961FED /* Pods_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ECAF456A1041DED820140FB /* TestWebSocketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWebSocketViewController.swift; sourceTree = "<group>"; };
 		1D021F73DE17648F28C0F05D /* WaitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitViewController.swift; sourceTree = "<group>"; };
 		2965B6AAEC8B72A5AA362A72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2C97D8A2AF4751B023970703 /* Pods-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client.release.xcconfig"; path = "Target Support Files/Pods-client/Pods-client.release.xcconfig"; sourceTree = "<group>"; };
 		328C53D27CB3F8017C81B66D /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
-		3543C404F35420F1D2481341 /* Pods-client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client.release.xcconfig"; path = "Target Support Files/Pods-client/Pods-client.release.xcconfig"; sourceTree = "<group>"; };
-		3E8473AE26CDDFAE001DB0F9 /* Buzzer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Buzzer.mp3; path = "../../../Downloads/Quiz-Buzzer02-mp3/Buzzer.mp3"; sourceTree = "<group>"; };
-		3E8473B126CDE0F7001DB0F9 /* Correct_Answer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Correct_Answer.mp3; path = "../../../Downloads/Quiz-Correct_Answer02-mp3/Correct_Answer.mp3"; sourceTree = "<group>"; };
-		3E8473BB26CDE613001DB0F9 /* Question.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Question.mp3; path = "../../../Downloads/Quiz-Question03-mp3/Question.mp3"; sourceTree = "<group>"; };
-		3E8473BE26CDE61C001DB0F9 /* Wrong_Answer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Wrong_Answer.mp3; path = "../../../Downloads/Quiz-Wrong_Buzzer02-mp3/Wrong_Answer.mp3"; sourceTree = "<group>"; };
 		457FCA0F882AD7EB7938EF04 /* project.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = project.yml; sourceTree = "<group>"; };
 		4E71045F3DCB39A1138B0D69 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		6094CFBCE92A4A65F594F636 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		636084E6993DBCB69FBCC23E /* TestFunction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestFunction.storyboard; sourceTree = "<group>"; };
-		66C2D4A2D9B0B511587DF969 /* Pods-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client.debug.xcconfig"; path = "Target Support Files/Pods-client/Pods-client.debug.xcconfig"; sourceTree = "<group>"; };
 		75D7FD29996885F4A28ACB1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E8B1E606C9F0BB0B1369AE3 /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 		7EE1E11C018211EE3FC2A07A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		8173C5CD325C99327C79430F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		8173C5CD325C99327C79430F /* .gitignore */ = {isa = PBXFileReference; path = .gitignore; sourceTree = "<group>"; };
+		8DE5671EDC8C5912A81458C5 /* Pods_client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		933C27CBD861086CECFA76EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		985A186F9637DFB32852805B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B0471D2EC685D174BC88A13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -61,20 +52,29 @@
 		CB82FFD8CFA86023FDF72A4A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CC5C1882863D650D3D18DDA6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DC4237237C3F8AEBFA2CF37D /* TestWebSocket.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestWebSocket.storyboard; sourceTree = "<group>"; };
+		ED5F05134010F507839940F1 /* Pods-client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client.debug.xcconfig"; path = "Target Support Files/Pods-client/Pods-client.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		76FBB5A82C34D420369050D1 /* Frameworks */ = {
+		20649CA89C1BCF55FC225A72 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C78B7810E7BEA9120D4180B1 /* Pods_client.framework in Frameworks */,
+				28914B1084517DD07066D957 /* Pods_client.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A2E45349E8C56DB2A225393 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8DE5671EDC8C5912A81458C5 /* Pods_client.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4F7E1AF58E5191467E2055F0 /* Sample */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,18 +92,14 @@
 				CB82FFD8CFA86023FDF72A4A /* README.md */,
 				739C76D43A92331916BE4CE7 /* Sources */,
 				AA99229A272F07DA07B0963B /* Products */,
-				9F312F91232A714A9A0B5086 /* Pods */,
-				A1E89EE80156114C17B571FC /* Frameworks */,
+				9FC775A89EA6AAB6D98B8116 /* Pods */,
+				2A2E45349E8C56DB2A225393 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		739C76D43A92331916BE4CE7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				3E8473AE26CDDFAE001DB0F9 /* Buzzer.mp3 */,
-				3E8473B126CDE0F7001DB0F9 /* Correct_Answer.mp3 */,
-				3E8473BB26CDE613001DB0F9 /* Question.mp3 */,
-				3E8473BE26CDE61C001DB0F9 /* Wrong_Answer.mp3 */,
 				985A186F9637DFB32852805B /* AppDelegate.swift */,
 				75D7FD29996885F4A28ACB1A /* Assets.xcassets */,
 				7EE1E11C018211EE3FC2A07A /* HomeViewController.swift */,
@@ -124,21 +120,14 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		9F312F91232A714A9A0B5086 /* Pods */ = {
+		9FC775A89EA6AAB6D98B8116 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				66C2D4A2D9B0B511587DF969 /* Pods-client.debug.xcconfig */,
-				3543C404F35420F1D2481341 /* Pods-client.release.xcconfig */,
+				ED5F05134010F507839940F1 /* Pods-client.debug.xcconfig */,
+				2C97D8A2AF4751B023970703 /* Pods-client.release.xcconfig */,
 			);
+			name = Pods;
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		A1E89EE80156114C17B571FC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				04A2E3AE8959185934961FED /* Pods_client.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		AA99229A272F07DA07B0963B /* Products */ = {
@@ -156,11 +145,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0435AE5EB711C11918AF5D6A /* Build configuration list for PBXNativeTarget "client" */;
 			buildPhases = (
-				AB04433A9CCA7F503E3C7CF8 /* [CP] Check Pods Manifest.lock */,
+				B20B7C6967821BC5911B5732 /* [CP] Check Pods Manifest.lock */,
 				AB90B2941273266F67CC74E6 /* Sources */,
 				72C324D9D33CAB4E2F760532 /* Resources */,
-				76FBB5A82C34D420369050D1 /* Frameworks */,
-				48725F7CBD5962885B4B6D96 /* [CP] Embed Pods Frameworks */,
+				20649CA89C1BCF55FC225A72 /* Frameworks */,
+				1C4CDC421D38D4324272CC35 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -178,6 +167,8 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = EE0361824CAD5BF6769F9CC2 /* Build configuration list for PBXProject "client" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -202,12 +193,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E8473BC26CDE613001DB0F9 /* Question.mp3 in Resources */,
-				3E8473BF26CDE61C001DB0F9 /* Wrong_Answer.mp3 in Resources */,
 				97C459D62AEC784F9811A284 /* Assets.xcassets in Resources */,
 				E574D1BBA5A7E53FD819B426 /* LaunchScreen.storyboard in Resources */,
-				3E8473B226CDE0F7001DB0F9 /* Correct_Answer.mp3 in Resources */,
-				3E8473AF26CDDFAE001DB0F9 /* Buzzer.mp3 in Resources */,
 				0D2B1E73D7A994F874FA3F9D /* Main.storyboard in Resources */,
 				04089A340EA68E17952842A0 /* README.md in Resources */,
 				082B9B3DDCAC06B681512968 /* TestFunction.storyboard in Resources */,
@@ -219,7 +206,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		48725F7CBD5962885B4B6D96 /* [CP] Embed Pods Frameworks */ = {
+		1C4CDC421D38D4324272CC35 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -236,7 +223,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-client/Pods-client-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AB04433A9CCA7F503E3C7CF8 /* [CP] Check Pods Manifest.lock */ = {
+		B20B7C6967821BC5911B5732 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -366,7 +353,7 @@
 		};
 		68AC98ED7339AD7F56F90562 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3543C404F35420F1D2481341 /* Pods-client.release.xcconfig */;
+			baseConfigurationReference = 2C97D8A2AF4751B023970703 /* Pods-client.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -383,7 +370,7 @@
 		};
 		6CE5B4C7BDB3A4D07E8DE572 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66C2D4A2D9B0B511587DF969 /* Pods-client.debug.xcconfig */;
+			baseConfigurationReference = ED5F05134010F507839940F1 /* Pods-client.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
