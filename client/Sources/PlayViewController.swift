@@ -18,11 +18,14 @@ class PlayViewController: UIViewController, PlayingDelegate {
     func problemAnswered(isCorrect: Bool) {
         print("相手が正解したか\(isCorrect)")
         if isCorrect {
-            player2Point += 10
+            player2Point += 20
+           
         } else {
             canAnswerState()
-            player2Point -= 10
+            player2Point -= 5
         }
+        
+        player2PointText.text = String(player2Point)
 
     }
     
