@@ -86,8 +86,12 @@ class PlayViewController: UIViewController, PlayingDelegate {
         count += 1
         if count < 5 {
             yomiageTimer.invalidate()
-            displaySentence()
+            displaySentence(quiz.question!)
+            displaying = true
             // TODO: 新しい問題用にボタンを更新
+            setAnswerChoices()
+            settingButton(setStrings: answerChoices)
+            
         } else {
             gameover()
         }
