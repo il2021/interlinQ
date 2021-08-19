@@ -29,6 +29,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     func submitAnswer() {
         print("提出完了")
         answerField.text = ""
+        stackButtons.isHidden = true
         
     }
     
