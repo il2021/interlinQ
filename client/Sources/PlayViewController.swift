@@ -37,7 +37,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         print("提出完了")
         answerField.text = ""
         stackButtons.isHidden = true
-        
+        player1PointText.text = String(player1Point)
     }
     
     func canAnswerState() {
@@ -294,6 +294,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
             settingButton(setStrings: answerChoices)
             progress()
         } else {
+            player1Point -= 5
             let soundURL = Bundle.main.url(forResource: "Wrong_Answer", withExtension: "mp3")
             do {
                 // 効果音を鳴らす
@@ -305,7 +306,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
             Thread.sleep(forTimeInterval: 1.0)
             print("不正解")
             //失敗シグナル
-            player1Point -= 5
+           
             webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: false)
         }
         
