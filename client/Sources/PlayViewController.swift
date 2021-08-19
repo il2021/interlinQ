@@ -84,6 +84,9 @@ class PlayViewController: UIViewController, PlayingDelegate {
             self.nextQuiz()
             self.quizNumberText.text = "問題 \(self.quizCount)"
         }
+    }
+    
+    func playQuestionSound() {
         let soundURL = Bundle.main.url(forResource: "Question", withExtension: "mp3")
         do {
             // 効果音を鳴らす
@@ -108,7 +111,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
             // TODO: 新しい問題用にボタンを更新
             setAnswerChoices()
             settingButton(setStrings: answerChoices)
-            
+            playQuestionSound()
         } else {
             gameover()
         }
@@ -117,8 +120,6 @@ class PlayViewController: UIViewController, PlayingDelegate {
     func gameover() {
         self.performSegue(withIdentifier: "toResult", sender: self)
     }
-    
-
     
     @IBOutlet weak var answerField: UILabel!
     
