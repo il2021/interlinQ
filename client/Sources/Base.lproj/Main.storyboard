@@ -470,6 +470,8 @@
                     <connections>
                         <outlet property="answerButton" destination="5Gp-m7-sml" id="dfy-uS-ID8"/>
                         <outlet property="answerField" destination="pGN-I3-snH" id="Bmc-eT-KFt"/>
+                        <outlet property="player1PointText" destination="KO5-Um-IJ5" id="tLq-Nh-jeh"/>
+                        <outlet property="player2PointText" destination="QtE-Wb-ydn" id="V0L-Rn-vmT"/>
                         <outlet property="prg" destination="Bz3-Qx-hSg" id="flJ-ao-F8a"/>
                         <outlet property="questionSentence" destination="Nbh-Nc-OUO" id="b8W-gI-jah"/>
                         <outlet property="stackButtons" destination="qBo-3g-fVL" id="tuD-b2-jwk"/>
@@ -585,7 +587,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="a5X-EB-mmU"/>
         <segue reference="oTQ-8R-noX"/>
     </inferredMetricsTieBreakers>
     <resources>
