@@ -102,9 +102,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
         webSocketManager.playingdelegate = self
         prg.progress = 1.0
         displaySentence()
-        displayChoicesRandomly()
-        setUpQuiz()
-        updateAnswerField()
+        setAnswerChoices()
+        settingButton(setStrings: answerChoices)
     }
     
     @IBAction func tapanswerButton(_ sender: Any) {
@@ -114,6 +113,27 @@ class PlayViewController: UIViewController, PlayingDelegate {
         
     }
     
+    func setAnswerChoices() {
+        answerChoices = ["", "", "", ""]
+        let ansChar = strAccess(str: quiz.answerInKana!, index: currentCharIndex)// 正解の文字
+        // 正解が入る場所(1-4)のどれか
+        answerChoices[Int.random(in: 0 ..< 4)] = ansChar
+        //ランダムな文字
+        for i in 0..<4 {
+            while (answerChoices[i] == "") {
+                answerChoices[i] = generateRandomChar(chartype: ansChar)
+            }
+        }
+        
+    }
+    
+    func settingButton(setStrings: [String]) {
+        for i in 0..<4 {
+            DispatchQueue.main.async {
+                self.ansButtonArray[i].setTitle(setStrings[i], for: .normal)
+            }
+        }
+    }
     
     
     @IBAction func quitButton(_ sender: Any) {
@@ -140,24 +160,29 @@ class PlayViewController: UIViewController, PlayingDelegate {
                     print("input0")
                     choicedAnswer += answerChoices[0]
                     updateAnswerField()
-                    displayChoicesRandomly()
-                    
+                    judgeAnswer(answerChoices[0], answerChar: strAccess(str: quiz.answerInKana!, index: currentCharIndex))
+                   
                 case .input1:
                     print("input1")
                     choicedAnswer += answerChoices[1]
                     updateAnswerField()
-                    displayChoicesRandomly()
+                    judgeAnswer(answerChoices[1], answerChar: strAccess(str: quiz.answerInKana!, index: currentCharIndex))
+                   
                 case .input2:
                     print("input2")
                     choicedAnswer += answerChoices[2]
                     updateAnswerField()
-                    displayChoicesRandomly()
+                    judgeAnswer(answerChoices[2], answerChar: strAccess(str: quiz.answerInKana!, index: currentCharIndex))
+           
                 case .input3:
                     print("input3")
                     choicedAnswer += answerChoices[3]
                     updateAnswerField()
-                    displayChoicesRandomly()
+                    judgeAnswer(answerChoices[3], answerChar: strAccess(str: quiz.answerInKana!, index: currentCharIndex))
+ 
                 }
+                
+                
             }
         }
     }
@@ -169,6 +194,25 @@ class PlayViewController: UIViewController, PlayingDelegate {
         } else {
             print("クイズなし")
         }
+    }
+    
+    func judgeAnswer(_ userinputChar: String, answerChar: String) {
+        if choicedAnswer == quiz.answerInKana! {
+            print("正解")
+           
+            //問題に正解シグナル
+        } else if userinputChar == answerChar {
+            currentCharIndex += 1
+            setAnswerChoices()
+            settingButton(setStrings: answerChoices)
+            
+        } else {
+            print("不正解")
+            //失敗シグナル
+        }
+        
+        //ユーザーの入力が合っているかどうか
+        
     }
     
 }
