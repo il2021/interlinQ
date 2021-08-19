@@ -12,8 +12,8 @@ interface Problem {
     answerInKana: string;
 }
 
-const HOST = 'http://localhost:8080';
-// const HOST = 'http://tk2-221-20494.vs.sakura.ne.jp:8080';
+// const HOST = 'http://localhost:8080';
+const HOST = 'http://tk2-221-20494.vs.sakura.ne.jp:8080';
 
 const makeChoices = (correctChar: string) => {
     const correctCharCode = correctChar.charCodeAt(0);
