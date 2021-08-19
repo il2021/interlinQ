@@ -29,8 +29,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
     func startAnswer() {
         print("自分が回答を始めた ")
         stackButtons.isHidden = false
-        stackButtons.backgroundColor = .blue
-        
+//        stackButtons.backgroundColor = .blue
+        (0..<4).forEach {index in ansButtonArray[index].backgroundColor = .blue}
         answerButton.isEnabled = false
         answerButton.backgroundColor = .gray
     }
