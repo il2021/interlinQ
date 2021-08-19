@@ -69,12 +69,6 @@ const App: React.FC = () => {
             socket?.emit('join-room', {
                 userId, userName,
             });
-            // socket?.on('room-created', param => {
-            //     console.log(`[room-created] Room id: ${param.roomId}`);
-            // });
-            // socket?.on('room-updated', param => {
-            //     console.log(`[room-updated] Current members: ${param.memberNames.join(', ')}`);
-            // });
             socket?.on('room-ready', param => {
                 setRoomId(param.roomId);
                 setMemberNames(param.memberNames);
@@ -93,7 +87,7 @@ const App: React.FC = () => {
             }
         }
         if (status === 'attending') {
-            socket?.on('answer-blocked', param => {
+            socket?.on('answer-blocked', () => {
                 setAnswerBlocked(true);
             });
             socket?.on('problem-answered', param => {
@@ -105,14 +99,20 @@ const App: React.FC = () => {
                     });
                 }
             });
-            socket?.on('problem-closed', param => {
+            socket?.on('problem-closed', () => {
                 setAnswerBlocked(false);
                 setCurrentProblem(null);
             });
         }
-        socket?.on('room-closed', param => {
-            setStatus(null);
-            setRoomId(null);
+        socket?.on('room-closed', params => {
+            if (!params?.succeeded) {
+                setRoomId(null);
+                setMemberNames([userName]);
+                setStatus(null);
+                setCurrentProblem(null);
+                setMyAnswer('');
+                setScore({ me: 0, opponent: 0 });
+            }
         });
     }, [status, currentProblem]);
     if (currentProblem) {
@@ -142,12 +142,19 @@ const App: React.FC = () => {
                 {status !== null &&
                     <button onClick={() => {
                         socket?.emit('close-room', { roomId });
-                        setStatus('waiting');
+                        setRoomId(null);
+                        setMemberNames([userName]);
+                        setStatus(null);
+                        setCurrentProblem(null);
+                        setMyAnswer('');
+                        setScore({ me: 0, opponent: 0 });
                     }}>退出する</button>
                 }
                 {(status === 'attending' || status === 'answering') &&
                     <div>
                         <p>参加者: {memberNames.join(', ')}</p>
+                        <p>今のあなたの点数: {score.me}</p>
+                        <p>今の相手の点数: {score.opponent}</p>
                         {currentProblem && (
                             <div>
                                 <h2>問題</h2>
