@@ -153,6 +153,13 @@ class PlayViewController: UIViewController, PlayingDelegate {
  * displayChoicesRandomly: 選択肢をランダムに表示
  * hideButton: ボタンを隠す（画面遷移時に実行）
  */
+extension PlayViewController {
+    
+    // 文字列で返す。
+    func strAccess(str: String, index: Int) -> String {
+        let char = String(str[str.index(str.startIndex, offsetBy: index)..<str.index(str.startIndex, offsetBy: index+1)])
+        return char
+    }
     
     
 }
