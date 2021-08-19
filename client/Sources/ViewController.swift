@@ -13,6 +13,8 @@
 
 import UIKit
 
+import AVFoundation
+
 class ViewController: UIViewController {
     
     //indicator
@@ -50,8 +52,61 @@ class ViewController: UIViewController {
     @IBAction func showIndicator(_ sender: Any) {
         progress()
     }
-       
+    
+    //sound effect
 
+    var player:AVAudioPlayer?
+    
+    override func didReceiveMemoryWarning() {
+            super.didReceiveMemoryWarning()
+            // Dispose of any resources that can be recreated.
+        }
+
+    @IBAction func buzzer(_ sender: Any) {
+        // 再生する音声ファイルを指定する
+        let soundURL = Bundle.main.url(forResource: "Buzzer", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
+    }
+
+    @IBAction func correctAnswer(_ sender: Any) {
+        let soundURL = Bundle.main.url(forResource: "Correct_Answer", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
+    }
+    
+    @IBAction func question(_ sender: Any) {
+        let soundURL = Bundle.main.url(forResource: "Question", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
+    }
+    
+    @IBAction func wrongAnswer(_ sender: Any) {
+        let soundURL = Bundle.main.url(forResource: "Wrong_Answer", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
+    }
+    
     //display sentence
     
     @IBAction func toTestButtonAction(_ sender: Any) {
