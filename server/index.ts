@@ -127,12 +127,12 @@ io.on('connection', socket => {
         const userId = params.userId as string;
         const room = roomIdToRoom(activeRooms, roomId);
         if (typeof room === 'undefined') {
-            io.emit('room-closed', { succeeded: false });
+            io.to(roomId).emit('room-closed', { succeeded: false });
             return;
         }
         const user = memberIdToMember(room, userId);
         if (typeof user === 'undefined') {
-            io.emit('room-closed', { succeeded: false });
+            io.to(roomId).emit('room-closed', { succeeded: false });
             return;
         }
         socket.to(roomId).emit('answer-blocked', { answeringUserName: user.name });
@@ -142,12 +142,12 @@ io.on('connection', socket => {
         const userId = params.userId as string;
         const room = roomIdToRoom(activeRooms, roomId);
         if (typeof room === 'undefined') {
-            io.emit('room-closed', { succeeded: false });
+            io.to(roomId).emit('room-closed', { succeeded: false });
             return;
         }
         const user = memberIdToMember(room, userId);
         if (typeof user === 'undefined') {
-            io.emit('room-closed', { succeeded: false });
+            io.to(roomId).emit('room-closed', { succeeded: false });
             return;
         }
         const isCorrect = params.isCorrect as boolean;
@@ -166,7 +166,7 @@ io.on('connection', socket => {
                 const winnerId = topRunnerId;
                 const winner = memberIdToMember(room, winnerId);
                 if (typeof winner === 'undefined') {
-                    io.emit('room-closed', { succeeded: false });
+                    io.to(roomId).emit('room-closed', { succeeded: false });
                     return;
                 }
                 const winnerName = winner.name;
