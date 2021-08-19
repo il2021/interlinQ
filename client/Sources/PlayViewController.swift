@@ -113,12 +113,15 @@ class PlayViewController: UIViewController, PlayingDelegate {
     @IBOutlet weak var stackButtons: UIStackView!
     @IBOutlet weak var answerButton: UIButton!
     
+    @IBOutlet weak var player1PointText: UILabel!
+    @IBOutlet weak var player2PointText: UILabel!
     @IBOutlet var ansButtonArray: [UIButton]!
     
     //選んだ文字
     var choicedAnswer: String = ""
     var count = 0
     var player2Point = 0
+    var player1Point = 0
     var currentCharIndex:Int = 0
     var ansLen:Int = 0
     var answerChoices: [String] = ["", "", "", ""]
