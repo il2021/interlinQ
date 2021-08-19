@@ -60,6 +60,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         answerButton.isEnabled = false
         answerButton.backgroundColor = .gray
         displaying = false
+        stackButtons.isHidden = false
     }
     
     
@@ -142,6 +143,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
         setAnswerChoices()
         settingButton(setStrings: answerChoices)
         print(quiz.answerInKana)
+        answerField.text = ""
+        stackButtons.isHidden = true
     }
     
     @IBAction func tapanswerButton(_ sender: Any) {
