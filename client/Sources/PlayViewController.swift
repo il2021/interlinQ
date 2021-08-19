@@ -78,6 +78,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
             self.choicedAnswer = ""
             self.updateAnswerField()
             self.nextQuiz()
+            self.quizNumberText.text = "問題 \(self.quizCount)"
         }
         
     }
@@ -88,8 +89,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
         answerButton.backgroundColor = .blue
         stackButtons.isHidden = true
         
-        count += 1
-        if count < 5 {
+        quizCount += 1
+        if quizCount < 5 {
             yomiageTimer.invalidate()
             displaySentence(quiz.question!)
             displaying = true
@@ -120,6 +121,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     //選んだ文字
     var choicedAnswer: String = ""
     var count = 0
+    var quizCount = 1
     var player2Point = 0
     var player1Point = 0
     var currentCharIndex:Int = 0
@@ -131,12 +133,14 @@ class PlayViewController: UIViewController, PlayingDelegate {
     var currentCharNum = 0
     
     var quiz: Quiz!
+
     var roomId: String!
     var timerPrg:Timer = Timer()
     let userId = UIDevice.current.identifierForVendor!.uuidString
     var answeringUser: String = ""
     @IBOutlet weak var prg: UIProgressView!
     
+    @IBOutlet weak var quizNumberText: UILabel!
     @IBOutlet weak var questionSentence: UITextView!
     var webSocketManager = WebSocketManager.shared
     var displaying: Bool = true
@@ -151,7 +155,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         print(quiz.answerInKana)
         answerField.text = ""
         stackButtons.isHidden = true
-        
+        quizNumberText.text = "問題 \(quizCount)"
         //ポイント管理
         player1PointText.text = String(0)
         player2PointText.text = String(0)

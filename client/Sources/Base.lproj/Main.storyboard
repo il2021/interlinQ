@@ -442,6 +442,13 @@
                                     <action selector="testSubmitAnswer:" destination="chf-99-qCv" eventType="touchUpInside" id="Kwe-I2-Z5V"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="問題1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7n-lY-pep">
+                                <rect key="frame" x="157" y="198" width="102" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xPo-mu-XPn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -474,6 +481,7 @@
                         <outlet property="player2PointText" destination="QtE-Wb-ydn" id="V0L-Rn-vmT"/>
                         <outlet property="prg" destination="Bz3-Qx-hSg" id="flJ-ao-F8a"/>
                         <outlet property="questionSentence" destination="Nbh-Nc-OUO" id="b8W-gI-jah"/>
+                        <outlet property="quizNumberText" destination="c7n-lY-pep" id="4Nh-Mb-TdY"/>
                         <outlet property="stackButtons" destination="qBo-3g-fVL" id="tuD-b2-jwk"/>
                         <outletCollection property="ansButtonArray" destination="cEa-Wf-fFq" collectionClass="NSMutableArray" id="eMi-RT-cWX"/>
                         <outletCollection property="ansButtonArray" destination="0Kl-2K-sXP" collectionClass="NSMutableArray" id="zJc-6x-DrJ"/>
@@ -484,7 +492,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BTY-T9-jwn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2952" y="862"/>
+            <point key="canvasLocation" x="2950.7246376811595" y="861.83035714285711"/>
         </scene>
         <!--Result View Controller-->
         <scene sceneID="bSA-ty-hBU">
