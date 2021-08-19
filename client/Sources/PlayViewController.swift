@@ -52,7 +52,6 @@ class PlayViewController: UIViewController, PlayingDelegate {
         answerButton.isEnabled = true
         answerButton.backgroundColor = .blue
         stackButtons.isHidden = true
-        setUpQuiz()
         
         count += 1
         if count < 5 {
@@ -79,8 +78,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
     //選んだ文字
     var choicedAnswer: String = ""
     var count = 0
-    
-    var ansChar = ""
+
     var currentCharIndex:Int = 0
     var ansLen:Int = 0
     var answerChoices: [String] = ["", "", "", ""]
