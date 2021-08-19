@@ -207,37 +207,8 @@ extension PlayViewController {
         return char
     }
     
-    func displayChoicesRandomly() {
-        if (currentCharIndex==0 || currentCharIndex < ansLen) {
-            if let answer = quiz.answerInKana {
-                ansChar = strAccess(str: answer, index: currentCharIndex)  // 正解の文字
-                var ansIndex = Int.random(in: 0 ..< 4)  // 正解が入る場所(1-4)
-                answerChoices[ansIndex] = ansChar
-                generateChoicesRandomly()
-                for i in 0..<4 {
-                    DispatchQueue.main.async {
-                        self.ansButtonArray[i].setTitle(self.answerChoices[i], for: .normal)
-                    }
-                }
-                // 次の文字列
-                currentCharIndex += 1
-            }else if (currentCharIndex == ansLen) {
-                // MARK: ボタンを消す
-                DispatchQueue.main.async {
-                    self.stackButtons.isHidden = true
-                }
-                
-                print("正解")
-                
-                
-            }
-        } else {
-            print("quizが存在しない or \(currentCharIndex)")
-        }
-        
-    }
     
-    func generateChoicesRandomly() {
+    func generateRandomChar(chartype: String) -> String {
         
         let hira:String = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
         let kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
