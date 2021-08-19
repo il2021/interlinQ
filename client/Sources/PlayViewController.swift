@@ -151,6 +151,11 @@ class PlayViewController: UIViewController, PlayingDelegate {
         print(quiz.answerInKana)
         answerField.text = ""
         stackButtons.isHidden = true
+        
+        //ポイント管理
+        player1PointText.text = String(0)
+        player2PointText.text = String(0)
+        
     }
     
     @IBAction func tapanswerButton(_ sender: Any) {
