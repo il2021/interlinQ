@@ -7,6 +7,10 @@
 
 import UIKit
 
+import AVFoundation
+
+var player:AVAudioPlayer?
+
 enum inputButton: Int {
     case input0 = 0
     case input1 = 1
@@ -80,7 +84,14 @@ class PlayViewController: UIViewController, PlayingDelegate {
             self.nextQuiz()
             self.quizNumberText.text = "問題 \(self.quizCount)"
         }
-        
+        let soundURL = Bundle.main.url(forResource: "Question", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
     }
     
     
@@ -159,10 +170,25 @@ class PlayViewController: UIViewController, PlayingDelegate {
         //ポイント管理
         player1PointText.text = String(0)
         player2PointText.text = String(0)
-        
+        let soundURL = Bundle.main.url(forResource: "Question", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
     }
     
     @IBAction func tapanswerButton(_ sender: Any) {
+        let soundURL = Bundle.main.url(forResource: "Buzzer", withExtension: "mp3")
+        do {
+            // 効果音を鳴らす
+            player = try AVAudioPlayer(contentsOf: soundURL!)
+            player?.play()
+        } catch {
+            print("error...")
+        }
         print("回答")
         print(quiz.answerInKana)
         webSocketManager.startAnswer(userId: userId, roomId: roomId)
@@ -247,6 +273,15 @@ class PlayViewController: UIViewController, PlayingDelegate {
 
     func judgeAnswer(_ userinputChar: String, answerChar: String) {
         if choicedAnswer == quiz.answerInKana! {
+            let soundURL = Bundle.main.url(forResource: "Correct_Answer", withExtension: "mp3")
+            do {
+                // 効果音を鳴らす
+                player = try AVAudioPlayer(contentsOf: soundURL!)
+                player?.play()
+            } catch {
+                print("error...")
+            }
+            Thread.sleep(forTimeInterval: 1.0)
             print("正解")
             webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: true)
             player1Point += 20
@@ -258,6 +293,15 @@ class PlayViewController: UIViewController, PlayingDelegate {
             settingButton(setStrings: answerChoices)
             progress()
         } else {
+            let soundURL = Bundle.main.url(forResource: "Wrong_Answer", withExtension: "mp3")
+            do {
+                // 効果音を鳴らす
+                player = try AVAudioPlayer(contentsOf: soundURL!)
+                player?.play()
+            } catch {
+                print("error...")
+            }
+            Thread.sleep(forTimeInterval: 1.0)
             print("不正解")
             //失敗シグナル
             player1Point -= 5
