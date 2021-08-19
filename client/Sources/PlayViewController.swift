@@ -130,6 +130,29 @@ class PlayViewController: UIViewController, PlayingDelegate {
             }
         }
     }
+}
+
+//入力ボタン
+/*
+ ## TIPS
+ * hide -> answer -> 各選択肢　（ボタンの押し方）
+ ## TODO
+ * 記号には対応してない
+ * 画面遷移時のイベントはhideボタンで対応
+ * 答えるボタンを押すとisHidden=falseをあとに実行しているはずなのに一瞬setTitleされていないボタンが表示されてしまう
+ ## PARAM
+ * answer: 答え
+ * ancChar: 正解の文字
+ * currentCharIndex: その時までに表示した文字数
+ * ansLen: 答えの文字列の長さ
+ * answerChoices: 答えの選択肢
+ * ansButtonArray: 選択肢のボタンが入った配列
+ ## FUNC
+ * strAccess: strのindex番目の文字を返す
+ * generateChoicesRandomly: 選択肢をランダムに生成
+ * displayChoicesRandomly: 選択肢をランダムに表示
+ * hideButton: ボタンを隠す（画面遷移時に実行）
+ */
     
     
 }
