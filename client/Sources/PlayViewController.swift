@@ -15,14 +15,24 @@ enum inputButton: Int {
 }
 
 class PlayViewController: UIViewController, PlayingDelegate {
+    //他の人が回答中
+    func answering(userName: String) {
+        answeringUser = userName
+        print("\(answeringUser)が回答中")
+        answerButton.isEnabled = false
+        answerButton.backgroundColor = .gray
+        stackButtons.isHidden = true
+        //TODO: テキスト読み上げ一時停止
+        
+    }
+    
     func startAnswer() {
         print("自分が回答を始めた ")
         stackButtons.isHidden = false
         stackButtons.backgroundColor = .blue
+        
         answerButton.isEnabled = false
         answerButton.backgroundColor = .gray
-        
-        
     }
     
     
@@ -42,6 +52,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         answerButton.isEnabled = true
         answerButton.backgroundColor = .blue
         stackButtons.isHidden = true
+        setUpQuiz()
         
         count += 1
         if count < 5 {
@@ -56,14 +67,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
         self.performSegue(withIdentifier: "toResult", sender: self)
     }
     
-    func answering(userName: String) {
-        answeringUser = userName
-        print("\(answeringUser)が回答中")
-        answerButton.isEnabled = false
-        answerButton.backgroundColor = .gray
-        stackButtons.isHidden = true
-        //TODO:テキスト読み上げ一時停止
-    }
+
     
     @IBOutlet weak var answerField: UILabel!
     
@@ -72,9 +76,19 @@ class PlayViewController: UIViewController, PlayingDelegate {
     
     @IBOutlet var ansButtonArray: [UIButton]!
     
+    //選んだ文字
+    var choicedAnswer: String = ""
     var count = 0
+    
+    var ansChar = ""
+    var currentCharIndex:Int = 0
+    var ansLen:Int = 0
+    var answerChoices: [String] = ["", "", "", ""]
+    
+    //読み上げの文字列
     var yomiageTimer = Timer()
     var currentCharNum = 0
+    
     var quiz: Quiz!
     var roomId: String!
     var timerPrg:Timer = Timer()
@@ -89,14 +103,17 @@ class PlayViewController: UIViewController, PlayingDelegate {
         super.viewDidLoad()
         webSocketManager.playingdelegate = self
         prg.progress = 1.0
-        
         displaySentence()
-        
+        displayChoicesRandomly()
+        setUpQuiz()
+        updateAnswerField()
     }
     
     @IBAction func tapanswerButton(_ sender: Any) {
         print("回答")
+        print(quiz.answerInKana)
         webSocketManager.startAnswer(userId: userId, roomId: roomId)
+        
     }
     
     
@@ -123,16 +140,39 @@ class PlayViewController: UIViewController, PlayingDelegate {
                 switch tag {
                 case .input0:
                     print("input0")
+                    choicedAnswer += answerChoices[0]
+                    updateAnswerField()
+                    displayChoicesRandomly()
+                    
                 case .input1:
                     print("input1")
+                    choicedAnswer += answerChoices[1]
+                    updateAnswerField()
+                    displayChoicesRandomly()
                 case .input2:
                     print("input2")
+                    choicedAnswer += answerChoices[2]
+                    updateAnswerField()
+                    displayChoicesRandomly()
                 case .input3:
                     print("input3")
+                    choicedAnswer += answerChoices[3]
+                    updateAnswerField()
+                    displayChoicesRandomly()
                 }
             }
         }
     }
+    
+    //画面遷移時or問題が切り替わった時に実行
+    func setUpQuiz() {
+        if let answer = quiz.answerInKana {
+            ansLen = answer.count
+        } else {
+            print("クイズなし")
+        }
+    }
+    
 }
 
 //入力ボタン
@@ -158,11 +198,81 @@ class PlayViewController: UIViewController, PlayingDelegate {
  */
 extension PlayViewController {
     
+    func updateAnswerField() {
+        answerField.text = choicedAnswer
+        answerChoices = ["", "", "", ""]
+    }
+    
     // 文字列で返す。
     func strAccess(str: String, index: Int) -> String {
         let char = String(str[str.index(str.startIndex, offsetBy: index)..<str.index(str.startIndex, offsetBy: index+1)])
         return char
     }
+    
+    func displayChoicesRandomly() {
+        if (currentCharIndex==0 || currentCharIndex < ansLen) {
+            if let answer = quiz.answerInKana {
+                ansChar = strAccess(str: answer, index: currentCharIndex)  // 正解の文字
+                var ansIndex = Int.random(in: 0 ..< 4)  // 正解が入る場所(1-4)
+                answerChoices[ansIndex] = ansChar
+                generateChoicesRandomly()
+                for i in 0..<4 {
+                    DispatchQueue.main.async {
+                        self.ansButtonArray[i].setTitle(self.answerChoices[i], for: .normal)
+                    }
+                }
+                // 次の文字列
+                currentCharIndex += 1
+            }else if (currentCharIndex == ansLen) {
+                // MARK: ボタンを消す
+                DispatchQueue.main.async {
+                    self.stackButtons.isHidden = true
+                }
+                
+                print("正解")
+                
+                
+            }
+        } else {
+            print("quizが存在しない or \(currentCharIndex)")
+        }
+        
+    }
+    
+    func generateChoicesRandomly() {
+        
+        let hira:String = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
+        let kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
+        let alpha:String = "abcdefghijklmnopqrstuvwxyz"
+        let num:String = "0123456789"
+        
+        var tmp = ""  // 答えの文字の種類の要素一覧
+        if (hira.contains(ansChar)) {
+            tmp = hira
+        } else if (kata.contains(ansChar)) {
+            tmp = kata
+        } else if (alpha.contains(ansChar)) {
+            tmp = alpha
+        } else {
+            tmp = num
+        }
+        //tmpLenとは ランダム文字の長さ
+        var tmpLen = tmp.count
+        
+        //この部分でanswerChoices[String]を当てはめている
+        for i in 0..<4 {
+            while (answerChoices[i] == "") {
+                var index = Int.random(in: 0 ..< tmpLen)
+                //あいうえお、アイウエオのどれかの文字
+                var choice = strAccess(str: tmp, index: index)
+                //重複した文字列がはいっていなければ、
+                if (!answerChoices.contains(choice)){
+                    answerChoices[i] = choice
+                }
+            }
+        }
+    }
+    
     
     
 }

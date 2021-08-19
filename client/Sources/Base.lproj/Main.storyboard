@@ -437,9 +437,14 @@
                     <navigationItem key="navigationItem" id="YYj-Ez-the"/>
                     <connections>
                         <outlet property="answerButton" destination="5Gp-m7-sml" id="dfy-uS-ID8"/>
+                        <outlet property="answerField" destination="pGN-I3-snH" id="Bmc-eT-KFt"/>
                         <outlet property="prg" destination="Bz3-Qx-hSg" id="flJ-ao-F8a"/>
                         <outlet property="questionSentence" destination="Nbh-Nc-OUO" id="b8W-gI-jah"/>
                         <outlet property="stackButtons" destination="qBo-3g-fVL" id="tuD-b2-jwk"/>
+                        <outletCollection property="ansButtonArray" destination="cEa-Wf-fFq" collectionClass="NSMutableArray" id="eMi-RT-cWX"/>
+                        <outletCollection property="ansButtonArray" destination="0Kl-2K-sXP" collectionClass="NSMutableArray" id="zJc-6x-DrJ"/>
+                        <outletCollection property="ansButtonArray" destination="bXP-v1-JZ0" collectionClass="NSMutableArray" id="BBl-h9-9Ku"/>
+                        <outletCollection property="ansButtonArray" destination="Vlt-tA-wfz" collectionClass="NSMutableArray" id="UXr-y7-nha"/>
                         <segue destination="VU6-pu-DTT" kind="presentation" identifier="toResult" modalPresentationStyle="fullScreen" id="a5X-EB-mmU"/>
                     </connections>
                 </viewController>

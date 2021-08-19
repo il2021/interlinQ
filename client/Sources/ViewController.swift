@@ -114,7 +114,7 @@ class ViewController: UIViewController {
     var kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
     var alpha:String = "abcdefghijklmnopqrstuvwxyz"
     var num:String = "0123456789"
-    var answer:String = "あいうエオカabc123"
+    var answer:String = "あいうエオカabc123" //quizhira
     var ansChar = ""
     var currentCharIndex:Int = 0
     var ansLen:Int = 0
