@@ -137,9 +137,10 @@ class PlayViewController: UIViewController, PlayingDelegate {
         super.viewDidLoad()
         webSocketManager.playingdelegate = self
         prg.progress = 1.0
-        displaySentence()
+        displaySentence(self.quiz.question!)
         setAnswerChoices()
         settingButton(setStrings: answerChoices)
+        print(quiz.answerInKana)
     }
     
     @IBAction func tapanswerButton(_ sender: Any) {
@@ -301,8 +302,8 @@ extension PlayViewController {
 //読みあげ機能
 extension PlayViewController {
     
-    func displaySentence() {
-        yomiageTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(showDelayText(time:)), userInfo: quiz.question, repeats: true)
+    func displaySentence(_ sentence: String) {
+        yomiageTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(showDelayText(time:)), userInfo: sentence, repeats: true)
     }
     
     @objc func showDelayText(time: Timer) {
