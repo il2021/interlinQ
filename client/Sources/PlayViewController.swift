@@ -287,10 +287,11 @@ extension PlayViewController {
     
     
     func generateRandomChar(chartype: String) -> String {
+        // 「ぁぃぅぇぉゎァィゥェォヵヶヮ」及び使わなそうな濁音・破裂音は除いている
         
-        let hira:String = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
-        let kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
-        let alpha:String = "abcdefghijklmnopqrstuvwxyz"
+        let hira:String = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞたぢづでどばびぶべぼぱぴぷぺぽっゃゅょー"
+        let kata:String = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポッャュョー"
+        let alpha:String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         let num:String = "0123456789"
         
         var tmp = ""  // 答えの文字の種類の要素一覧
