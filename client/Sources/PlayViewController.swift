@@ -83,6 +83,8 @@ class PlayViewController: UIViewController, PlayingDelegate {
             self.updateAnswerField()
             self.nextQuiz()
             self.quizNumberText.text = "問題 \(self.quizCount)"
+            self.timerPrg.invalidate()
+            self.prg.progress = 1.0
         }
     }
     
@@ -294,6 +296,7 @@ class PlayViewController: UIViewController, PlayingDelegate {
             settingButton(setStrings: answerChoices)
             progress()
         } else {
+            self.timerPrg.invalidate()
             player1Point -= 5
             let soundURL = Bundle.main.url(forResource: "Wrong_Answer", withExtension: "mp3")
             do {
@@ -379,6 +382,7 @@ extension PlayViewController {
         questionSentence.text = String(message.prefix(currentCharNum))
         if message.count <= currentCharNum {
             time.invalidate()
+        
             return
         }
         if (displaying) {
@@ -394,13 +398,24 @@ extension PlayViewController {
     //タイマーの中身
     @objc func timerFunc() {
         // prgの現在の数値より少しだけ少ない数値をprgにセット
-        let newValue = prg.progress - 0.01
+        let newValue = prg.progress - 0.005
         // 10秒ぐらいで0になりますので
         if (newValue < 0) {
             // newValueが０より小さくなってしまったら
             prg.setProgress(0, animated: true)
             // タイマーを停止させます
             timerPrg.invalidate()
+            webSocketManager.submitAnswer(userId: userId, roomId: roomId, isCorrect: false)
+            
+            let soundURL = Bundle.main.url(forResource: "Wrong_Answer", withExtension: "mp3")
+            do {
+                // 効果音を鳴らす
+                player = try AVAudioPlayer(contentsOf: soundURL!)
+                player?.play()
+            } catch {
+                print("error...")
+            }
+            
         } else {
             prg.setProgress(newValue, animated: true)
         }
@@ -411,7 +426,7 @@ extension PlayViewController {
         timerPrg.invalidate()
         prg.progress = 1.0
         //バーがだんだん短くなっていくようにTimerでリピートさせる
-        timerPrg = Timer.scheduledTimer(timeInterval: 0.03, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
+        timerPrg = Timer.scheduledTimer(timeInterval: 0.02, target: self, selector: #selector(timerFunc), userInfo: nil, repeats: true)
     }
     
     @IBAction func showIndicator(_ sender: Any) {
